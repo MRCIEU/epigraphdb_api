@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui.css">
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <link rel="shortcut icon" href="/static/img/logo_only.png">
+    <title>{{ title }}</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <script>
+     window.addEventListener("load", function(){
+       window.cookieconsent.initialise({
+         "palette": {
+           "popup": {
+             "background": "#edeff5",
+             "text": "#838391"
+           },
+           "button": {
+             "background": "#4b81e8"
+           }
+         },
+         "theme": "edgeless",
+         "position": "bottom-right"
+       })});
+    </script>
+
+  </head>
+  <body>
+
+    <div class="container" style="margin-top: 10px; box-sizing: border-box; text-align: center; ">
+      <span href="/">
+        <a href="http://www.biocompute.org.uk/"><img src="/static/img/logo_wide.png" style="height:55px; padding-left: 20px; float: left;"></a>
+        <span style="vertical-align: middle; float: right;"><a href="http://www.bris.ac.uk/"><img src="/static/img/uob40.png" style="padding: 10px;"/></a>
+          <a href="http://www.bris.ac.uk/ieu"><img src="/static/img/ieu40.png" style="padding: 10px; padding-right: 20px; "/></a></span>
+      </span>
+    </div>
+
+    <div id="swagger-ui">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+    <!-- `SwaggerUIBundle` is now available on the page -->
+    <script>
+
+      const ui = SwaggerUIBundle({
+        url: '{{ openapi_url }}',
+        dom_id: '#swagger-ui',
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout"
+
+      })
+    </script>
+  </body>
+</html>

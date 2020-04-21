@@ -1,0 +1,32 @@
+name: epigraphdb_api
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.7
+  - fastapi
+  - black
+  - mypy
+  - jedi
+  - isort
+  - autoflake
+  - flake8
+  - pytest
+  - ipython
+  - aiofiles
+  - click
+  - environs
+  - jinja2
+  - loguru
+  - neo4j-python-driver
+  - neobolt
+  - requests
+  - uvicorn
+  - pandas
+  - graphviz
+  - python-graphviz
+  - pandoc
+  - tabulate
+  - r-tidyverse
+  - r-rmarkdown
+  - r-reticulate

@@ -1,0 +1,50 @@
+---
+title: "EpiGraphDB API endpoints"
+output:
+  rmarkdown::md_document:
+    variant: gfm
+---
+
+# EpiGraphDB API endpoints
+
+This document is auto generated from
+[EpiGraphDB API specification](http://api.epigraphdb.org).
+
+```{r r_init, include=FALSE}
+library("reticulate")
+use_condaenv("epigraphdb_api", required = TRUE)
+```
+
+```{python py_init, include=FALSE}
+import sys
+
+sys.path.append('../')
+```
+
+```{python py_setup}
+from environs import Env
+env = Env()
+env.read_env()
+
+EPIGRAPHDB_API_URL = env.str("EPIGRAPHDB_API_URL", "http://api.epigraphdb.org")
+print(EPIGRAPHDB_API_URL)
+```
+
+## Topic endpoints
+
+```{python topic_endpoints, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+from docs.render_api import rmd_render_endpoints
+from tests.api_tests.api_response.public_endpoints import topic_params
+
+print("\n")
+rmd_render_endpoints(api_url=EPIGRAPHDB_API_URL, endpoint_params=topic_params)
+```
+
+## Utility endpoints
+
+```{python util_endpoints, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+from docs.render_api import rmd_render_endpoints
+from tests.api_tests.api_response.public_endpoints import util_params
+
+rmd_render_endpoints(api_url=EPIGRAPHDB_API_URL, endpoint_params=util_params)
+```

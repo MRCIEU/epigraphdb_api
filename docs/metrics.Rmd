@@ -1,0 +1,74 @@
+---
+title: "EpiGraphDB metadata and metrics"
+output:
+  rmarkdown::md_document:
+    variant: gfm
+---
+
+# EpiGraphDB metadata and metrics
+
+```{r r_init, include=FALSE}
+library("reticulate")
+use_condaenv("epigraphdb_api", required = TRUE)
+```
+
+```{python py_init, include=FALSE}
+import sys
+
+sys.path.append('../')
+```
+
+```{python py_setup, include=FALSE}
+from environs import Env
+env = Env()
+env.read_env()
+
+EPIGRAPHDB_API_URL = env.str("EPIGRAPHDB_API_URL", "http://api.epigraphdb.org")
+```
+
+```{python requests, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+import requests
+from pprint import pformat
+import pandas as pd
+
+r = requests.get(f"{EPIGRAPHDB_API_URL}/meta/schema", params={"graphviz": False, "plot": False})
+r.raise_for_status()
+results = r.json()
+
+node_df = (
+    pd.DataFrame.from_dict(results["nodes"], orient="index")
+    .reset_index()
+    .rename(columns={"index": "Meta node"})
+    [["Meta node", "count"]]
+    .assign(count=lambda df: df["count"].apply(lambda x: f"{x:,}"))
+    .sort_values(by=["Meta node"])
+    .set_index("Meta node")
+)
+
+rel_df = (
+    pd.json_normalize(results["connections"])
+    .rename(columns={"rel": "Meta rel"})
+    .assign(count=lambda df: df["count"].apply(lambda x: f"{x:,}"))
+    .sort_values(by=["from_node", "to_node"])
+    .set_index("Meta rel")
+)
+```
+
+
+```{python tables, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+print("## Meta node\n")
+print(node_df.to_markdown())
+print("## Meta relationship\n")
+print(rel_df.to_markdown())
+```
+
+
+```{python metadata, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+print("\n")
+print("## Metadata\n")
+print(f'??? summary \\"Expand to show\\"\n')
+print("    ```{python}")
+for line in pformat(results).split("\n"):
+    print("    ", line)
+print("    ```")
+```

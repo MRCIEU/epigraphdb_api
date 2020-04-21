@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile-dev
+      context: .
+    restart: unless-stopped
+    command: /start-reload.sh
+    env_file:
+      - .env
+    environment:
+      - API_PRIVATE_ACCESS=true
+    volumes:
+      - ./:/app
+    ports:
+      - ${DOCKER_API_PORT:-8006}:80
