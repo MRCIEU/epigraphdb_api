@@ -183,7 +183,16 @@ def render_schema_graphviz(schema):
     dot = Digraph(
         name="EpiGraphDB schema",
         node_attr={"shape": "record"},
-        graph_attr={"rankdir": "LR"},
+        graph_attr={
+            "rankdir": "LR",
+            "ratio": "0.8",
+            "overlap": "false",
+            "splines": "compound",
+            "nodesep": "1",
+            "fontnames": "monospace",
+            "K": "0.05",
+        },
+        engine="neato"
     )
     for node_name, node_value in schema["nodes"].items():
         if node_value["properties"] is not None:
@@ -202,12 +211,12 @@ def render_schema_graphviz(schema):
             )
         else:
             props = ""
-        label = "< <B> {name} {count:,} </B> {props} >".format(
+        label = "< <B> ({name}) {count:,} </B> {props} >".format(
             name=node_name, count=node_value["count"], props=props
         )
         dot.node(name=node_name, label=label)
     for connection in schema["connections"]:
-        label = "< <B> {name} </B> <BR/> {count:,} >".format(
+        label = "< <B> [{name}] </B> <BR/> {count:,} >".format(
             name=connection["rel"], count=connection["count"]
         )
         dot.edge(
