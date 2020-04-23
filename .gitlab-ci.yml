@@ -17,21 +17,21 @@ before_script:
   - ls -lah
   # - pip install pipenv
 
-stages:
+# stages:
   # - docs
   # - build
   # - unit_tests
   # - lint
   # - deploy
 
-docs:
-  stage: docs
-  only:
-    - dev
-  tags:
-    - epigraphdb
-  script:
-    - cp ${CI_PROJECT_DIR}/README.md ${PRIVATE_DOCS_DIR}/docs/development/api-v0.3.md
+# docs:
+#   stage: docs
+#   only:
+#     - dev
+#   tags:
+#     - epigraphdb
+#   script:
+#     - cp ${CI_PROJECT_DIR}/README.md ${PRIVATE_DOCS_DIR}/docs/development/api-v0.3.md
 
 # build:
 #   stage: build
