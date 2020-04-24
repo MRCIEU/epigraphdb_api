@@ -105,4 +105,24 @@ def test_literature():
     literature_df_expected = pd.read_json(
         CASE_2_DIR / "case-2-literature.json"
     )
+
+    # manual manipulation
+    def manual_manipulation(df):
+        return (
+            df.assign(
+                pubmed_id=lambda df: df["pubmed_id"].apply(lambda x: sorted(x))
+            )
+            .sort_values(
+                by=[
+                    "gene.name",
+                    "st.predicate",
+                    "st.object_name",
+                    "literature_count",
+                ]
+            )
+            .reset_index(drop=True)
+        )
+
+    literature_df = literature_df.pipe(manual_manipulation)
+    literature_df_expected = literature_df_expected.pipe(manual_manipulation)
     pd.testing.assert_frame_equal(literature_df, literature_df_expected)
