@@ -61,7 +61,7 @@ class Gene(BaseModel):
         extra = "forbid"
 
 
-class Gtex(BaseModel):
+class Tissue(BaseModel):
     """Tissue specific gene expression from GTEx.
     """
 
@@ -210,7 +210,7 @@ meta_node_schema = {
     "Efo": Efo,
     "Event": Event,
     "Gene": Gene,
-    "Gtex": Gtex,
+    "Tissue": Tissue,
     "Gwas": Gwas,
     "Literature": Literature,
     "Meta": Meta,

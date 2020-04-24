@@ -71,7 +71,7 @@ class EXPRESSED_IN(BaseModel):
 
     class _Path:
         source = "Gene"
-        target = "Gtex"
+        target = "Tissue"
 
 
 class GENE_TO_LITERATURE(BaseModel):
