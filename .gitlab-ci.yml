@@ -12,17 +12,28 @@ variables:
 #   paths:
 #     - .cache
 
-before_script:
-  - python -V
-  - ls -lah
-  # - pip install pipenv
+# before_script:
+#   - python -V
+#   - ls -lah
+#   # - pip install pipenv
 
-# stages:
+stages:
+  - init
   # - docs
   # - build
   # - unit_tests
   # - lint
   # - deploy
+
+init:
+  stage: init
+  only:
+    - dev
+  tags:
+    - epigraphdb
+  script:
+    - python -V
+    - ls -lah
 
 # docs:
 #   stage: docs
