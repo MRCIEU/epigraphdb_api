@@ -8,6 +8,7 @@ from app.main import app
 from app.utils import df_coerce
 
 client = TestClient(app)
+
 CASE_2_DIR = Path("data/case-study-results/case-2")
 GENE_NAME = "IL23R"
 OUTCOME_TRAIT = "Inflammatory bowel disease"
@@ -71,9 +72,8 @@ def extract_literature(outcome_trait, gene_list):
 
 
 def test_ppi():
-    results_file = CASE_2_DIR / "case-2-ppi.json"
     ppi_df = ppi()
-    ppi_df_expected = pd.read_json(results_file)
+    ppi_df_expected = pd.read_json(CASE_2_DIR / "case-2-ppi.json")
     pd.testing.assert_frame_equal(
         ppi_df.pipe(df_coerce), ppi_df_expected.pipe(df_coerce)
     )

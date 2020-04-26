@@ -7,6 +7,7 @@ from app.main import app
 from app.utils import df_coerce
 
 client = TestClient(app)
+
 CASE_3_DIR = Path("data/case-study-results/case-3")
 STARTING_TRAIT = "Sleep duration"
 GWAS_ID = "ieu-a-1088"
@@ -55,22 +56,18 @@ def get_literature(gwas_id, assoc_gwas_id):
 
 
 def test_mr():
-
     mr_df = get_mr(trait=STARTING_TRAIT)
-    results_file = CASE_3_DIR / "case-3-mr.json"
-    mr_df_expected = pd.read_json(results_file)
+    mr_df_expected = pd.read_json(CASE_3_DIR / "case-3-mr.json")
     pd.testing.assert_frame_equal(
         mr_df.pipe(df_coerce), mr_df_expected.pipe(df_coerce)
     )
 
 
 def test_disease():
-
     disease_df = get_mr(trait=STARTING_TRAIT).assign(
         disease=lambda df: df.apply(trait_to_disease, axis=1)
     )
-    results_file = CASE_3_DIR / "case-3-disease.json"
-    disease_df_expected = pd.read_json(results_file)
+    disease_df_expected = pd.read_json(CASE_3_DIR / "case-3-disease.json")
     pd.testing.assert_frame_equal(
         disease_df.pipe(df_coerce, list_columns=["disease"]),
         disease_df_expected.pipe(df_coerce, list_columns=["disease"]),
@@ -78,10 +75,8 @@ def test_disease():
 
 
 def test_literature():
-
     lit_df = get_literature(gwas_id=GWAS_ID, assoc_gwas_id=ASSOC_GWAS_ID)
-    results_file = CASE_3_DIR / "case-3-lit.json"
-    lit_df_expected = pd.read_json(results_file)
+    lit_df_expected = pd.read_json(CASE_3_DIR / "case-3-lit.json")
     pd.testing.assert_frame_equal(
         lit_df.pipe(df_coerce), lit_df_expected.pipe(df_coerce)
     )
