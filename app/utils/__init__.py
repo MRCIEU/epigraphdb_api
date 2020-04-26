@@ -39,10 +39,6 @@ def df_coerce(
             df[col] = df[col].apply(
                 lambda x: sorted(x) if x is not None else x
             )
-    df = (
-        df
-        .sort_values(by=cols, kind="mergesort")
-        .reset_index(drop=True)
-    )
+    df = df.sort_values(by=cols, kind="mergesort").reset_index(drop=True)
 
     return df

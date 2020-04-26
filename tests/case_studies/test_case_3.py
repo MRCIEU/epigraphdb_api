@@ -52,6 +52,7 @@ def get_literature(gwas_id, assoc_gwas_id):
     r = client.get(route, params=params)
     r.raise_for_status()
     lit_df = pd.json_normalize(r.json()["results"])
+    lit_df = lit_df.sort_values(by=["gs1.pval"], ascending=True)
     return lit_df
 
 
