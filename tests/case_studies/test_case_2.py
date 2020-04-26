@@ -5,6 +5,7 @@ import pandas as pd
 from starlette.testclient import TestClient
 
 from app.main import app
+from app.utils import df_coerce
 
 client = TestClient(app)
 CASE_2_DIR = Path("data/case-study-results/case-2")
@@ -73,7 +74,9 @@ def test_ppi():
     results_file = CASE_2_DIR / "case-2-ppi.json"
     ppi_df = ppi()
     ppi_df_expected = pd.read_json(results_file)
-    pd.testing.assert_frame_equal(ppi_df, ppi_df_expected)
+    pd.testing.assert_frame_equal(
+        ppi_df.pipe(df_coerce), ppi_df_expected.pipe(df_coerce)
+    )
 
 
 def test_mr():
@@ -92,7 +95,9 @@ def test_mr():
         ]
     ).reset_index(drop=True)
     mr_df_expected = pd.read_json(CASE_2_DIR / "case-2-mr.json")
-    pd.testing.assert_frame_equal(mr_df, mr_df_expected)
+    pd.testing.assert_frame_equal(
+        mr_df.pipe(df_coerce), mr_df_expected.pipe(df_coerce)
+    )
 
 
 def test_literature():
@@ -106,23 +111,7 @@ def test_literature():
         CASE_2_DIR / "case-2-literature.json"
     )
 
-    # manual manipulation
-    def manual_manipulation(df):
-        return (
-            df.assign(
-                pubmed_id=lambda df: df["pubmed_id"].apply(lambda x: sorted(x))
-            )
-            .sort_values(
-                by=[
-                    "gene.name",
-                    "st.predicate",
-                    "st.object_name",
-                    "literature_count",
-                ]
-            )
-            .reset_index(drop=True)
-        )
-
-    literature_df = literature_df.pipe(manual_manipulation)
-    literature_df_expected = literature_df_expected.pipe(manual_manipulation)
-    pd.testing.assert_frame_equal(literature_df, literature_df_expected)
+    pd.testing.assert_frame_equal(
+        literature_df.pipe(df_coerce, list_columns=["pubmed_id"]),
+        literature_df_expected.pipe(df_coerce, list_columns=["pubmed_id"]),
+    )
