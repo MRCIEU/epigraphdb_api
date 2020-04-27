@@ -70,8 +70,16 @@ def test_disease():
     )
     disease_df_expected = pd.read_json(CASE_3_DIR / "case-3-disease.json")
     pd.testing.assert_frame_equal(
-        disease_df.pipe(df_coerce, list_columns=["disease"]),
-        disease_df_expected.pipe(df_coerce, list_columns=["disease"]),
+        disease_df.pipe(
+            df_coerce,
+            order_by=["exposure.id", "outcome.id", "mr.method"],
+            list_columns=["disease"],
+        ),
+        disease_df_expected.pipe(
+            df_coerce,
+            order_by=["exposure.id", "outcome.id", "mr.method"],
+            list_columns=["disease"],
+        ),
     )
 
 
@@ -79,5 +87,26 @@ def test_literature():
     lit_df = get_literature(gwas_id=GWAS_ID, assoc_gwas_id=ASSOC_GWAS_ID)
     lit_df_expected = pd.read_json(CASE_3_DIR / "case-3-lit.json")
     pd.testing.assert_frame_equal(
-        lit_df.pipe(df_coerce), lit_df_expected.pipe(df_coerce)
+        lit_df.pipe(
+            df_coerce,
+            order_by=[
+                "s1.subject_name",
+                "s1.predicate",
+                "s1.object_name",
+                "s2.subject_name",
+                "s2.predicate",
+                "s2.object_name",
+            ],
+        ),
+        lit_df_expected.pipe(
+            df_coerce,
+            order_by=[
+                "s1.subject_name",
+                "s1.predicate",
+                "s1.object_name",
+                "s2.subject_name",
+                "s2.predicate",
+                "s2.object_name",
+            ],
+        ),
     )

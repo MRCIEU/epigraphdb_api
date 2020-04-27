@@ -63,9 +63,8 @@ class GwasPairwise:
 class Gwas:
     _head = """
         MATCH
-            (gwas:Gwas) -[gl:GWAS_TO_LIT]->(lit:Literature)
-            <-[sl:SEM_TO_LIT]-(triple:SemmedTriple)
-            <-[gs:GWAS_SEM]-(gwas:Gwas)
+            (gwas:Gwas)-[gs:GWAS_SEM]->(triple:SemmedTriple)
+            -[sl:SEM_TO_LIT]->(lit:Literature)
         WHERE
     """
     _where = """
