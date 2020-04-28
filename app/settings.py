@@ -13,7 +13,7 @@ env = Env()
 env.read_env()
 
 # General config
-epigraphdb_version = "0.2"
+epigraphdb_version = "0.3"
 api_version = "0.3"
 api_private_access = env.bool("API_PRIVATE_ACCESS", False)
 if api_private_access:
