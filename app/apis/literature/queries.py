@@ -69,8 +69,12 @@ class Gwas:
     """
     _where = """
         AND
-        gs.pval < {pval_threshold}
-        {semmed_predicates_clause}
+            gs.pval < {pval_threshold}
+            {semmed_predicates_clause}
+        WITH
+            gwas, triple, lit, gs
+        MATCH
+            (gwas)-[gl:GWAS_TO_LIT]-(lit)
     """
     _tail = """
         RETURN
