@@ -5,8 +5,10 @@ from starlette.responses import FileResponse
 
 from app.models import ApiGenericResponse
 from app.models.api_meta_graph import EpigraphdbMetaNodes, EpigraphdbMetaRels
+from app.models.schema_meta_nodes import meta_node_schema
+from app.models.schema_meta_rels import meta_path_schema, meta_rel_schema
 from app.resources.schema import epigraphdb_meta_nodes
-from app.settings import epigraphdb
+from app.settings import api_private_access, epigraphdb
 from app.utils.logging import log_args, logger
 from app.utils.schema import (
     generate_schema,
@@ -29,7 +31,7 @@ router = APIRouter()
 def get_schema(
     graphviz: bool = False, plot: bool = False, overwrite: bool = False
 ):
-    """Schema of EpiGraphDB
+    """Schema of EpiGraphDB Graph.
     """
     log_args(api="/meta/schema")
     schema = generate_schema(overwrite=overwrite)
@@ -194,3 +196,26 @@ def get_paths_search(
     logger.info(query)
     response = epigraphdb.run_query(query)
     return response
+
+
+if api_private_access:
+
+    @router.get("/meta/api/schema")
+    def get_meta_api_schema():
+        """Returns current EpiGraphDB API schema
+        """
+        res = {
+            "meta_nodes": {
+                meta_node: model.schema()
+                for meta_node, model in meta_node_schema.items()
+            },
+            "meta_rels": {
+                meta_rel: model.schema()
+                for meta_rel, model in meta_rel_schema.items()
+            },
+            "meta_paths": {
+                meta_rel: {"source": value[0], "target": value[1]}
+                for meta_rel, value in meta_path_schema.items()
+            },
+        }
+        return res
