@@ -22,6 +22,7 @@ neobolt = "^1.7.16"
 graphviz = "^0.13.2"
 pytest-xdist = "^1.31.0"
 pandas = "^1.0.1"
+pyyaml = "^5.3.1"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^18.3-alpha.0", allow-prereleases = true}
