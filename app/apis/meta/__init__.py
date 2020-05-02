@@ -1,5 +1,7 @@
+import json
 from typing import Dict, List, Optional
 
+import yaml
 from fastapi import APIRouter, HTTPException, Query
 from starlette.responses import FileResponse
 
@@ -201,8 +203,8 @@ def get_paths_search(
 if api_private_access:
 
     @router.get("/meta/api/schema")
-    def get_meta_api_schema():
-        """Returns current EpiGraphDB API schema
+    def get_meta_api_schema(yaml_format: bool = False):
+        """Returns current EpiGraphDB API schema, by default as json
         """
         res = {
             "meta_nodes": {
@@ -218,4 +220,6 @@ if api_private_access:
                 for meta_rel, value in meta_path_schema.items()
             },
         }
+        if yaml_format:
+            res = yaml.dump(yaml.load(json.dumps(res)))
         return res

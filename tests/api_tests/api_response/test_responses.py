@@ -29,6 +29,8 @@ response_url_params = [
     # meta rels
     ("/meta/rels/list", None),
     ("/meta/rels/MR/list", None),
+    ("/meta/api/schema", None),
+    ("/meta/api/schema", {"yaml_format": True}),
     # /raw_cypher/
     (
         "/raw_cypher/",
