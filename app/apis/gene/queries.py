@@ -31,3 +31,17 @@ class Literature:
             st {{.predicate, .object_name}},
             collect(l.pubmed_id) AS pubmed_id
     """
+
+
+class Drugs:
+    query = """
+        MATCH
+            (gene:Gene)-[r:OPENTARGETS_DRUG_TO_TARGET|CPIC]-(drug:Drug)
+        WHERE
+            gene.name = '{gene_name}'
+        RETURN
+            gene {{.name}},
+            r,
+            type(r) AS r_source,
+            drug {{.label}}
+    """

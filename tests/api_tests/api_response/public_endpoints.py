@@ -1,12 +1,7 @@
-from app.apis import covid_xqtl, cypher, meta
+from app.apis import covid_xqtl, cypher, gene, literature, meta
 from app.apis.confounder import get_confounder
 from app.apis.drugs import get_drugs_risk_factors
-from app.apis.gene import get_gene_druggability_ppi, get_gene_literature
 from app.apis.genetic_cor import get_genetic_cor
-from app.apis.literature import (
-    get_literature_gwas_graph,
-    get_literature_gwas_semmed,
-)
 from app.apis.mappings import post_gene_to_protein
 from app.apis.mr import get_mr
 from app.apis.obs_cor import get_obs_cor
@@ -215,11 +210,11 @@ topic_params = {
         ],
     },
     "GET /gene/druggability/ppi": {
-        "func": get_gene_druggability_ppi,
+        "func": gene.get_gene_druggability_ppi,
         "tests": [{"params": {"gene_name": "IL23R"}}],
     },
     "GET /gene/literature": {
-        "func": get_gene_literature,
+        "func": gene.get_gene_literature,
         "tests": [
             {
                 "params": {
@@ -228,6 +223,10 @@ topic_params = {
                 }
             }
         ],
+    },
+    "GET /gene/drugs": {
+        "func": gene.get_gene_drugs,
+        "tests": [{"params": {"gene_name": "TFRC"}}],
     },
     "GET /ontology/gwas-efo": {
         "func": get_ontology_gwas_efo,
@@ -278,7 +277,7 @@ topic_params = {
         ],
     },
     "GET /literature/gene": {
-        "func": get_gene_literature,
+        "func": literature.get_gene_literature,
         "tests": [
             {
                 "params": {
@@ -289,7 +288,7 @@ topic_params = {
         ],
     },
     "GET /literature/gwas": {
-        "func": get_literature_gwas_semmed,
+        "func": literature.get_literature_gwas_semmed,
         "tests": [
             {
                 "desc": "Search by trait name",
@@ -318,7 +317,7 @@ topic_params = {
         ],
     },
     "GET /literature/gwas/pairwise": {
-        "func": get_literature_gwas_graph,
+        "func": literature.get_literature_gwas_graph,
         "tests": [
             {
                 "desc": "Search by trait name",

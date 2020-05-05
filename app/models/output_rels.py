@@ -44,3 +44,15 @@ class PrsItem(BaseModel):
     Model: str
     nSNPs: int
     N: int
+
+
+class OpentargetsDrugToTargetItem(BaseModel):
+    phase: str
+    action_type: str
+
+
+class CpicItem(BaseModel):
+    pharmgkb_level_of_evidence: str
+    pgx_on_fda_label: str
+    cpic_level: str
+    guideline: str
