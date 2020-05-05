@@ -277,6 +277,17 @@ topic_params = {
             },
         ],
     },
+    "GET /literature/gene": {
+        "func": get_gene_literature,
+        "tests": [
+            {
+                "params": {
+                    "gene_name": "IL23R",
+                    "object_name": "Inflammatory bowel disease",
+                }
+            }
+        ],
+    },
     "GET /literature/gwas": {
         "func": get_literature_gwas_semmed,
         "tests": [

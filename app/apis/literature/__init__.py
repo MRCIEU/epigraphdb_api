@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Query
 
+from app.apis.gene import get_gene_literature
 from app.settings import epigraphdb
 from app.utils import cypher_fuzzify
 from app.utils.logging import log_args
@@ -176,3 +177,8 @@ def get_literature_gwas_graph(
             )
     res = epigraphdb.run_query(query)
     return res
+
+
+router.add_api_route(
+    path="/literature/gene", endpoint=get_gene_literature, methods=["GET"]
+)
