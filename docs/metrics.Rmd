@@ -49,7 +49,7 @@ rel_df = (
     pd.json_normalize(results["connections"])
     .rename(columns={"rel": "Meta rel"})
     .assign(count=lambda df: df["count"].apply(lambda x: f"{x:,}"))
-    .sort_values(by=["from_node", "to_node"])
+    .sort_values(by=["from_node", "to_node", "count"])
     .set_index("Meta rel")
 )
 ```
