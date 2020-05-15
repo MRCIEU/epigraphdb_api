@@ -43,7 +43,7 @@ def df_coerce(
         logger.info(f"sort by cols: {cols}")
     if list_columns is not None:
         for col in list_columns:
-            df[col] = df[col].apply(
+            df.loc[:, col] = df[col].apply(
                 lambda x: sorted(x) if x is not None else x
             )
     df = df.sort_values(by=cols, kind="mergesort").reset_index(drop=True)
