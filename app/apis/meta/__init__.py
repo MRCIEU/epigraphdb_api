@@ -221,5 +221,5 @@ if api_private_access:
             },
         }
         if yaml_format:
-            res = yaml.dump(yaml.load(json.dumps(res)))
+            res = yaml.dump(yaml.load(json.dumps(res), Loader=yaml.FullLoader))
         return res

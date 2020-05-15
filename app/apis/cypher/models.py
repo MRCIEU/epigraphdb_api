@@ -31,7 +31,7 @@ class CypherBuilderRequest(BaseModel):
             )
         return v
 
-    @validator("order_by", whole=True)
+    @validator("order_by")
     def validate_order_by(cls, v, values):
         if len(v) > 0 and len(values.get("where")) == 0:
             raise ValueError(
