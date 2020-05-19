@@ -47,6 +47,7 @@ logger.add(
     compression="tar.gz",
     backtrace=False,
     catch=False,
+    serialize=True,
 )
 
 if settings.api_private_access:
