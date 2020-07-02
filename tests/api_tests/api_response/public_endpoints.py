@@ -548,7 +548,19 @@ util_params = {
     },
     "POST /mappings/gene-to-protein": {
         "func": post_gene_to_protein,
-        "tests": [{"params": {"gene_name_list": ["GCH1", "MYOF"]}}],
+        "tests": [
+            {
+                "desc": "(default) By HGNC symbols",
+                "params": {"gene_name_list": ["GCH1", "MYOF"]},
+            },
+            {
+                "desc": "By Ensembl IDs",
+                "params": {
+                    "gene_id_list": ["ENSG00000162594", "ENSG00000113302"],
+                    "by_gene_id": True,
+                },
+            },
+        ],
     },
     "POST /cypher/builder/plain": {
         "func": cypher.post_cypher_builder_plain,
