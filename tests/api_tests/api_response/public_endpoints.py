@@ -534,7 +534,7 @@ util_params = {
         "func": meta.get_paths_search,
         "tests": [
             {
-                "desc": "Search pair-wise relationships between two Gwas nodes",
+                "desc": "Search pair-wise rels between two Gwas",
                 "params": {
                     "meta_node_source": "Gwas",
                     "meta_node_target": "Gwas",
