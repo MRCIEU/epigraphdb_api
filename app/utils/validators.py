@@ -1,13 +1,22 @@
 from fastapi import HTTPException
 
 
+def _validate_none_or_empty(value) -> bool:
+    res = False
+    if value is None:
+        return True
+    if len(value) == 0:
+        return True
+    return res
+
+
 def validate_at_least_one_not_none(members):
     """
-    Validate that at least one of the members is not None
+    Validate that at least one of the members is not None or has no members
     """
-    if sum([value is None for key, value in members.items()]) == len(
-        members.keys()
-    ):
+    if sum(
+        [_validate_none_or_empty(value) for key, value in members.items()]
+    ) == len(members.keys()):
         message = (
             "At least one of the following parameters should be non-missing: "
             + "[{items}]".format(items=", ".join(members.keys()))
