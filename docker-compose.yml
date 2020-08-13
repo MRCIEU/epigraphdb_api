@@ -1,15 +1,13 @@
 version: '3.3'
 
 services:
-  api:
+  api_private:
     build:
       dockerfile: Dockerfile
       context: .
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       - WEB_CONCURRENCY=2
       - API_PRIVATE_ACCESS=true
     ports:
-      - ${DOCKER_API_PORT:-8006}:80
+      - ${DOCKER_API_PORT_PRIVATE:-8006}:80

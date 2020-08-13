@@ -6,10 +6,18 @@ services:
       dockerfile: Dockerfile-dev
       context: .
     restart: unless-stopped
-    command: /start-reload.sh
+    networks:
+      - local-network
+    command: bash -c "while true; do sleep 1; done"
     environment:
       - API_PRIVATE_ACCESS=true
     volumes:
       - ./:/app
     ports:
       - ${DOCKER_API_PORT_PRIVATE:-8006}:80
+
+networks:
+  local-network:
+    ipam:
+      config:
+        - subnet: "172.16.249.0/24"
