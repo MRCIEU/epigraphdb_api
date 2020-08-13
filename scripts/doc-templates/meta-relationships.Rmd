@@ -15,11 +15,11 @@ use_condaenv("epigraphdb_api", required = TRUE)
 ```{python py_init, include=FALSE}
 import sys
 
-sys.path.append('../')
+sys.path.append('../../')
 ```
 
 ```{python, results='asis', echo=FALSE}
-from docs.render_schema import rmd_render_meta_rels
+from scripts.render_schema import rmd_render_meta_rels
 
 rmd_render_meta_rels()
 ```

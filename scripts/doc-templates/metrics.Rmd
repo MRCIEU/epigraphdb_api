@@ -15,7 +15,7 @@ use_condaenv("epigraphdb_api", required = TRUE)
 ```{python py_init, include=FALSE}
 import sys
 
-sys.path.append('../')
+sys.path.append('../../')
 ```
 
 ```{python py_setup, include=FALSE}
@@ -23,7 +23,7 @@ from environs import Env
 env = Env()
 env.read_env()
 
-EPIGRAPHDB_API_URL = env.str("EPIGRAPHDB_API_URL", "http://api.epigraphdb.org")
+EPIGRAPHDB_API_URL = env.str("EPIGRAPHDB_API_URL", "https://api.epigraphdb.org")
 ```
 
 ```{python requests, results='asis', echo=FALSE, message=FALSE, warning=FALSE}

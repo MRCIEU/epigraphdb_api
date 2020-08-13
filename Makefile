@@ -36,21 +36,21 @@ __codebase__:
 
 ## Lint codebase with flake8
 lint:
-	python -m flake8 app tests docs
-	python -m mypy app tests docs
+	python -m flake8 app tests scripts
+	python -m mypy app tests scripts
 
 ## Format codebase with black
 fmt:
-	python -m autoflake --in-place --remove-all-unused-imports --recursive app tests docs
-	python -m isort -rc app tests docs
-	python -m black app tests docs
+	python -m autoflake --in-place --remove-all-unused-imports --recursive app tests scripts
+	python -m isort -rc app tests scripts
+	python -m black app tests scripts
 
 ## Generate documentation
 docs:
-	docs/rmd.sh docs/meta-nodes.Rmd
-	docs/rmd.sh docs/meta-relationships.Rmd
-	docs/rmd.sh docs/metrics.Rmd
-	docs/rmd.sh docs/api-endpoints.Rmd
+	scripts/rmd.sh scripts/doc-templates/meta-nodes.Rmd
+	scripts/rmd.sh scripts/doc-templates/meta-relationships.Rmd
+	scripts/rmd.sh scripts/doc-templates/metrics.Rmd
+	scripts/rmd.sh scripts/doc-templates/api-endpoints.Rmd
 
 ## ==== running the api ====
 __run__:
