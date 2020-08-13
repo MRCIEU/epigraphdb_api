@@ -1,9 +1,9 @@
 from typing import Any, List, Optional, Union
 
-from pydantic import BaseModel
+from app.utils.schema import Neo4jEntity
 
 
-class Drug(BaseModel):
+class Drug(Neo4jEntity):
     """Drug data from Open Targets.
     """
 
@@ -12,11 +12,8 @@ class Drug(BaseModel):
     chembl_uri: Optional[str]
     source: Union[str, List[str]]
 
-    class Config:
-        extra = "forbid"
 
-
-class Efo(BaseModel):
+class Efo(Neo4jEntity):
     """Experimental Factor Ontology.
     """
 
@@ -24,20 +21,14 @@ class Efo(BaseModel):
     value: str
     type: str
 
-    class Config:
-        extra = "forbid"
 
-
-class Event(BaseModel):
+class Event(Neo4jEntity):
     name: str
     in_disease: str
     reactome_id: str
 
-    class Config:
-        extra = "forbid"
 
-
-class Gene(BaseModel):
+class Gene(Neo4jEntity):
     """Gene data from BioMart (build 37).
 
     Gene druggability data comes from Finan et al (2017).
@@ -57,21 +48,15 @@ class Gene(BaseModel):
     bio_druggable: Optional[str]
     druggability_tier: Optional[str]
 
-    class Config:
-        extra = "forbid"
 
-
-class Tissue(BaseModel):
+class Tissue(Neo4jEntity):
     """Tissue specific gene expression from GTEx.
     """
 
     tissue: str
 
-    class Config:
-        extra = "forbid"
 
-
-class Gwas(BaseModel):
+class Gwas(Neo4jEntity):
     """GWAS metadata from IEU GWAS Database.
     """
 
@@ -96,11 +81,8 @@ class Gwas(BaseModel):
     ncontrol: Optional[str]
     sd: Optional[str]
 
-    class Config:
-        extra = "forbid"
 
-
-class Literature(BaseModel):
+class Literature(Neo4jEntity):
     """PubMed literature data as available from SemMedDB.
     """
 
@@ -110,22 +92,16 @@ class Literature(BaseModel):
     year: int
     edat: str
 
-    class Config:
-        extra = "forbid"
 
-
-class Meta(BaseModel):
+class Meta(Neo4jEntity):
     """Metadata information of EpiGraphDB Graph.
     """
 
     build_date: Any
     graph_version: str
 
-    class Config:
-        extra = "forbid"
 
-
-class Pathway(BaseModel):
+class Pathway(Neo4jEntity):
     """Biological pathway data from Reactome.
     """
 
@@ -133,21 +109,15 @@ class Pathway(BaseModel):
     in_disease: str
     reactome_id: str
 
-    class Config:
-        extra = "forbid"
 
-
-class Protein(BaseModel):
+class Protein(Neo4jEntity):
     """Protein data from BioMart web service (build 37).
     """
 
     uniprot_id: str
 
-    class Config:
-        extra = "forbid"
 
-
-class Disease(BaseModel):
+class Disease(Neo4jEntity):
     """Disease data from Mondo Disease Ontology.
     """
 
@@ -161,11 +131,8 @@ class Disease(BaseModel):
     icd10: Optional[List[str]]
     mesh: Optional[List[str]]
 
-    class Config:
-        extra = "forbid"
 
-
-class SemmedTriple(BaseModel):
+class SemmedTriple(Neo4jEntity):
     id: str
     predicate: str
     subject_name: str
@@ -176,21 +143,15 @@ class SemmedTriple(BaseModel):
     object_id: str
     count: int
 
-    class Config:
-        extra = "forbid"
 
-
-class SemmedTerm(BaseModel):
+class SemmedTerm(Neo4jEntity):
     name: str
     count: int
     id: str
     type: str
 
-    class Config:
-        extra = "forbid"
 
-
-class Variant(BaseModel):
+class Variant(Neo4jEntity):
     """SNPs from the following sources:
 
     - IEU GWAS Database
@@ -199,9 +160,6 @@ class Variant(BaseModel):
     """
 
     name: str
-
-    class Config:
-        extra = "forbid"
 
 
 meta_node_schema = {

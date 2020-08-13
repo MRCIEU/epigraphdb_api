@@ -1,9 +1,9 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from app.utils.schema import Neo4jEntity
 
 
-class BN_GEN_COR(BaseModel):
+class BN_GEN_COR(Neo4jEntity):
     """Study results from "UKBB Genetic Correlation" project
     by Neale Lab.
     """
@@ -19,84 +19,55 @@ class BN_GEN_COR(BaseModel):
     gcov_int: float
     gcov_int_se: float
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gwas"
         target = "Gwas"
 
 
-class CPIC(BaseModel):
+class CPIC(Neo4jEntity):
     pharmgkb_level_of_evidence: str
     cpic_level: str
     guideline: str
     pgx_on_fda_label: str
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Drug"
         target = "Gene"
 
 
-class EFO_CHILD_OF(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class EFO_CHILD_OF(Neo4jEntity):
     class _Path:
         source = "Efo"
         target = "Efo"
 
 
-class EVENT_IN_PATHWAY(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class EVENT_IN_PATHWAY(Neo4jEntity):
     class _Path:
         source = "Pathway"
         target = "Event"
 
 
-class EXPRESSED_IN(BaseModel):
+class EXPRESSED_IN(Neo4jEntity):
     tpm: float
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Gene"
         target = "Tissue"
 
 
-class GENE_TO_LITERATURE(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class GENE_TO_LITERATURE(Neo4jEntity):
     class _Path:
         source = "Gene"
         target = "Literature"
 
 
-class GENE_TO_PROTEIN(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class GENE_TO_PROTEIN(Neo4jEntity):
     class _Path:
         source = "Gene"
         target = "Protein"
 
 
-class GWAS_NLP(BaseModel):
+class GWAS_NLP(Neo4jEntity):
     """Pairwise semantic similarity of GWAS traits.
 
     Precomputed results from Vectology (BioSentVec model).
@@ -104,15 +75,12 @@ class GWAS_NLP(BaseModel):
 
     score: float
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gwas"
         target = "Gwas"
 
 
-class GWAS_NLP_EFO(BaseModel):
+class GWAS_NLP_EFO(Neo4jEntity):
     """Semantic similarity of a GWAS trait to an EFO term.
 
     Precomputed results from Vectology (BioSentVec model).
@@ -120,15 +88,12 @@ class GWAS_NLP_EFO(BaseModel):
 
     score: float
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gwas"
         target = "Efo"
 
 
-class GWAS_SEM(BaseModel):
+class GWAS_SEM(Neo4jEntity):
     localCount: int
     localTotal: int
     globalCount: int
@@ -136,26 +101,18 @@ class GWAS_SEM(BaseModel):
     odds: float
     pval: float
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gwas"
         target = "SemmedTriple"
 
 
-class GWAS_TO_LIT(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class GWAS_TO_LIT(Neo4jEntity):
     class _Path:
         source = "Gwas"
         target = "Literature"
 
 
-class GWAS_TO_VARIANT(BaseModel):
+class GWAS_TO_VARIANT(Neo4jEntity):
     beta: float
     se: Optional[float]
     pval: float
@@ -164,112 +121,84 @@ class GWAS_TO_VARIANT(BaseModel):
     ncase: Optional[int]
     ncontrol: Optional[int]
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gwas"
         target = "Variant"
 
 
-class INTACT_INTERACTS_WITH_GENE_GENE(BaseModel):
+class INTACT_INTERACTS_WITH_GENE_GENE(Neo4jEntity):
     intact_confidence_score: float
     intact_detection_method: List[str]
     intact_type: List[str]
     intact_source: List[str]
     intact_identifier: List[str]
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Gene"
         target = "Gene"
 
 
-class INTACT_INTERACTS_WITH_PROTEIN_PROTEIN(BaseModel):
+class INTACT_INTERACTS_WITH_PROTEIN_PROTEIN(Neo4jEntity):
     intact_confidence_score: float
     intact_detection_method: List[str]
     intact_type: List[str]
     intact_source: List[str]
     intact_identifier: List[str]
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Protein"
         target = "Protein"
 
 
-class INTACT_INTERACTS_WITH_GENE_PROTEIN(BaseModel):
+class INTACT_INTERACTS_WITH_GENE_PROTEIN(Neo4jEntity):
     intact_confidence_score: float
     intact_detection_method: List[str]
     intact_type: List[str]
     intact_source: List[str]
     intact_identifier: List[str]
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Gene"
         target = "Protein"
 
 
-class INTACT_NOT_INTERACTS_WITH(BaseModel):
+class INTACT_NOT_INTERACTS_WITH(Neo4jEntity):
     intact_confidence_score: float
     intact_detection_method: List[str]
     intact_type: List[str]
     intact_source: List[str]
     intact_identifier: List[str]
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Protein"
         target = "Protein"
 
 
-class METAMAP_LITE(BaseModel):
+class METAMAP_LITE(Neo4jEntity):
     """Mapping between Gwas and SemmedTerm via MetaMap Lite.
     """
 
     mmi_score: float
     mesh: Optional[str]
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gwas"
         target = "SemmedTerm"
 
 
-class MONDO_MAP_EFO(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class MONDO_MAP_EFO(Neo4jEntity):
     class _Path:
         source = "Disease"
         target = "Efo"
 
 
-class MONDO_MAP_UMLS(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class MONDO_MAP_UMLS(Neo4jEntity):
     class _Path:
         source = "Disease"
         target = "SemmedTerm"
 
 
-class MR(BaseModel):
+class MR(Neo4jEntity):
     """Pairwise Mendelian randomization evidence.
 
     Results from MR-EvE.
@@ -295,7 +224,7 @@ class MR(BaseModel):
         target = "Gwas"
 
 
-class OBS_COR(BaseModel):
+class OBS_COR(Neo4jEntity):
     """Pairwise Spearman rank correlation for UK Biobank GWAS (ukb-b).
 
     Results in-house by Benjamin Elsworth.
@@ -303,115 +232,69 @@ class OBS_COR(BaseModel):
 
     cor: float
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gwas"
         target = "Gwas"
 
 
-class OPENTARGETS_DRUG_TO_DISEASE(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class OPENTARGETS_DRUG_TO_DISEASE(Neo4jEntity):
     class _Path:
         source = "Drug"
         target = "Disease"
 
 
-class OPENTARGETS_DRUG_TO_TARGET(BaseModel):
+class OPENTARGETS_DRUG_TO_TARGET(Neo4jEntity):
     phase: str
     action_type: str
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Drug"
         target = "Gene"
 
 
-class PATHWAY_TO_DISEASE(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class PATHWAY_TO_DISEASE(Neo4jEntity):
     class _Path:
         source = "Pathway"
         target = "Disease"
 
 
-class PATHWAY_TO_LITERATURE(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class PATHWAY_TO_LITERATURE(Neo4jEntity):
     class _Path:
         source = "Pathway"
         target = "Literature"
 
 
-class PRECEDING_EVENT(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class PRECEDING_EVENT(Neo4jEntity):
     class _Path:
         source = "Event"
         target = "Event"
 
 
-class PROTEIN_IN_EVENT(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class PROTEIN_IN_EVENT(Neo4jEntity):
     class _Path:
         source = "Protein"
         target = "Event"
 
 
-class PROTEIN_TO_DISEASE(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class PROTEIN_TO_DISEASE(Neo4jEntity):
     class _Path:
         source = "Protein"
         target = "Disease"
 
 
-class PROTEIN_TO_LITERATURE(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class PROTEIN_TO_LITERATURE(Neo4jEntity):
     class _Path:
         source = "Protein"
         target = "Literature"
 
 
-class PROTEIN_IN_PATHWAY(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class PROTEIN_IN_PATHWAY(Neo4jEntity):
     class _Path:
         source = "Protein"
         target = "Pathway"
 
 
-class PRS(BaseModel):
+class PRS(Neo4jEntity):
     """Pairwise polygenic risk scores between GWAS.
 
     Results from PRS Atlas.
@@ -425,94 +308,62 @@ class PRS(BaseModel):
     r2: float
     n: int
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gwas"
         target = "Gwas"
 
 
-class SEM_GENE(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class SEM_GENE(Neo4jEntity):
     class _Path:
         source = "SemmedTerm"
         target = "Gene"
 
 
-class SEM_OBJ(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class SEM_OBJ(Neo4jEntity):
     class _Path:
         source = "SemmedTriple"
         target = "SemmedTerm"
 
 
-class SEM_PREDICATE(BaseModel):
+class SEM_PREDICATE(Neo4jEntity):
     predicate: str
     count: int
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "SemmedTerm"
         target = "SemmedTerm"
 
 
-class SEM_SUB(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class SEM_SUB(Neo4jEntity):
     class _Path:
         source = "SemmedTriple"
         target = "SemmedTerm"
 
 
-class SEM_TO_LIT(BaseModel):
-    pass
-
-    class Config:
-        extra = "forbid"
-
+class SEM_TO_LIT(Neo4jEntity):
     class _Path:
         source = "SemmedTriple"
         target = "Literature"
 
 
-class STRING_INTERACT_WITH(BaseModel):
+class STRING_INTERACT_WITH(Neo4jEntity):
     score: float
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Protein"
         target = "Protein"
 
 
-class TOPHITS(BaseModel):
+class TOPHITS(Neo4jEntity):
     beta: float
     pval: float
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Gwas"
         target = "Variant"
 
 
-class VARIANT_TO_GENE(BaseModel):
+class VARIANT_TO_GENE(Neo4jEntity):
     location: str
     allele: str
     feature: str
@@ -526,15 +377,12 @@ class VARIANT_TO_GENE(BaseModel):
     existing_variation: str
     extra: str
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Variant"
         target = "Gene"
 
 
-class XQTL_MULTI_SNP_MR(BaseModel):
+class XQTL_MULTI_SNP_MR(Neo4jEntity):
     """Association of exposure gene and outcome phenotype in the multi SNP MR results of xQTL.
     """
 
@@ -544,15 +392,12 @@ class XQTL_MULTI_SNP_MR(BaseModel):
     qtl_type: str
     mr_method: str
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gene"
         target = "Gwas"
 
 
-class XQTL_SINGLE_SNP_MR_GENE_GWAS(BaseModel):
+class XQTL_SINGLE_SNP_MR_GENE_GWAS(Neo4jEntity):
     """Association of exposure gene and outcome phenotype in the single SNP MR results of xQTL.
     """
 
@@ -562,20 +407,14 @@ class XQTL_SINGLE_SNP_MR_GENE_GWAS(BaseModel):
     rsid: str
     qtl_type: str
 
-    class Config:
-        extra = "forbid"
-
     class _Path:
         source = "Gene"
         target = "Gwas"
 
 
-class XQTL_SINGLE_SNP_MR_SNP_GENE(BaseModel):
+class XQTL_SINGLE_SNP_MR_SNP_GENE(Neo4jEntity):
     """Association of SNP and exposure gene in the single SNP MR results of xQTL.
     """
-
-    class Config:
-        extra = "forbid"
 
     class _Path:
         source = "Variant"

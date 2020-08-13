@@ -2,12 +2,20 @@ from typing import List
 
 import pandas as pd
 from graphviz import Digraph
+from pydantic import BaseModel
 
 from app.apis.status import get_db_metric
 from app.apis.status.models import GraphDbMetrics
 from app.models import EpigraphdbGraphs
 from app.settings import cache_dir
 from app.utils.cache import cache_func_call_json
+
+
+class Neo4jEntity(BaseModel):
+    "A modified version of pydantic's BaseModel."
+
+    class Config:
+        extra = "forbid"
 
 
 def generate_schema(overwrite: bool = False):
