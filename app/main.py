@@ -1,7 +1,6 @@
 from pprint import pformat
 
 from fastapi import APIRouter, FastAPI
-from starlette.staticfiles import StaticFiles
 
 from app import settings
 from app.resources.info import description, title, version
@@ -33,7 +32,6 @@ from .apis import (
 app = FastAPI(
     title=title, description=description, version=version, docs_url="/"
 )
-app.mount("/static", StaticFiles(directory="static"))
 
 top_router = APIRouter()
 
