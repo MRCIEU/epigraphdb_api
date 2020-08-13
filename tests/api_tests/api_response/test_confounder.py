@@ -5,7 +5,7 @@ from app.main import app
 from app.resources._global import unittest_headers
 
 client = TestClient(app)
-url = f"/confounder"
+url = "/confounder"
 
 
 @pytest.mark.parametrize(

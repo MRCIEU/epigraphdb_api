@@ -35,7 +35,7 @@ class CypherBuilderRequest(BaseModel):
     def validate_order_by(cls, v, values):
         if len(v) > 0 and len(values.get("where")) == 0:
             raise ValueError(
-                f"You must specify valid where clause(s) to use order_by"
+                "You must specify valid where clause(s) to use order_by"
             )
         return v
 

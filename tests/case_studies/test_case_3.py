@@ -16,10 +16,7 @@ ASSOC_GWAS_ID = "ieu-a-6"
 
 def get_mr(trait):
     route = "/mr"
-    params = {
-        "exposure_trait": trait,
-        "pval_threshold": 1e-10,
-    }
+    params = {"exposure_trait": trait, "pval_threshold": 1e-10}
     r = client.get(route, params=params)
     r.raise_for_status()
     mr_df = pd.json_normalize(r.json()["results"])
@@ -28,9 +25,7 @@ def get_mr(trait):
 
 def trait_to_disease(row):
     route = "/ontology/gwas-efo-disease"
-    params = {
-        "trait": row["outcome.trait"],
-    }
+    params = {"trait": row["outcome.trait"]}
     r = client.get(route, params=params)
     r.raise_for_status()
     disease_df = pd.json_normalize(r.json()["results"])

@@ -156,7 +156,7 @@ def get_xqtl_list(
     pval_threshold: float = Query(1e-5, ge=0.0, le=1.0),
     qtl_type: QtlTypeInput = QtlTypeInput.eqtl,
 ):
-    log_args(api=f"/xqtl/single-snp-mr/list", kwargs=locals())
+    log_args(api="/xqtl/single-snp-mr/list", kwargs=locals())
     if meta_node.value == "GeneGwas":
         query = xqtl_queries.XqtlSingleSnpMrList.gene_gwas.format(
             qtl_type=qtl_type.value, pval_threshold=pval_threshold

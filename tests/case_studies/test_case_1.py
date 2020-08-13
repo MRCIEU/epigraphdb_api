@@ -28,10 +28,7 @@ def get_sys_snps(gwas_trait, qtl_type):
     snps = pd.json_normalize(r.json()["results"])["r.rsid"].drop_duplicates()
     # Get genes associated by the snp
     route = "/xqtl/single-snp-mr/gene-by-variant"
-    payload = {
-        "qtl_type": qtl_type,
-        "variant_list": snps.to_list(),
-    }
+    payload = {"qtl_type": qtl_type, "variant_list": snps.to_list()}
     r = client.post(route, json=payload)
     r.raise_for_status()
     res = pd.json_normalize(r.json()["results"])["variant"].rename("snp")
@@ -95,9 +92,7 @@ def get_sys_proteins(sys_snps: pd.Series, qtl_type):
 
 def get_protein_pathway(snp_protein_df):
     route = "/protein/in-pathway"
-    payload = {
-        "uniprot_id_list": snp_protein_df["uniprot_id"].to_list(),
-    }
+    payload = {"uniprot_id_list": snp_protein_df["uniprot_id"].to_list()}
     r = client.post(route, json=payload)
     r.raise_for_status()
     df = pd.json_normalize(r.json()["results"])
@@ -185,5 +180,5 @@ def test_ppi():
     )
     ppi_df_expected = pd.read_json(CASE_1_DIR / "case-1-ppi-df.json")
     pd.testing.assert_frame_equal(
-        ppi_df.pipe(df_coerce), ppi_df_expected.pipe(df_coerce),
+        ppi_df.pipe(df_coerce), ppi_df_expected.pipe(df_coerce)
     )
