@@ -34,7 +34,7 @@ print(EPIGRAPHDB_API_URL)
 
 ```{python topic_endpoints, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
 from scripts.render_api import rmd_render_endpoints
-from tests.api_tests.api_response.public_endpoints import topic_params
+from app.resources.public_endpoints import topic_params
 
 print("\n")
 rmd_render_endpoints(api_url=EPIGRAPHDB_API_URL, endpoint_params=topic_params)
@@ -44,7 +44,7 @@ rmd_render_endpoints(api_url=EPIGRAPHDB_API_URL, endpoint_params=topic_params)
 
 ```{python util_endpoints, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
 from scripts.render_api import rmd_render_endpoints
-from tests.api_tests.api_response.public_endpoints import util_params
+from app.resources.public_endpoints import util_params
 
 rmd_render_endpoints(api_url=EPIGRAPHDB_API_URL, endpoint_params=util_params)
 ```
