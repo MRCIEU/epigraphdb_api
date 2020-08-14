@@ -17,8 +17,11 @@ use_condaenv("epigraphdb_api", required = TRUE)
 
 ```{python py_init, include=FALSE}
 import sys
+from pathlib import Path
 
-sys.path.append('../../')
+project_root = (Path.cwd() / ".." / "..").resolve()
+
+sys.path.append(str(project_root))
 ```
 
 ```{python py_setup}
