@@ -2,7 +2,6 @@ import pytest
 from starlette.testclient import TestClient
 
 from app.main import app
-
 from app.resources.public_endpoints import topic_params, util_params
 
 client = TestClient(app)

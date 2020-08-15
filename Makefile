@@ -7,18 +7,22 @@
 ## ==== codebase ====
 __codebase__:
 
+## check for issues in env configs
+check:
+	python -m scripts.check
+
 ## Format codebase
 fmt:
 	python -m autoflake \
 		--in-place --remove-all-unused-imports --recursive \
-		app tests scripts
-	python -m isort -rc app tests scripts
-	python -m black app tests scripts
+		app tests scripts epigraphdb_common_utils
+	python -m isort -rc app tests scripts epigraphdb_common_utils
+	python -m black app tests scripts epigraphdb_common_utils
 
 ## Lint codebase
 lint:
-	python -m flake8 app tests scripts
-	python -m mypy app tests scripts
+	python -m flake8 app tests scripts epigraphdb_common_utils
+	python -m mypy app tests scripts epigraphdb_common_utils
 
 ## ==== utils ====
 __utils__:

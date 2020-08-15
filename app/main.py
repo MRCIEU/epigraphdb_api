@@ -1,5 +1,3 @@
-from pprint import pformat
-
 from fastapi import APIRouter, FastAPI
 
 from app import settings
@@ -34,8 +32,6 @@ app = FastAPI(
 )
 
 top_router = APIRouter()
-
-logger.info(pformat(settings.env_configs))
 
 
 # ==== Endpoints ====

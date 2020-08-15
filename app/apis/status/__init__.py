@@ -2,12 +2,10 @@ from typing import List
 
 from fastapi import APIRouter, HTTPException
 
-from app import settings
 from app.models import EpigraphdbGraphs
 from app.resources._global import get_service_builds
 from app.settings import epigraphdb, pqtl
 from app.utils.logging import log_args
-from app.utils.ping import ping_service
 
 from .models import GraphDbMetrics, PingResponse
 from .queries import DbStatusQueries
@@ -32,11 +30,11 @@ def get_ping():
             "url": f"bolt://{pqtl.hostname}/{pqtl.bolt_port}",
             "available": pqtl.check_connection(),
         },
-        {
-            "name": "epigraphdb_browser",
-            "url": settings.epigraphdb_browser,
-            "available": ping_service(settings.epigraphdb_browser),
-        },
+        # {
+        #     "name": "epigraphdb_browser",
+        #     "url": settings.epigraphdb_browser,
+        #     "available": ping_service(settings.epigraphdb_browser),
+        # },
     ]
     log_args(api="status/ping")
     return data
