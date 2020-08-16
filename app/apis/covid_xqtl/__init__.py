@@ -6,8 +6,8 @@ import pandas as pd
 from fastapi import APIRouter
 
 from app.models import ApiGenericResponse
+from app.resources.dependent_files import dependent_files
 from app.utils.process_query import format_response
-from app.utils.resources import dependent_files
 
 from . import models
 

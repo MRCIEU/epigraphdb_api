@@ -7,7 +7,7 @@
 ## ==== codebase ====
 __codebase__:
 
-## check for issues in env configs
+## check for setup status
 check:
 	python -m scripts.check
 

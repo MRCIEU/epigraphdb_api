@@ -3,9 +3,9 @@ from typing import List, Optional
 import pandas as pd
 from fastapi import APIRouter, Query
 
+from app.resources.dependent_files import dependent_files
 from app.settings import epigraphdb
 from app.utils.logging import log_args
-from app.utils.resources import dependent_files
 from app.utils.validators import validate_at_least_one_not_none
 
 from . import queries as xqtl_queries
