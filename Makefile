@@ -43,6 +43,7 @@ __run__:
 
 ## Start API server, port: 80
 run:
+	python -m scripts.check
 	uvicorn app.main:app --reload \
 	--host 0.0.0.0 --port 80
 
