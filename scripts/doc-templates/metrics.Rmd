@@ -22,11 +22,9 @@ sys.path.append(str(project_root))
 ```
 
 ```{python py_setup, include=FALSE}
-from environs import Env
-env = Env()
-env.read_env()
+from epigraphdb_common_utils.api_docs_env_configs import configs
 
-EPIGRAPHDB_API_URL = env.str("EPIGRAPHDB_API_URL", "https://api.epigraphdb.org")
+EPIGRAPHDB_API_URL = configs["api_url"]
 ```
 
 ```{python requests, results='asis', echo=FALSE, message=FALSE, warning=FALSE}

@@ -24,14 +24,15 @@ lint:
 	python -m flake8 app tests scripts epigraphdb_common_utils
 	python -m mypy app tests scripts epigraphdb_common_utils
 
-## ==== utils ====
-__utils__:
 
 ## Unit tests (takes a LONG time!)
 test:
 	python -m pytest -vv
 
-## Generate documentation
+## ==== documentation ====
+__documentation__:
+
+## Generate documentation (requires dedicated conda env "epigraphdb_api")
 docs:
 	scripts/rmd.sh scripts/doc-templates/meta-nodes.Rmd
 	scripts/rmd.sh scripts/doc-templates/meta-relationships.Rmd

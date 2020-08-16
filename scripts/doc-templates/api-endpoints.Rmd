@@ -24,12 +24,13 @@ project_root = (Path.cwd() / ".." / "..").resolve()
 sys.path.append(str(project_root))
 ```
 
-```{python py_setup}
-from environs import Env
-env = Env()
-env.read_env()
+```{python py_setup, include=FALSE}
+from epigraphdb_common_utils.api_docs_env_configs import configs
 
-EPIGRAPHDB_API_URL = env.str("EPIGRAPHDB_API_URL", "https://api.epigraphdb.org")
+EPIGRAPHDB_API_URL = configs["api_url"]
+```
+
+```{python api_url}
 print(EPIGRAPHDB_API_URL)
 ```
 
