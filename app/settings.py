@@ -4,7 +4,7 @@ Control and configure global settings.
 from pathlib import Path
 
 from app.utils.database import Neo4jDB
-from epigraphdb_common_utils.api_env_configs import configs as env_configs
+from epigraphdb_common_utils.api_env_configs import env_configs
 
 # General config
 epigraphdb_version = "0.3"

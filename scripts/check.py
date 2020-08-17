@@ -2,8 +2,7 @@ from app.resources.dependent_files import dependent_files
 from epigraphdb_common_utils import (
     api_docs_env_configs,
     api_env_configs,
-    docker_api_private_env_configs,
-    docker_api_public_env_configs,
+    docker_api_env_configs,
 )
 
 
@@ -19,16 +18,13 @@ def check_env_configs() -> None:
     print("\n# Check environment configs")
     print("\n## Check environment configs for API server")
     print(api_env_configs.__doc__)
-    print(api_env_configs.configs)
+    print(api_env_configs.env_configs)
     print("\n## Check environment configs for API documentation")
     print(api_docs_env_configs.__doc__)
-    print(api_docs_env_configs.configs)
+    print(api_docs_env_configs.env_configs)
     print("\n## Check environment configs for private API container")
-    print(docker_api_private_env_configs.__doc__)
-    print(docker_api_private_env_configs.configs)
-    print("\n## Check environment configs for public API container")
-    print(docker_api_public_env_configs.__doc__)
-    print(docker_api_public_env_configs.configs)
+    print(docker_api_env_configs.__doc__)
+    print(docker_api_env_configs.env_configs)
 
 
 if __name__ == "__main__":
