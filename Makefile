@@ -4,8 +4,11 @@
 # Rules
 #################################################################################
 
+# directories that contain python scripts in the codebase
+python_dirs = app tests scripts epigraphdb_common_utils
+
 ## ==== codebase ====
-__codebase__:
+__codebase__: help
 
 ## check for setup status
 check:
@@ -15,14 +18,18 @@ check:
 fmt:
 	python -m autoflake \
 		--in-place --remove-all-unused-imports --recursive \
-		app tests scripts epigraphdb_common_utils
-	python -m isort -rc app tests scripts epigraphdb_common_utils
-	python -m black app tests scripts epigraphdb_common_utils
+		$(python_dirs)
+	python -m isort -rc \
+		$(python_dirs)
+	python -m black \
+		$(python_dirs)
 
 ## Lint codebase
 lint:
-	python -m flake8 app tests scripts epigraphdb_common_utils
-	python -m mypy app tests scripts epigraphdb_common_utils
+	python -m flake8 \
+		$(python_dirs)
+	python -m mypy \
+		$(python_dirs)
 
 
 ## Unit tests (takes a LONG time!)
@@ -30,7 +37,7 @@ test:
 	python -m pytest -vv
 
 ## ==== documentation ====
-__documentation__:
+__documentation__: help
 
 ## Generate documentation (requires dedicated conda env "epigraphdb_api")
 docs:
@@ -40,14 +47,13 @@ docs:
 	scripts/rmd.sh scripts/doc-templates/api-endpoints.Rmd
 
 ## ==== running the api ====
-__run__:
+__run__: help
 
 ## Start API server, port: 80
 run:
 	python -m scripts.check
 	uvicorn app.main:app --reload \
 	--host 0.0.0.0 --port 80
-
 
 #################################################################################
 # Self Documenting Commands                                                     #
