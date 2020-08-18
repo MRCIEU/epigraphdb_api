@@ -24,6 +24,7 @@ pytest-xdist = "^1.31.0"
 pandas = "^1.0.1"
 pyyaml = "^5.3.1"
 pydantic = "^1.5"
+colorama = "^0.4.3"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^19", allow-prereleases = true}

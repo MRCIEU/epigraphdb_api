@@ -1,3 +1,5 @@
+from colorama import Fore, Style
+
 from app.resources.dependent_files import dependent_files
 from epigraphdb_common_utils import (
     api_docs_env_configs,
@@ -7,23 +9,62 @@ from epigraphdb_common_utils import (
 
 
 def check_dependent_files() -> None:
-    print("\n# Check dependent files")
+    print(
+        Style.BRIGHT
+        + Fore.GREEN
+        + "\n# Check dependent files"
+        + Style.RESET_ALL
+    )
     for name, path in dependent_files.items():
         exist = path.exists()
-        exist_str = "existed" if exist else "NOT exist!"
+        exist_str = (
+            Style.BRIGHT + Fore.GREEN + "existed" + Style.RESET_ALL
+            if exist
+            else Style.BRIGHT + Fore.RED + "NOT exist!" + Style.RESET_ALL
+        )
         print(f"Dependent file {name}\t {path}\t {exist_str}")
 
 
 def check_env_configs() -> None:
-    print("\n# Check environment configs")
-    print("\n## Check environment configs for API server")
-    print(api_env_configs.__doc__)
+    print(
+        Style.BRIGHT
+        + Fore.GREEN
+        + "\n# Check environment configs"
+        + Style.RESET_ALL
+    )
+    print(
+        Style.BRIGHT
+        + Fore.GREEN
+        + "\n## Check environment configs for API server"
+        + Style.RESET_ALL
+    )
+    print(Style.DIM + Fore.YELLOW + api_env_configs.__doc__ + Style.RESET_ALL)
     print(api_env_configs.env_configs)
-    print("\n## Check environment configs for API documentation")
-    print(api_docs_env_configs.__doc__)
+    print(
+        Style.BRIGHT
+        + Fore.GREEN
+        + "\n## Check environment configs for API documentation"
+        + Style.RESET_ALL
+    )
+    print(
+        Style.DIM
+        + Fore.YELLOW
+        + api_docs_env_configs.__doc__
+        + Style.RESET_ALL
+    )
     print(api_docs_env_configs.env_configs)
-    print("\n## Check environment configs for private API container")
-    print(docker_api_env_configs.__doc__)
+    print(
+        Style.BRIGHT
+        + Fore.GREEN
+        + "\n## Check environment configs for private API container"
+        + Style.RESET_ALL
+    )
+    print(
+        Style.DIM
+        + Fore.YELLOW
+        + docker_api_env_configs.__doc__
+        + Style.RESET_ALL
+    )
     print(docker_api_env_configs.env_configs)
 
 
