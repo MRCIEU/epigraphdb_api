@@ -15,6 +15,7 @@ dependencies:
   - ipython
   - aiofiles
   - click
+  - colorama
   - environs
   - jinja2
   - loguru
