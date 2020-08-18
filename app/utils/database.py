@@ -34,12 +34,12 @@ class Neo4jDB:
             self._driver = GraphDatabase.driver(
                 f"bolt://{self.hostname}:{self.bolt_port}",
                 auth=(self.user, self.password),
-                max_connection_lifetime=200,
+                max_connection_lifetime=20,
             )
         else:
             self._driver = GraphDatabase.driver(
                 f"bolt://{self.hostname}:{self.bolt_port}",
-                max_connection_lifetime=200,
+                max_connection_lifetime=20,
             )
         start_time = datetime.now()
         try:
