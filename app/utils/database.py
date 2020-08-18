@@ -1,12 +1,26 @@
 from dataclasses import dataclass
 from datetime import datetime
+from time import sleep
 from typing import Optional
 
 from fastapi import HTTPException
+from loguru import logger
 from neo4j import GraphDatabase
-from neobolt.exceptions import CypherError, CypherSyntaxError, CypherTypeError
+from neobolt.exceptions import (
+    CypherError,
+    CypherSyntaxError,
+    CypherTypeError,
+    ServiceUnavailable,
+)
 
 from app.utils.process_query import format_response
+
+DRIVER_KWARGS = {
+    "encrypted": False,
+    "keep_alive": False,
+}
+MAX_TRY = 4
+RETRY_SEC = 2
 
 
 @dataclass
@@ -22,40 +36,53 @@ class Neo4jDB:
     def __post_init__(self):
         if self.version is None:
             self.version = ""
-
-    def close(self):
-        self._driver.close()
+        self._driver = None
 
     def run_query(self, query, format=True):
         """Run query to Neo4jDB, if format then
-        post process using `format_respose`
+        post process using `format_response`
         """
-        if self.user is not None:
-            self._driver = GraphDatabase.driver(
-                f"bolt://{self.hostname}:{self.bolt_port}",
-                auth=(self.user, self.password),
-                max_connection_lifetime=20,
-            )
-        else:
-            self._driver = GraphDatabase.driver(
-                f"bolt://{self.hostname}:{self.bolt_port}",
-                max_connection_lifetime=20,
-            )
         start_time = datetime.now()
-        try:
-            with self._driver.session() as session:
-                data = session.run(query).data()
-                session.close()
-        except CypherSyntaxError as e:
-            raise HTTPException(
-                status_code=422, detail=f"CypherSyntaxError: {e}"
-            )
-        except CypherTypeError as e:
-            raise HTTPException(
-                status_code=422, detail=f"CypherTypeError: {e}"
-            )
-        except CypherError as e:
-            raise HTTPException(status_code=422, detail=f"CypherError: {e}")
+        for try_idx in range(MAX_TRY):
+            try:
+                if self.user is not None:
+                    driver = GraphDatabase.driver(
+                        f"bolt://{self.hostname}:{self.bolt_port}",
+                        auth=(self.user, self.password),
+                        **DRIVER_KWARGS,
+                    )
+                else:
+                    driver = GraphDatabase.driver(
+                        f"bolt://{self.hostname}:{self.bolt_port}",
+                        **DRIVER_KWARGS,
+                    )
+                with driver.session() as session:
+                    data = session.run(query).data()
+                driver.close()
+            except ServiceUnavailable as e:
+                if try_idx < MAX_TRY - 1:
+                    logger.exception(
+                        f"ServiceUnavailable: {e}; "
+                        + f"retry after {RETRY_SEC} seconds; "
+                        + f"current retry #{try_idx}"
+                    )
+                    sleep(RETRY_SEC)
+                    continue
+                else:
+                    raise
+            except CypherSyntaxError as e:
+                raise HTTPException(
+                    status_code=422, detail=f"CypherSyntaxError: {e}"
+                )
+            except CypherTypeError as e:
+                raise HTTPException(
+                    status_code=422, detail=f"CypherTypeError: {e}"
+                )
+            except CypherError as e:
+                raise HTTPException(
+                    status_code=422, detail=f"CypherError: {e}"
+                )
+            break
         finish_time = datetime.now()
         total_seconds = (finish_time - start_time).total_seconds()
         if format:
