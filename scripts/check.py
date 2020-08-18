@@ -1,6 +1,7 @@
 from colorama import Fore, Style
 
 from app.resources.dependent_files import dependent_files
+from app.settings import epigraphdb, pqtl
 from epigraphdb_common_utils import (
     api_docs_env_configs,
     api_env_configs,
@@ -68,6 +69,25 @@ def check_env_configs() -> None:
     print(docker_api_env_configs.env_configs)
 
 
+def check_db_connections() -> None:
+    print(
+        Style.BRIGHT
+        + Fore.GREEN
+        + "\n# Database connections"
+        + Style.RESET_ALL
+    )
+    for db_name, neo4j_db in [("epigraphdb", epigraphdb), ("pqtl", pqtl)]:
+        name = Style.BRIGHT + Fore.YELLOW + db_name + Style.RESET_ALL
+        if neo4j_db.check_connection():
+            status = Style.BRIGHT + Fore.GREEN + "Connected" + Style.RESET_ALL
+        else:
+            status = (
+                Style.BRIGHT + Fore.RED + "NOT Connected" + Style.RESET_ALL
+            )
+        print(f"{name}: {status}")
+
+
 if __name__ == "__main__":
     check_dependent_files()
     check_env_configs()
+    check_db_connections()
