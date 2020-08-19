@@ -17,7 +17,7 @@ from app.utils.process_query import format_response
 
 DRIVER_KWARGS = {
     "encrypted": False,
-    "keep_alive": False,
+    # "keep_alive": False,
 }
 MAX_TRY = 4
 RETRY_SEC = 2
