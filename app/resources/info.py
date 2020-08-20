@@ -11,6 +11,13 @@ description = f"""<a style="color:#757575">A RESTful Web API for querying EpiGra
     - Database: `{builds["epigraphdb"]["database"]}`
     - API: `{builds["epigraphdb"]["api"]}`
 - pQTL database: `{builds["pqtl"]}`
+
+Visit the
+[API endpoints page](
+http://docs.epigraphdb.org/api/api-endpoints/
+)
+in the EpiGraphDB documentation for
+further information.
 """
 # if settings.api_private_access:
 #     # FIXME:  git info will not work in submodule
