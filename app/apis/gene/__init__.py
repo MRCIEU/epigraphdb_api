@@ -8,7 +8,9 @@ from . import models, queries
 router = APIRouter()
 
 
-@router.get("/gene/druggability/ppi")
+@router.get(
+    "/gene/druggability/ppi", response_model=models.GeneDrugPpiResponse
+)
 def get_gene_druggability_ppi(gene_name: str):
     """
     For a gene, search for its associated druggable genes
@@ -20,7 +22,7 @@ def get_gene_druggability_ppi(gene_name: str):
     return res
 
 
-@router.get("/gene/literature")
+@router.get("/gene/literature", response_model=models.GeneLiteratureResponse)
 def get_gene_literature(gene_name: str, object_name: str):
     """
     For a gene, search for its literature evidence
