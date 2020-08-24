@@ -1,14 +1,13 @@
 .PHONY: clean data lint requirements docs
 
+# directories that contain python scripts in the codebase
+python_dirs = app tests scripts epigraphdb_common_utils
+
 #################################################################################
 # Rules
 #################################################################################
 
-# directories that contain python scripts in the codebase
-python_dirs = app tests scripts epigraphdb_common_utils
-
 ## ==== codebase ====
-__codebase__: help
 
 ## check for setup status
 check:
@@ -37,7 +36,6 @@ test:
 	python -m pytest -vv
 
 ## ==== documentation ====
-__documentation__: help
 
 ## Generate documentation (requires dedicated conda env "epigraphdb_api")
 docs:
@@ -47,7 +45,6 @@ docs:
 	scripts/rmd.sh scripts/doc-templates/api-endpoints.Rmd
 
 ## ==== running the api ====
-__run__: help
 
 ## Start API server, port: 80
 run:
