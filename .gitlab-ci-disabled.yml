@@ -1,0 +1,91 @@
+# image: tiangolo/uvicorn-gunicorn-fastapi:python3.7
+
+# variables:
+#   GIT_SSL_NO_VERIFY: "1"
+#   # PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+#   # PIPENV_VENV_IN_PROJECT: "1"
+#   PUBLIC_DOCS_DIR: "/var/epigraphdb/epigraphdb_docs/public-docs/"
+#   PRIVATE_DOCS_DIR: "/var/epigraphdb/epigraphdb_docs/private-docs/"
+
+# # cache:
+# #   key: pipenv
+# #   paths:
+# #     - .cache
+
+# # before_script:
+# #   - python -V
+# #   - ls -lah
+# #   # - pip install pipenv
+
+# stages:
+#   - init
+#   # - docs
+#   # - build
+#   # - unit_tests
+#   # - lint
+#   # - deploy
+
+# init:
+#   stage: init
+#   only:
+#     - dev
+#   tags:
+#     - epigraphdb
+#   script:
+#     - python -V
+#     - ls -lah
+
+# # docs:
+# #   stage: docs
+# #   only:
+# #     - dev
+# #   tags:
+# #     - epigraphdb
+# #   script:
+# #     - cp ${CI_PROJECT_DIR}/README.md ${PRIVATE_DOCS_DIR}/docs/development/api-v0.3.md
+
+# # build:
+# #   stage: build
+# #   only:
+# #     - merge_requests
+# #   retry:
+# #     2
+# #   tags:
+# #     - epigraphdb-docker
+# #   script:
+# #     - pipenv install --deploy
+# #     - export VENV_HOME_DIR=$(pipenv --venv)
+# #     - source $VENV_HOME_DIR/bin/activate
+# #     - make
+# #     - echo "${API_PORT}"
+# #     - echo "${API_VERSION}"
+# #     - echo "${API_PRIVATE_ACCESS}"
+
+# # unit_tests:
+# #   stage: unit_tests
+# #   only:
+# #     - merge_requests
+# #   retry:
+# #     2
+# #   tags:
+# #     - epigraphdb-docker
+# #   script:
+# #     - pipenv install --deploy --dev
+# #     - export VENV_HOME_DIR=$(pipenv --venv)
+# #     - source $VENV_HOME_DIR/bin/activate
+# #     - make test
+
+# # lint:
+# #   stage: lint
+# #   allow_failure: true
+# #   only:
+# #     - merge_requests
+# #   retry:
+# #     2
+# #   tags:
+# #     - epigraphdb-docker
+# #   script:
+# #     - pipenv install --deploy --dev
+# #     - export VENV_HOME_DIR=$(pipenv --venv)
+# #     - source $VENV_HOME_DIR/bin/activate
+# #     - make lint
