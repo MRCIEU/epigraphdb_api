@@ -9,7 +9,7 @@ from app import settings
 
 today = datetime.date.today().isoformat()
 
-unittest_headers = {"client-type": "pytest"}
+unittest_headers = {"client-type": "pytest", "ci": "true"}
 
 
 def get_service_builds() -> Dict:

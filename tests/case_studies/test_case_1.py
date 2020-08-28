@@ -4,6 +4,7 @@ import pandas as pd
 from starlette.testclient import TestClient
 
 from app.main import app
+from app.resources._global import unittest_headers
 from app.utils import df_coerce
 
 client = TestClient(app)
@@ -23,13 +24,13 @@ def get_sys_snps(gwas_trait, qtl_type):
         "qtl_type": qtl_type,
         "pval_threshold": 1e-08,
     }
-    r = client.get(route, params=params)
+    r = client.get(route, params=params, headers=unittest_headers)
     r.raise_for_status()
     snps = pd.json_normalize(r.json()["results"])["r.rsid"].drop_duplicates()
     # Get genes associated by the snp
     route = "/xqtl/single-snp-mr/gene-by-variant"
     payload = {"qtl_type": qtl_type, "variant_list": snps.to_list()}
-    r = client.post(route, json=payload)
+    r = client.post(route, json=payload, headers=unittest_headers)
     r.raise_for_status()
     res = pd.json_normalize(r.json()["results"])["variant"].rename("snp")
     return res
@@ -44,7 +45,7 @@ def get_snp_protein(snp, qtl_type):
         # NOTE: we don't restrict pvalue
         "pval_threshold": 1.0,
     }
-    r = client.get(route, params=params)
+    r = client.get(route, params=params, headers=unittest_headers)
     r.raise_for_status()
     snp_gene_df = pd.json_normalize(r.json()["results"])[
         ["r.rsid", "gene.name"]
@@ -52,7 +53,7 @@ def get_snp_protein(snp, qtl_type):
     # get gene-protein
     route = "/mappings/gene-to-protein"
     payload = {"gene_name_list": snp_gene_df["gene.name"].to_list()}
-    r = client.post(route, json=payload)
+    r = client.post(route, json=payload, headers=unittest_headers)
     r.raise_for_status()
     protein_df = pd.json_normalize(r.json()["results"])
     if len(protein_df) > 0:
@@ -93,7 +94,7 @@ def get_sys_proteins(sys_snps: pd.Series, qtl_type):
 def get_protein_pathway(snp_protein_df):
     route = "/protein/in-pathway"
     payload = {"uniprot_id_list": snp_protein_df["uniprot_id"].to_list()}
-    r = client.post(route, json=payload)
+    r = client.post(route, json=payload, headers=unittest_headers)
     r.raise_for_status()
     df = pd.json_normalize(r.json()["results"])
 
@@ -125,7 +126,7 @@ def get_ppi(snp_protein_df, n_intermediate_proteins: int = 0):
         "uniprot_id_list": snp_protein_df["uniprot_id"].to_list(),
         "n_intermediate_proteins": n_intermediate_proteins,
     }
-    r = client.post(route, json=payload)
+    r = client.post(route, json=payload, headers=unittest_headers)
     r.raise_for_status()
     df = pd.json_normalize(r.json()["results"])
 

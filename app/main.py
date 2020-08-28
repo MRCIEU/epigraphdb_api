@@ -2,7 +2,7 @@ from fastapi import APIRouter, FastAPI
 
 from app import settings
 from app.resources.info import description, title, version
-from app.utils.logging import logger  # noqa:F401
+from app.utils.logging import MonitoringMiddleware, logger  # noqa:F401
 
 from .apis import (
     confounder,
@@ -30,6 +30,7 @@ from .apis import (
 app = FastAPI(
     title=title, description=description, version=version, docs_url="/"
 )
+app.add_middleware(MonitoringMiddleware)
 
 top_router = APIRouter()
 

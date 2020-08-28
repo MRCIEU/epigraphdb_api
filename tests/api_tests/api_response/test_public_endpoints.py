@@ -2,6 +2,7 @@ import pytest
 from starlette.testclient import TestClient
 
 from app.main import app
+from app.resources._global import unittest_headers
 from app.resources.public_endpoints import topic_params, util_params
 
 client = TestClient(app)
@@ -18,10 +19,10 @@ def test_topic_endpoints(endpoint):
         method, route = actual_endpoint.split(" ")
         params = test["params"]
         if method == "GET":
-            r = client.get(url=route, params=params)
+            r = client.get(url=route, params=params, headers=unittest_headers)
             assert r.status_code == 200
         elif method == "POST":
-            r = client.post(url=route, json=params)
+            r = client.post(url=route, json=params, headers=unittest_headers)
             assert r.status_code == 200
         data = r.json()
         assert "results" in data.keys()
@@ -39,8 +40,8 @@ def test_util_endpoints(endpoint):
         method, route = actual_endpoint.split(" ")
         params = test["params"]
         if method == "GET":
-            r = client.get(url=route, params=params)
+            r = client.get(url=route, params=params, headers=unittest_headers)
             assert r.status_code == 200
         elif method == "POST":
-            r = client.post(url=route, json=params)
+            r = client.post(url=route, json=params, headers=unittest_headers)
             assert r.status_code == 200

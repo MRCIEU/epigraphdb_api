@@ -4,6 +4,7 @@ import pandas as pd
 from starlette.testclient import TestClient
 
 from app.main import app
+from app.resources._global import unittest_headers
 from app.utils import df_coerce
 
 client = TestClient(app)
@@ -17,7 +18,7 @@ ASSOC_GWAS_ID = "ieu-a-6"
 def get_mr(trait):
     route = "/mr"
     params = {"exposure_trait": trait, "pval_threshold": 1e-10}
-    r = client.get(route, params=params)
+    r = client.get(route, params=params, headers=unittest_headers)
     r.raise_for_status()
     mr_df = pd.json_normalize(r.json()["results"])
     return mr_df
@@ -26,7 +27,7 @@ def get_mr(trait):
 def trait_to_disease(row):
     route = "/ontology/gwas-efo-disease"
     params = {"trait": row["outcome.trait"]}
-    r = client.get(route, params=params)
+    r = client.get(route, params=params, headers=unittest_headers)
     r.raise_for_status()
     disease_df = pd.json_normalize(r.json()["results"])
     if "disease.label" in disease_df:
@@ -44,7 +45,7 @@ def get_literature(gwas_id, assoc_gwas_id):
         "blacklist": "True",
         "limit": 1000,
     }
-    r = client.get(route, params=params)
+    r = client.get(route, params=params, headers=unittest_headers)
     r.raise_for_status()
     lit_df = pd.json_normalize(r.json()["results"])
     lit_df = lit_df.sort_values(by=["gs1.pval"], ascending=True)

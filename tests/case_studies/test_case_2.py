@@ -5,6 +5,7 @@ import pandas as pd
 from starlette.testclient import TestClient
 
 from app.main import app
+from app.resources._global import unittest_headers
 from app.utils import df_coerce
 
 client = TestClient(app)
@@ -17,7 +18,7 @@ OUTCOME_TRAIT = "Inflammatory bowel disease"
 def ppi():
     route = "/gene/druggability/ppi"
     params = {"gene_name": GENE_NAME}
-    r = client.get(url=route, params=params)
+    r = client.get(url=route, params=params, headers=unittest_headers)
     r.raise_for_status()
     df = pd.json_normalize(r.json()["results"])
     return df
@@ -33,7 +34,7 @@ def extract_mr(outcome_trait, gene_list, qtl_type):
             "qtl_type": qtl_type,
             "pval_threshold": 1e-5,
         }
-        r = client.get(route, params=params)
+        r = client.get(route, params=params, headers=unittest_headers)
         try:
             r.raise_for_status()
             df = pd.json_normalize(r.json()["results"])
@@ -51,7 +52,7 @@ def extract_literature(outcome_trait, gene_list):
     def per_gene(gene_name):
         route = "/gene/literature"
         params = {"gene_name": gene_name, "object_name": outcome_trait.lower()}
-        r = client.get(url=route, params=params)
+        r = client.get(url=route, params=params, headers=unittest_headers)
         try:
             r.raise_for_status()
             res_df = pd.json_normalize(r.json()["results"])
