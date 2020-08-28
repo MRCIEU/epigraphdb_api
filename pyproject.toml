@@ -11,7 +11,6 @@ environs = "^6.1"
 numpy = "^1.17"
 requests = "^2.22"
 pytest = "^5.3"
-loguru = "^0.4"
 aiofiles = "^0.4.0"
 uvicorn = "^0.10.8"
 pymongo = "^3.10.0"
@@ -25,6 +24,7 @@ pandas = "^1.0.1"
 pyyaml = "^5.3.1"
 pydantic = "^1.5"
 colorama = "^0.4.3"
+loguru = ">=0.5.1"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^19", allow-prereleases = true}
