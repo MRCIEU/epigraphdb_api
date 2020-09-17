@@ -21,11 +21,6 @@ project_root = (Path.cwd() / ".." / "..").resolve()
 sys.path.append(str(project_root))
 ```
 
-
-```{python py_foobar}
-print(sys.path)
-```
-
 ```{python, results='asis', echo=FALSE}
 from scripts.render_schema import rmd_render_meta_nodes
 
