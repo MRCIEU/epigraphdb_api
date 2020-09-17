@@ -6,7 +6,11 @@ from fastapi import APIRouter, HTTPException, Query
 from starlette.responses import FileResponse
 
 from app.models import ApiGenericResponse
-from app.models.api_meta_graph import EpigraphdbMetaNodes, EpigraphdbMetaRels
+from app.models.api_meta_graph import (
+    EpigraphdbMetaNodes,
+    EpigraphdbMetaNodesFull,
+    EpigraphdbMetaRels,
+)
 from app.models.schema_meta_nodes import meta_node_schema
 from app.models.schema_meta_rels import meta_path_schema, meta_rel_schema
 from app.resources.schema import epigraphdb_meta_nodes
@@ -70,7 +74,7 @@ def meta_nodes_id_name_schema():
 
 @router.get("/meta/nodes/{meta_node}/list", response_model=ApiGenericResponse)
 def nodes_list(
-    meta_node: EpigraphdbMetaNodes,
+    meta_node: EpigraphdbMetaNodesFull,
     full_data: bool = True,
     limit: int = Query(10, ge=1, le=10_000),
     offset: int = 0,
