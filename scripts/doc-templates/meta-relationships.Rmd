@@ -7,6 +7,9 @@ output:
 
 # EpiGraphDB meta relationships
 
+This document shows the current meta relationships (a group of relationship entities) in the EpiGraphDB graph database.
+For each meta relationship, their available properties are shown, and an example set of relationship entities are shown in the collapsed text box.
+
 ```{r r_init, include=FALSE}
 library("reticulate")
 use_condaenv("epigraphdb_api", required = TRUE)
@@ -21,8 +24,14 @@ project_root = (Path.cwd() / ".." / "..").resolve()
 sys.path.append(str(project_root))
 ```
 
+```{python py_setup, include=FALSE}
+from epigraphdb_common_utils.api_docs_env_configs import env_configs
+
+EPIGRAPHDB_API_URL = env_configs["api_url"]
+```
+
 ```{python, results='asis', echo=FALSE}
 from scripts.render_schema import rmd_render_meta_rels
 
-rmd_render_meta_rels()
+rmd_render_meta_rels(api_url=EPIGRAPHDB_API_URL)
 ```

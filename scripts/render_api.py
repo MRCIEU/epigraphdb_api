@@ -1,5 +1,6 @@
 from pprint import pformat
 from textwrap import dedent
+from typing import Optional
 
 import requests
 
@@ -52,7 +53,7 @@ def render_results(
     api_url: str,
     route: str,
     params,
-    char_limit: int = 2400,
+    char_limit: Optional[int] = 2400,
     method: str = "GET",
 ) -> str:
     url = f"{api_url}{route}"
@@ -60,8 +61,11 @@ def render_results(
     if method == "POST":
         func = render_results_post
     results = func(url=url, params=params)
-    res = pformat(results)[:char_limit]
-    return res
+    res = pformat(results)
+    if char_limit is not None:
+        return res[:char_limit]
+    else:
+        return res
 
 
 def rmd_render_endpoints(api_url, endpoint_params):

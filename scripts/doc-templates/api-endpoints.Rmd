@@ -25,9 +25,9 @@ sys.path.append(str(project_root))
 ```
 
 ```{python py_setup, include=FALSE}
-from epigraphdb_common_utils.api_docs_env_configs import configs
+from epigraphdb_common_utils.api_docs_env_configs import env_configs
 
-EPIGRAPHDB_API_URL = configs["api_url"]
+EPIGRAPHDB_API_URL = env_configs["api_url"]
 ```
 
 ```{python api_url}
