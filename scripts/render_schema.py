@@ -7,9 +7,6 @@ from epigraphdb_common_utils.epigraphdb_data_dicts import (
 
 from .render_api import render_results_get
 
-# Nodes to miss when printing sneak peek examples
-# INVALID_NODES = ["Meta", "SemmedTriple"]
-
 
 def rmd_render_meta_nodes(api_url: str):
     for name, data in meta_nodes_dict_sanitised.items():
