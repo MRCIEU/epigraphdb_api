@@ -64,7 +64,7 @@ def render_entity_sneak_peek(meta_entity: str, entity_type: str, api_url: str):
 
     sneak_peek_res = sneak_peek(meta_entity, entity_type, api_url)
 
-    print('??? summary \\"**Examples**\\"\n')
+    print('???+ summary \\"**Examples**\\"\n')
     print("    **query**\n")
     print("    ```")
     print("    ", sneak_peek_res["query"])
