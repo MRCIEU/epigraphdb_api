@@ -179,7 +179,6 @@ class METAMAP_LITE(Neo4jEntity):
     """
 
     mmi_score: float
-    mesh: Optional[str]
 
     class _Path:
         source = "Gwas"
