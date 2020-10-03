@@ -28,6 +28,7 @@ dependencies:
   - python-graphviz
   - pandoc
   - tabulate
+  - anonymizeip
   - r-tidyverse
   - r-rmarkdown
   - r-reticulate
