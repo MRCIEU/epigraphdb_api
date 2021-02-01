@@ -6,8 +6,7 @@ from typing import Optional
 from fastapi import HTTPException
 from loguru import logger
 from neo4j import GraphDatabase
-from neobolt.exceptions import (
-    CypherError,
+from neo4j.exceptions import (
     CypherSyntaxError,
     CypherTypeError,
     ServiceUnavailable,
@@ -78,10 +77,11 @@ class Neo4jDB:
                 raise HTTPException(
                     status_code=422, detail=f"CypherTypeError: {e}"
                 )
-            except CypherError as e:
-                raise HTTPException(
-                    status_code=422, detail=f"CypherError: {e}"
-                )
+            # FIXME
+            # except CypherError as e:
+            #     raise HTTPException(
+            #         status_code=422, detail=f"CypherError: {e}"
+            #     )
             break
         finish_time = datetime.now()
         total_seconds = (finish_time - start_time).total_seconds()
