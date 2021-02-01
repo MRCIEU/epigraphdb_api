@@ -27,5 +27,5 @@ class ProteinItem(BaseModel):
 
 
 class PathwayItem(BaseModel):
-    reactome_id: str
+    id: str
     name: str

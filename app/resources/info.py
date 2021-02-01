@@ -19,13 +19,4 @@ http://docs.epigraphdb.org/api/api-endpoints/
 in the EpiGraphDB documentation for
 further information.
 """
-# if settings.api_private_access:
-#     # FIXME:  git info will not work in submodule
-#     # git_info = get_git_info()
-#     description += textwrap.dedent(
-#         f"""
-#     **Links**:
-#     - private: [EpiGraphDB Neo4j Browser]({settings.epigraphdb_browser})
-#     """
-#     )
 version = settings.api_version

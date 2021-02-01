@@ -15,7 +15,7 @@ class PathwayQueries:
         variant {{.name}},
         gene {{.name}},
         protein {{.uniprot_id}},
-        pathway {{.reactome_id, .name}}
+        pathway {{.id, .name}}
     ORDER BY gwas_to_variant.pval
     ;
     """

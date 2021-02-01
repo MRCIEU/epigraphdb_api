@@ -21,15 +21,21 @@ class Druggability:
 class Literature:
     query = """
         MATCH
-            (gene:Gene)-[:SEM_GENE]-(:SemmedTerm)-[:SEM_SUB|SEM_OBJ]-
-            (st:SemmedTriple)-[:SEM_TO_LIT]-(l:Literature)
+            (gene:Gene)-[:TERM_TO_GENE]-(lt_gene:LiteratureTerm)-[st:SEMMEDDB_PREDICATE]->(lt:LiteratureTerm)
         WHERE
             gene.name = '{gene_name}' AND
-            st.object_name=~"(?i).*{object_name}.*"
+            lt.name =~ "(?i).*{object_name}.*"
+        WITH
+            gene, lt_gene, st, lt
+        MATCH
+            (triple:LiteratureTriple)-[:SEMMEDDB_TO_LIT]-(l:Literature)
+        WHERE
+            triple.subject_id = lt_gene.id AND triple.object_id = lt.id
         RETURN
             gene {{.name}},
-            st {{.predicate, .object_name}},
-            collect(l.pubmed_id) AS pubmed_id
+            st {{.predicate}},
+            lt {{.id, .name, .type}},
+            collect(l.id) AS pubmed_id
     """
 
 

@@ -77,7 +77,8 @@ class Neo4jDB:
                 raise HTTPException(
                     status_code=422, detail=f"CypherTypeError: {e}"
                 )
-            # FIXME
+            # NOTE: cyphererror? don't think we need them as it is
+            #       no longer in neo4j driver's exceptions
             # except CypherError as e:
             #     raise HTTPException(
             #         status_code=422, detail=f"CypherError: {e}"

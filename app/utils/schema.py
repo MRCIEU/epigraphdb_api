@@ -2,7 +2,9 @@ from typing import List
 
 import pandas as pd
 from graphviz import Digraph
-from pydantic import BaseModel
+
+# from pydantic import BaseModel
+from pydantic.dataclasses import dataclass
 
 from app.apis.status import get_db_metric
 from app.apis.status.models import GraphDbMetrics
@@ -11,11 +13,30 @@ from app.settings import cache_dir
 from app.utils.cache import cache_func_call_json
 
 
-class Neo4jEntity(BaseModel):
-    "A modified version of pydantic's BaseModel."
+class EntityConfig:
+    extra = "forbid"
 
-    class Config:
-        extra = "forbid"
+
+@dataclass(config=EntityConfig)
+class EpigraphdbNodeEntity:
+    "Pydantic basemodel for an epigraphdb node"
+
+    # NOTE: although specified here, they are ignored by pydantic
+    _id: str
+    _name: str
+    _source: List[str]
+
+
+@dataclass(config=EntityConfig)
+class EpigraphdbRelEntity:
+    "Pydantic basemodel for an epigraphdb rel"
+
+    # NOTE: although specified here, they are ignored by pydantic
+    _source: List[str]
+
+    class _Path:
+        source: str
+        target: str
 
 
 def generate_schema(overwrite: bool = False):

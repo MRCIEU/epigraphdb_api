@@ -1,3 +1,5 @@
+from pprint import pformat
+
 import pytest
 from loguru import logger
 
@@ -30,13 +32,14 @@ def test_meta_node_schema(meta_node_name):
     query = """
         MATCH (n: {meta_node_name})
         WITH n, rand() AS index
-        RETURN n
+        RETURN properties(n) AS n
         ORDER BY index
         LIMIT 1000
     """.format(
         meta_node_name=meta_node_name
     )
     res = epigraphdb.run_query(query)["results"]
+    logger.info(pformat(res)[:1_000])
     for item in res:
         # if None => black list
         if schema_model is not None:
@@ -50,13 +53,14 @@ def test_meta_rel_schema(meta_rel_name):
     query = """
         MATCH p=(n)-[r: {meta_rel_name}]-(m)
         WITH n, r, m, rand() AS index
-        RETURN r
+        RETURN properties(r) AS r
         ORDER BY index
         LIMIT 1000
     """.format(
         meta_rel_name=meta_rel_name
     )
     res = epigraphdb.run_query(query)["results"]
+    logger.info(pformat(res)[:1_000])
     for item in res:
         rel = schema_model(**item["r"])
         assert isinstance(rel, schema_model)

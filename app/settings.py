@@ -7,8 +7,8 @@ from app.utils.database import Neo4jDB
 from epigraphdb_common_utils.api_env_configs import env_configs
 
 # General config
-epigraphdb_version = "0.3"
-api_version = "0.3"
+epigraphdb_version = env_configs["epigraphdb_db_version"]
+api_version = "1.0"
 api_private_access = env_configs["api_private_access"]
 if api_private_access:
     api_version = f"{api_version}-private"

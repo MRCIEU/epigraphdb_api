@@ -22,40 +22,40 @@ class ConfounderQueries:
     confounder = (
         """
         MATCH
-            (cf:Gwas)-[r1:MR]->
+            (cf:Gwas)-[r1:MR_EVE_MR]->
             (exposure:Gwas {{trait: "{exposure_trait}"}})
-            -[r2:MR]->(outcome:Gwas {{trait: "{outcome_trait}"}})
-            <-[r3:MR]-(cf:Gwas)
+            -[r2:MR_EVE_MR]->(outcome:Gwas {{trait: "{outcome_trait}"}})
+            <-[r3:MR_EVE_MR]-(cf:Gwas)
         """
         + _tail
     )
     intermediate = (
         """
         MATCH
-            (cf:Gwas)<-[r1:MR]-
+            (cf:Gwas)<-[r1:MR_EVE_MR]-
             (exposure:Gwas {{trait: "{exposure_trait}"}})
-            -[r2:MR]->(outcome:Gwas {{trait: "{outcome_trait}"}})
-            <-[r3:MR]-(cf:Gwas)
+            -[r2:MR_EVE_MR]->(outcome:Gwas {{trait: "{outcome_trait}"}})
+            <-[r3:MR_EVE_MR]-(cf:Gwas)
         """
         + _tail
     )
     reverse_intermediate = (
         """
         MATCH
-            (cf:Gwas)-[r1:MR]->
+            (cf:Gwas)-[r1:MR_EVE_MR]->
             (exposure:Gwas {{trait: "{exposure_trait}"}})
-            -[r2:MR]->(outcome:Gwas {{trait: "{outcome_trait}"}})
-            -[r3:MR]->(cf:Gwas)
+            -[r2:MR_EVE_MR]->(outcome:Gwas {{trait: "{outcome_trait}"}})
+            -[r3:MR_EVE_MR]->(cf:Gwas)
         """
         + _tail
     )
     collider = (
         """
         MATCH
-            (cf:Gwas)<-[r1:MR]-
+            (cf:Gwas)<-[r1:MR_EVE_MR]-
             (exposure:Gwas {{trait: "{exposure_trait}"}})
-            -[r2:MR]->(outcome:Gwas {{trait: "{outcome_trait}"}})
-            -[r3:MR]->(cf:Gwas)
+            -[r2:MR_EVE_MR]->(outcome:Gwas {{trait: "{outcome_trait}"}})
+            -[r3:MR_EVE_MR]->(cf:Gwas)
         """
         + _tail
     )

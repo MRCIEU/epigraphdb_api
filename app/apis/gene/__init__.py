@@ -22,11 +22,12 @@ def get_gene_druggability_ppi(gene_name: str):
     return res
 
 
+# TODO: check if model conformed
 @router.get("/gene/literature", response_model=models.GeneLiteratureResponse)
 def get_gene_literature(gene_name: str, object_name: str):
     """
     For a gene, search for its literature evidence
-    related to a semmed object
+    related to a SemMedDB term
     """
     log_args(api="/gene/literature", kwargs=locals())
     query = queries.Literature.query.format(

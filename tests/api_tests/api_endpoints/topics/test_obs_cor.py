@@ -1,3 +1,6 @@
+from pprint import pformat
+
+from loguru import logger
 from starlette.testclient import TestClient
 
 from app.main import app
@@ -7,6 +10,9 @@ client = TestClient(app)
 
 
 def test_obs_cor():
-    payload = {"trait": "Body mass index"}
+    payload = {"trait": "Body mass index (BMI)"}
     r = client.get("/obs-cor", params=payload, headers=unittest_headers)
-    assert r.status_code == 200 and len(r.json()) >= 1
+    assert r.raise_for_status() is None
+    data = r.json()
+    logger.info(pformat(data))
+    assert len(r.json()["results"]) > 0

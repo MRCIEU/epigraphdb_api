@@ -14,17 +14,15 @@ class ObsCorItem(BaseModel):
     cor: float
 
 
-class BNGeneticCorItem(BaseModel):
-    rg: float
-    z: float
-    se: float
+class GeneticCorItem(BaseModel):
+    Z: float
     p: float
-    h2_int: float
-    h2_int_se: float
-    h2_obs: float
-    h2_obs_se: float
-    gcov_int: float
-    gcov_int_se: float
+    rg: float
+    rg_SE: float
+    rg_intercept: float
+    rg_intercept_SE: float
+    h2_intercept: float
+    h2_intercept_SE: float
 
 
 class GwasToVariantItem(BaseModel):

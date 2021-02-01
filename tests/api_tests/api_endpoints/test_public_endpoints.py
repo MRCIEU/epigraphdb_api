@@ -1,4 +1,7 @@
+from pprint import pformat
+
 import pytest
+from loguru import logger
 from starlette.testclient import TestClient
 
 from app.main import app
@@ -20,11 +23,12 @@ def test_topic_endpoints(endpoint):
         params = test["params"]
         if method == "GET":
             r = client.get(url=route, params=params, headers=unittest_headers)
-            assert r.status_code == 200
+            assert r.raise_for_status() is None
         elif method == "POST":
             r = client.post(url=route, json=params, headers=unittest_headers)
-            assert r.status_code == 200
+            assert r.raise_for_status() is None
         data = r.json()
+        logger.info(pformat(data))
         assert "results" in data.keys()
         assert len(data["results"]) > 0
 
@@ -41,7 +45,7 @@ def test_util_endpoints(endpoint):
         params = test["params"]
         if method == "GET":
             r = client.get(url=route, params=params, headers=unittest_headers)
-            assert r.status_code == 200
+            assert r.raise_for_status() is None
         elif method == "POST":
             r = client.post(url=route, json=params, headers=unittest_headers)
-            assert r.status_code == 200
+            assert r.raise_for_status() is None

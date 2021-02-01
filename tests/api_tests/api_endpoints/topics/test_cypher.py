@@ -14,7 +14,7 @@ def test_cypher_nodes():
     )
     payload = {"query": query}
     r = client.post("/cypher", json=payload, headers=unittest_headers)
-    assert r.status_code == 200
+    assert r.raise_for_status() is None
     assert len(r.json()) >= 1
     assert len(r.json()["results"]) >= 1
 
@@ -27,6 +27,6 @@ def test_cypher_rels():
     )
     payload = {"query": query}
     r = client.post("/cypher", json=payload, headers=unittest_headers)
-    assert r.status_code == 200
+    assert r.raise_for_status() is None
     assert len(r.json()) >= 1
     assert len(r.json()["results"]) >= 1

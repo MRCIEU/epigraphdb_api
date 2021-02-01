@@ -219,7 +219,7 @@ topic_params = {
             {
                 "params": {
                     "gene_name": "IL23R",
-                    "object_name": "Inflammatory bowel disease",
+                    "object_name": "Inflammatory Bowel Diseases",
                 }
             }
         ],
@@ -299,10 +299,10 @@ topic_params = {
                 "params": {"gwas_id": "ieu-a-1088", "by_gwas_id": True},
             },
             {
-                "desc": "Search by id and semmed triple id",
+                "desc": "Search by id and semmed triple name",
                 "params": {
                     "gwas_id": "ieu-a-1088",
-                    "semmed_triple_id": "ghrelin:INHIBITS:Leptin",
+                    "semmed_triple_name": "ghrelin INHIBITS Leptin",
                     "by_gwas_id": True,
                 },
             },
@@ -524,8 +524,8 @@ util_params = {
         "func": meta.rels_list,
         "tests": [
             {
-                "endpoint": "GET /meta/rels/MR/list",
-                "desc": "List MR relationships",
+                "endpoint": "GET /meta/rels/MR_EVE_MR/list",
+                "desc": "List MR (MR EvE) relationships",
                 "params": None,
             }
         ],
@@ -570,7 +570,7 @@ util_params = {
                 "params": {
                     "source_meta_node": "Gwas",
                     "target_meta_node": "Gwas",
-                    "meta_rel": "MR",
+                    "meta_rel": "MR_EVE_MR",
                     "where": ["rel.pval < 1e-12"],
                     "order_by": ["rel.pval"],
                     "limit": 20,
@@ -585,7 +585,7 @@ util_params = {
                 "params": {
                     "query": " ".join(
                         """
-                        MATCH (n:Gwas)-[r:MR]-(m:Gwas)
+                        MATCH (n:Gwas)-[r:MR_EVE_MR]-(m:Gwas)
                         WHERE r.pval < 1e-5
                         RETURN n, r, m
                         LIMIT 10

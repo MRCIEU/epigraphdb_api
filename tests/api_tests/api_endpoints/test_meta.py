@@ -1,10 +1,13 @@
+from pprint import pformat
+
 import pytest
+from loguru import logger
 from starlette.testclient import TestClient
 
 from app.main import app
+from app.models.schema_meta_nodes import meta_node_schema
 from app.models.schema_meta_rels import meta_path_schema
 from app.resources._global import unittest_headers
-from app.resources.schema import epigraphdb_meta_nodes
 
 client = TestClient(app)
 
@@ -12,37 +15,43 @@ client = TestClient(app)
 def test_get_schema():
     url = "/meta/schema"
     response = client.get(url, headers=unittest_headers)
-    assert response.status_code == 200
+    assert response.raise_for_status() is None
 
 
 @pytest.mark.parametrize("path", ["/meta/nodes/list", "/meta/rels/list"])
 def test_get_meta(path):
     response = client.get(path, headers=unittest_headers)
-    assert response.status_code == 200
+    assert response.raise_for_status() is None
     assert len(response.json()) >= 1
 
 
-@pytest.mark.parametrize("meta_node", epigraphdb_meta_nodes.keys())
+@pytest.mark.parametrize("meta_node", meta_node_schema.keys())
 def test_get_meta_nodes(meta_node):
     url = f"/meta/nodes/{meta_node}/list"
     # full data
     response = client.get(url, headers=unittest_headers)
-    assert response.status_code == 200
-    assert len(response.json()) >= 1
+    assert response.raise_for_status() is None
+    data = response.json()
+    logger.info(pformat(data))
+    assert len(data) >= 1
     # id and name
     response = client.get(
         url, params={"full_data": False, "limit": 10}, headers=unittest_headers
     )
-    assert response.status_code == 200
+    assert response.raise_for_status() is None
     assert len(response.json()) >= 1
+    assert len(data["results"]) >= 1
 
 
 @pytest.mark.parametrize("meta_rel", meta_path_schema.keys())
 def test_get_meta_rels(meta_rel):
     url = f"/meta/rels/{meta_rel}/list"
     response = client.get(url, headers=unittest_headers)
-    assert response.status_code == 200
-    assert len(response.json()) >= 1
+    data = response.json()
+    logger.info(pformat(data))
+    assert response.raise_for_status() is None
+    assert len(data) >= 1
+    assert len(data["results"]) >= 1
 
 
 @pytest.mark.parametrize(
@@ -54,8 +63,6 @@ def test_get_meta_rels(meta_rel):
         ("Drug", None, "CODEINE"),
         ("Efo", "http://www.orpha.net/ORDO/Orphanet_171866", None),
         ("Efo", None, "pathological myopia"),
-        ("Event", "R-NUL-9005747", None),
-        ("Event", None, "Phosphorylation and activation of CHEK2 by ATM"),
         ("Gene", "ENSG00000232163", None),
         ("Gene", None, "RPLP1P13"),
         ("Tissue", "Adrenal Gland", None),
@@ -70,8 +77,8 @@ def test_get_meta_rels(meta_rel):
         ("Pathway", None, "CDC6 association with the ORC:origin complex"),
         ("Protein", "A6NJS3", None),
         ("Protein", None, "A6NJS3"),
-        ("SemmedTerm", "C0752046", None),
-        ("SemmedTerm", None, "Single Nucleotide Polymorphism"),
+        ("LiteratureTerm", "C0752046", None),
+        ("LiteratureTerm", None, "Single Nucleotide Polymorphism"),
         ("Variant", "rs1347572", None),
         ("Variant", None, "rs1347572"),
     ],
@@ -80,7 +87,7 @@ def test_get_nodes_search(meta_node, id, name):
     url = f"/meta/nodes/{meta_node}/search"
     payload = {"meta_node": meta_node, "id": id, "name": name}
     response = client.get(url, params=payload, headers=unittest_headers)
-    assert response.status_code == 200
+    assert response.raise_for_status() is None
     assert len(response.json()) >= 1
 
 
@@ -119,8 +126,9 @@ def test_get_nodes_search_more_params(meta_node, id, name, limit, full_data):
         "full_data": full_data,
     }
     response = client.get(url, params=payload, headers=unittest_headers)
-    assert response.status_code == 200
-    assert len(response.json()) >= 1
+    assert response.raise_for_status() is None
+    data = response.json()
+    assert len(data) >= 1
 
 
 @pytest.mark.parametrize(
@@ -149,4 +157,4 @@ def test_get_paths_search(
         "limit": limit,
     }
     response = client.get(url, params=params, headers=unittest_headers)
-    assert response.status_code == 200
+    assert response.raise_for_status() is None

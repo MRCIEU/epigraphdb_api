@@ -1,4 +1,3 @@
-# FIXME: is there a way to fix those long '<>' into NOT IN ?
 class Proteins:
 
     simple = """
@@ -136,7 +135,8 @@ class NonProteins:
         "\n", " "
     )
 
-    # FIXME: rename se_slg to se_sgl
+    # NOTE: `se_slg` should have been `se_sgl`, but
+    #       not fixing to keep compatibility with downstream
     sglmr = """
     MATCH (o:Outcome)<-[n:SENS_OUT]-(s)-[m:SENS_EXP]->(e:Exposure)-[r:MR]->
           (o:Outcome)<-[INST_OUT]-()-[i:INST_EXP]->()

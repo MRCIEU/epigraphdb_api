@@ -11,7 +11,7 @@ class MRQueries:
     """
     _head = """
         MATCH
-            (exposure:Gwas)-[mr:MR]->(outcome:Gwas)
+            (exposure:Gwas)-[mr:MR_EVE_MR]->(outcome:Gwas)
     """
     pair = (
         _head

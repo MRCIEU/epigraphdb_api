@@ -30,7 +30,7 @@ def test_confounder(exposure_trait, outcome_trait, type, pval_threshold):
         "pval_threshold": pval_threshold,
     }
     response = client.get(url, params=payload, headers=unittest_headers)
-    assert response.status_code == 200
+    assert response.raise_for_status() is None
     assert len(response.json()) >= 1
 
 

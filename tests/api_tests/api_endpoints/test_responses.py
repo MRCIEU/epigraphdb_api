@@ -28,7 +28,7 @@ response_url_params = [
     ("/meta/nodes/Gwas/list", {"full_data": False}),
     # meta rels
     ("/meta/rels/list", None),
-    ("/meta/rels/MR/list", None),
+    ("/meta/rels/MR_EVE_MR/list", None),
     ("/meta/api/schema", None),
     ("/meta/api/schema", {"yaml_format": True}),
     # /raw_cypher/
@@ -111,13 +111,15 @@ response_url_params_topics = [
 @pytest.mark.parametrize("url, params", response_url_params)
 def test_responses(url, params):
     logger.info(f"url: {url}; params: {params}")
-    response = client.get(url, params=params, headers=unittest_headers)
-    assert response.status_code == 200
+    r = client.get(url, params=params, headers=unittest_headers)
+    assert r.raise_for_status() is None
 
 
 @pytest.mark.parametrize("url, params", response_url_params_topics)
 def test_responses_topics(url, params):
     logger.info(f"url: {url}; params: {params}")
-    response = client.get(url, params=params, headers=unittest_headers)
-    assert response.status_code == 200
-    assert len(response.json()["results"]) >= 1
+    r = client.get(url, params=params, headers=unittest_headers)
+    assert r.raise_for_status() is None
+    data = r.json()
+    assert "results" in data.keys()
+    assert len(data["results"]) >= 1

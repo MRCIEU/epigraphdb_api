@@ -1,6 +1,8 @@
+from pprint import pformat
 from typing import Dict
 
 import pytest
+from loguru import logger
 from starlette.testclient import TestClient
 
 from app.apis.pqtl import ListFlagInput, PrflagInput, RtypeInput
@@ -52,8 +54,10 @@ params_pqtl = [
 @pytest.mark.parametrize("url, params", params_pqtl)
 def test_pqtl(url: str, params: Dict[str, object]):
     response = client.get(url, params=params, headers=unittest_headers)
-    assert response.status_code == 200
+    assert response.raise_for_status is not None
+    data = response.json()
+    logger.info(pformat(data))
     if isinstance(response.json()["results"], list):
-        assert len(response.json()["results"]) > 0
+        assert len(data["results"]) > 0
     else:
-        assert response.json()["results"] is not None
+        assert data["results"] is not None

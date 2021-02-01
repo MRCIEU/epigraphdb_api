@@ -15,7 +15,12 @@ class DruggableGeneItem(BaseModel):
 
 class GeneSemmedTripleItem(BaseModel):
     predicate: str
-    object_name: str
+
+
+class GeneSemmedTermItem(BaseModel):
+    id: str
+    name: str
+    type: List[str]
 
 
 class GeneDrugsResultItem(BaseModel):
@@ -38,6 +43,7 @@ class GeneLiteratureItem(BaseModel):
 
     gene: GeneItem
     pubmed_id: List[str]
+    lt: GeneSemmedTermItem
     st: GeneSemmedTripleItem
 
 

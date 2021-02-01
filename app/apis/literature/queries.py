@@ -1,9 +1,9 @@
 class GwasPairwise:
     _head = """
         MATCH
-            (gwas:Gwas)-[gs1:GWAS_SEM]->(s1:SemmedTriple)
-            -[:SEM_OBJ]->(st:SemmedTerm)<-[:SEM_SUB]-
-            (s2:SemmedTriple)<-[gs2:GWAS_SEM]-(assoc_gwas:Gwas)
+            (gwas:Gwas)-[gs1:GWAS_TO_LITERATURE_TRIPLE]->(s1:LiteratureTriple)
+            -[:SEMMEDDB_OBJ]->(st:LiteratureTerm)<-[:SEMMEDDB_SUB]-
+            (s2:LiteratureTriple)<-[gs2:GWAS_TO_LITERATURE_TRIPLE]-(assoc_gwas:Gwas)
         WHERE
     """
     _where = """
@@ -16,9 +16,9 @@ class GwasPairwise:
         RETURN
             gwas {{.id, .trait}},
             gs1 {{.pval, .localCount}},
-            s1 {{.id, .subject_name, .object_name, .predicate}},
+            s1 {{.id, .subject_id, .object_id, .predicate}},
             st {{.name, .type}},
-            s2 {{.id, .subject_name, .object_name, .predicate}},
+            s2 {{.id, .subject_id, .object_id, .predicate}},
             gs2 {{.pval, .localCount}},
             assoc_gwas {{.id, .trait}}
         SKIP {skip}
@@ -63,8 +63,8 @@ class GwasPairwise:
 class Gwas:
     _head = """
         MATCH
-            (gwas:Gwas)-[gs:GWAS_SEM]->(triple:SemmedTriple)
-            -[sl:SEM_TO_LIT]->(lit:Literature)
+            (gwas:Gwas)-[gs:GWAS_TO_LITERATURE_TRIPLE]->(triple:LiteratureTriple)
+            -[sl:SEMMEDDB_TO_LIT]->(lit:Literature)
         WHERE
     """
     _where = """
@@ -74,14 +74,14 @@ class Gwas:
         WITH
             gwas, triple, lit, gs
         MATCH
-            (gwas)-[gl:GWAS_TO_LIT]-(lit)
+            (gwas)-[gl:GWAS_TO_LITERATURE]-(lit)
     """
     _tail = """
         RETURN
             gwas {{.id, .trait}},
             gs {{.pval, .localCount}},
-            triple {{.id, .subject_name, .object_name, .predicate}},
-            lit {{.pubmed_id}}
+            triple {{.id, .predicate}},
+            lit {{.id}}
         SKIP {skip}
         LIMIT {limit}
     """
@@ -105,7 +105,7 @@ class Gwas:
         _head
         + """
         gwas.id = "{gwas_id}" AND
-        triple.id = "{semmed_triple_id}"
+        triple.name = "{semmed_triple_name}"
         """
         + _where
         + _tail
@@ -114,7 +114,7 @@ class Gwas:
         _head
         + """
         gwas.trait {eq_symbol} "{trait}" AND
-        triple.id = "{semmed_triple_id}"
+        triple.name = "{semmed_triple_name}"
         """
         + _where
         + _tail

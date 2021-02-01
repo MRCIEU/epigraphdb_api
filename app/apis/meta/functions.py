@@ -1,6 +1,6 @@
 from typing import Optional
 
-from app.resources.schema import epigraphdb_meta_nodes
+from app.models.schema_meta_nodes import meta_node_id_name_mappings
 
 from .queries import (
     full_node_data_fragment,
@@ -21,8 +21,8 @@ def nodes_search_query_builder(
 ) -> str:
     """Returns the query for the search.
     """
-    name_field = epigraphdb_meta_nodes[meta_node]["name"]
-    id_field = epigraphdb_meta_nodes[meta_node]["id"]
+    name_field = meta_node_id_name_mappings[meta_node]["name"]
+    id_field = meta_node_id_name_mappings[meta_node]["id"]
     if full_data:
         node_data_field = full_node_data_fragment
     else:
@@ -56,7 +56,7 @@ def nodes_neighbour_query_builder(
 ) -> str:
     """Query builder for searching neighbours of a node
     """
-    id_field = epigraphdb_meta_nodes[meta_node]["id"]
+    id_field = meta_node_id_name_mappings[meta_node]["id"]
     query = search_node_neighbour_by_id_template.format(
         meta_node=meta_node, id_field=id_field, id_query=id, limit=limit
     )
@@ -71,8 +71,8 @@ def paths_search_query_builder(
     max_path_length: int = 3,
     limit: int = 100,
 ) -> str:
-    id_field_source = epigraphdb_meta_nodes[meta_node_source]["id"]
-    id_field_target = epigraphdb_meta_nodes[meta_node_target]["id"]
+    id_field_source = meta_node_id_name_mappings[meta_node_source]["id"]
+    id_field_target = meta_node_id_name_mappings[meta_node_target]["id"]
     query = search_path_template.format(
         meta_node_source=meta_node_source,
         meta_node_target=meta_node_target,

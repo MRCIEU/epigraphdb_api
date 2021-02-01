@@ -3,6 +3,7 @@ from typing import Dict, List, Optional
 
 import yaml
 from fastapi import APIRouter, HTTPException, Query
+from pydantic.schema import model_schema
 from starlette.responses import FileResponse
 
 from app.models import ApiGenericResponse
@@ -11,9 +12,11 @@ from app.models.api_meta_graph import (
     EpigraphdbMetaNodesFull,
     EpigraphdbMetaRels,
 )
-from app.models.schema_meta_nodes import meta_node_schema
+from app.models.schema_meta_nodes import (
+    meta_node_id_name_mappings,
+    meta_node_schema,
+)
 from app.models.schema_meta_rels import meta_path_schema, meta_rel_schema
-from app.resources.schema import epigraphdb_meta_nodes
 from app.settings import api_private_access, epigraphdb
 from app.utils.logging import log_args, logger
 from app.utils.schema import (
@@ -68,7 +71,7 @@ def meta_nodes_list():
 def meta_nodes_id_name_schema():
     """Show the current id / name schema for meta nodes."""
     log_args(api="/meta/nodes/id-name-schema")
-    res = epigraphdb_meta_nodes
+    res = meta_node_id_name_mappings
     return res
 
 
@@ -99,8 +102,8 @@ def nodes_list(
             meta_node=meta_node.value, skip=offset, limit=limit
         )
     else:
-        id_field = epigraphdb_meta_nodes[meta_node.value]["id"]
-        name_field = epigraphdb_meta_nodes[meta_node.value]["name"]
+        id_field = meta_node_id_name_mappings[meta_node.value]["id"]
+        name_field = meta_node_id_name_mappings[meta_node.value]["name"]
         query = MetaQueries.get_node_id_and_name_fields.format(
             meta_node=meta_node.value,
             id_field=id_field,
@@ -212,11 +215,11 @@ if api_private_access:
         """
         res = {
             "meta_nodes": {
-                meta_node: model.schema()
+                meta_node: model_schema(model)  # type: ignore
                 for meta_node, model in meta_node_schema.items()
             },
             "meta_rels": {
-                meta_rel: model.schema()
+                meta_rel: model_schema(model)  # type: ignore
                 for meta_rel, model in meta_rel_schema.items()
             },
             "meta_paths": {

@@ -1,53 +1,85 @@
-from typing import List, Optional
+from typing import Optional
 
-from app.utils.schema import Neo4jEntity
+from pydantic.dataclasses import dataclass
+
+from app.utils.schema import EpigraphdbRelEntity
 
 
-class BN_GEN_COR(Neo4jEntity):
-    """Study results from "UKBB Genetic Correlation" project
-    by Neale Lab.
-    """
+@dataclass
+class BIORXIV_OBJ(EpigraphdbRelEntity):
+    class _Path:
+        source = "LiteratureTriple"
+        target = "LiteratureTerm"
+
+
+@dataclass
+class BIORXIV_PREDICATE(EpigraphdbRelEntity):
+
+    count: int
+    predicate: str
+
+    class _Path:
+        source = "LiteratureTerm"
+        target = "LiteratureTerm"
+
+
+@dataclass
+class BIORXIV_SUB(EpigraphdbRelEntity):
+    class _Path:
+        source = "LiteratureTriple"
+        target = "LiteratureTerm"
+
+
+@dataclass
+class BIORXIV_TO_LIT(EpigraphdbRelEntity):
+    class _Path:
+        source = "LiteratureTriple"
+        target = "Literature"
+
+
+@dataclass
+class GEN_COR(EpigraphdbRelEntity):
 
     rg: float
-    se: float
-    z: float
     p: float
-    h2_obs: float
-    h2_obs_se: float
-    h2_int: float
-    h2_int_se: float
-    gcov_int: float
-    gcov_int_se: float
+    h2: Optional[float] = None
+    h2_SE: Optional[float] = None
+    h2_intercept: Optional[float] = None
+    h2_intercept_SE: Optional[float] = None
+    rpheno: Optional[float] = None
+    rg_SE: Optional[float] = None
+    Z: Optional[float] = None
+    rg_intercept: Optional[float] = None
+    rg_intercept_SE: Optional[float] = None
 
     class _Path:
         source = "Gwas"
         target = "Gwas"
 
 
-class CPIC(Neo4jEntity):
-    pharmgkb_level_of_evidence: str
+@dataclass
+class CPIC(EpigraphdbRelEntity):
+
     cpic_level: str
     guideline: str
     pgx_on_fda_label: str
+    pharmgkb_level_of_evidence: str
 
     class _Path:
         source = "Drug"
         target = "Gene"
 
 
-class EFO_CHILD_OF(Neo4jEntity):
+@dataclass
+class EFO_CHILD_OF(EpigraphdbRelEntity):
     class _Path:
         source = "Efo"
         target = "Efo"
 
 
-class EVENT_IN_PATHWAY(Neo4jEntity):
-    class _Path:
-        source = "Pathway"
-        target = "Event"
+@dataclass
+class EXPRESSED_IN(EpigraphdbRelEntity):
 
-
-class EXPRESSED_IN(Neo4jEntity):
     tpm: float
 
     class _Path:
@@ -55,23 +87,22 @@ class EXPRESSED_IN(Neo4jEntity):
         target = "Tissue"
 
 
-class GENE_TO_LITERATURE(Neo4jEntity):
-    class _Path:
-        source = "Gene"
-        target = "Literature"
-
-
-class GENE_TO_PROTEIN(Neo4jEntity):
+@dataclass
+class GENE_TO_PROTEIN(EpigraphdbRelEntity):
     class _Path:
         source = "Gene"
         target = "Protein"
 
 
-class GWAS_NLP(Neo4jEntity):
-    """Pairwise semantic similarity of GWAS traits.
+@dataclass
+class GWAS_EFO_EBI(EpigraphdbRelEntity):
+    class _Path:
+        source = "Gwas"
+        target = "Efo"
 
-    Precomputed results from Vectology (BioSentVec model).
-    """
+
+@dataclass
+class GWAS_NLP(EpigraphdbRelEntity):
 
     score: float
 
@@ -80,11 +111,8 @@ class GWAS_NLP(Neo4jEntity):
         target = "Gwas"
 
 
-class GWAS_NLP_EFO(Neo4jEntity):
-    """Semantic similarity of a GWAS trait to an EFO term.
-
-    Precomputed results from Vectology (BioSentVec model).
-    """
+@dataclass
+class GWAS_NLP_EFO(EpigraphdbRelEntity):
 
     score: float
 
@@ -93,141 +121,122 @@ class GWAS_NLP_EFO(Neo4jEntity):
         target = "Efo"
 
 
-class GWAS_SEM(Neo4jEntity):
-    localCount: int
-    localTotal: int
+@dataclass
+class GWAS_TO_LITERATURE_TRIPLE(EpigraphdbRelEntity):
+
     globalCount: int
     globalTotal: int
+    localCount: int
+    localTotal: int
     odds: float
     pval: float
 
     class _Path:
         source = "Gwas"
-        target = "SemmedTriple"
+        target = "LiteratureTriple"
 
 
-class GWAS_TO_LIT(Neo4jEntity):
+@dataclass
+class GWAS_TO_LITERATURE(EpigraphdbRelEntity):
     class _Path:
         source = "Gwas"
         target = "Literature"
 
 
-class GWAS_TO_VARIANT(Neo4jEntity):
+@dataclass
+class GWAS_TO_VARIANT(EpigraphdbRelEntity):
+
     beta: float
-    se: Optional[float]
     pval: float
-    eaf: Optional[float]
     samplesize: float
-    ncase: Optional[int]
-    ncontrol: Optional[int]
+    eaf: Optional[float] = None
+    ncase: Optional[int] = None
+    ncontrol: Optional[int] = None
+    se: Optional[float] = None
 
     class _Path:
         source = "Gwas"
         target = "Variant"
 
 
-class INTACT_INTERACTS_WITH_GENE_GENE(Neo4jEntity):
-    intact_confidence_score: float
-    intact_detection_method: List[str]
-    intact_type: List[str]
-    intact_source: List[str]
-    intact_identifier: List[str]
+@dataclass
+class MEDRXIV_OBJ(EpigraphdbRelEntity):
+    class _Path:
+        source = "LiteratureTriple"
+        target = "LiteratureTerm"
+
+
+@dataclass
+class MEDRXIV_PREDICATE(EpigraphdbRelEntity):
+
+    count: int
+    predicate: str
 
     class _Path:
-        source = "Gene"
-        target = "Gene"
+        source = "LiteratureTerm"
+        target = "LiteratureTerm"
 
 
-class INTACT_INTERACTS_WITH_PROTEIN_PROTEIN(Neo4jEntity):
-    intact_confidence_score: float
-    intact_detection_method: List[str]
-    intact_type: List[str]
-    intact_source: List[str]
-    intact_identifier: List[str]
-
+@dataclass
+class MEDRXIV_SUB(EpigraphdbRelEntity):
     class _Path:
-        source = "Protein"
-        target = "Protein"
+        source = "LiteratureTriple"
+        target = "LiteratureTerm"
 
 
-class INTACT_INTERACTS_WITH_GENE_PROTEIN(Neo4jEntity):
-    intact_confidence_score: float
-    intact_detection_method: List[str]
-    intact_type: List[str]
-    intact_source: List[str]
-    intact_identifier: List[str]
-
+@dataclass
+class MEDRXIV_TO_LIT(EpigraphdbRelEntity):
     class _Path:
-        source = "Gene"
-        target = "Protein"
+        source = "LiteratureTriple"
+        target = "Literature"
 
 
-class INTACT_NOT_INTERACTS_WITH(Neo4jEntity):
-    intact_confidence_score: float
-    intact_detection_method: List[str]
-    intact_type: List[str]
-    intact_source: List[str]
-    intact_identifier: List[str]
-
-    class _Path:
-        source = "Protein"
-        target = "Protein"
-
-
-class METAMAP_LITE(Neo4jEntity):
-    """Mapping between Gwas and SemmedTerm via MetaMap Lite.
-    """
+@dataclass
+class METAMAP_LITE(EpigraphdbRelEntity):
 
     mmi_score: float
+    mesh: Optional[str] = None
 
     class _Path:
         source = "Gwas"
-        target = "SemmedTerm"
+        target = "LiteratureTerm"
 
 
-class MONDO_MAP_EFO(Neo4jEntity):
+@dataclass
+class MONDO_MAP_EFO(EpigraphdbRelEntity):
     class _Path:
         source = "Disease"
         target = "Efo"
 
 
-class MONDO_MAP_UMLS(Neo4jEntity):
+@dataclass
+class MONDO_MAP_UMLS(EpigraphdbRelEntity):
     class _Path:
         source = "Disease"
-        target = "SemmedTerm"
+        target = "LiteratureTerm"
 
 
-class MR(Neo4jEntity):
-    """Pairwise Mendelian randomization evidence.
+@dataclass
+class MR_EVE_MR(EpigraphdbRelEntity):
 
-    Results from MR-EvE.
-    """
-
-    # TODO: review
-    method: str
-    nsnp: float
     b: float
-    se: Optional[float]
-    ci_low: Optional[float]
-    ci_upp: Optional[float]
-    pval: Optional[float]
-    selection: str
+    method: str
     moescore: str
-    log10pval: Optional[float]
-
-    class Config:
-        extra = "forbid"
+    nsnp: float
+    selection: str
+    ci_low: Optional[float] = None
+    ci_upp: Optional[float] = None
+    log10pval: Optional[float] = None
+    pval: Optional[float] = None
+    se: Optional[float] = None
 
     class _Path:
         source = "Gwas"
         target = "Gwas"
 
 
-class OBS_COR(Neo4jEntity):
-    """Pairwise Spearman rank correlation for UK Biobank GWAS (ukb-b).
-
-    Results in-house by Benjamin Elsworth.
-    """
+@dataclass
+class OBS_COR(EpigraphdbRelEntity):
 
     cor: float
 
@@ -236,13 +245,16 @@ class OBS_COR(Neo4jEntity):
         target = "Gwas"
 
 
-class OPENTARGETS_DRUG_TO_DISEASE(Neo4jEntity):
+@dataclass
+class OPENTARGETS_DRUG_TO_DISEASE(EpigraphdbRelEntity):
     class _Path:
         source = "Drug"
         target = "Disease"
 
 
-class OPENTARGETS_DRUG_TO_TARGET(Neo4jEntity):
+@dataclass
+class OPENTARGETS_DRUG_TO_TARGET(EpigraphdbRelEntity):
+
     phase: str
     action_type: str
 
@@ -251,101 +263,78 @@ class OPENTARGETS_DRUG_TO_TARGET(Neo4jEntity):
         target = "Gene"
 
 
-class PATHWAY_TO_DISEASE(Neo4jEntity):
+@dataclass
+class PATHWAY_CHILD_OF(EpigraphdbRelEntity):
     class _Path:
         source = "Pathway"
-        target = "Disease"
+        target = "Pathway"
 
 
-class PATHWAY_TO_LITERATURE(Neo4jEntity):
-    class _Path:
-        source = "Pathway"
-        target = "Literature"
-
-
-class PRECEDING_EVENT(Neo4jEntity):
-    class _Path:
-        source = "Event"
-        target = "Event"
-
-
-class PROTEIN_IN_EVENT(Neo4jEntity):
-    class _Path:
-        source = "Protein"
-        target = "Event"
-
-
-class PROTEIN_TO_DISEASE(Neo4jEntity):
-    class _Path:
-        source = "Protein"
-        target = "Disease"
-
-
-class PROTEIN_TO_LITERATURE(Neo4jEntity):
-    class _Path:
-        source = "Protein"
-        target = "Literature"
-
-
-class PROTEIN_IN_PATHWAY(Neo4jEntity):
+@dataclass
+class PROTEIN_IN_PATHWAY(EpigraphdbRelEntity):
     class _Path:
         source = "Protein"
         target = "Pathway"
 
 
-class PRS(Neo4jEntity):
-    """Pairwise polygenic risk scores between GWAS.
+@dataclass
+class PRS(EpigraphdbRelEntity):
 
-    Results from PRS Atlas.
-    """
-
-    nsnps: int
-    model: str
     beta: float
-    se: float
+    model: str
+    n: int
+    nsnps: int
     p: float
     r2: float
-    n: int
+    se: float
 
     class _Path:
         source = "Gwas"
         target = "Gwas"
 
 
-class SEM_GENE(Neo4jEntity):
+@dataclass
+class TERM_TO_GENE(EpigraphdbRelEntity):
     class _Path:
-        source = "SemmedTerm"
+        source = "LiteratureTerm"
         target = "Gene"
 
 
-class SEM_OBJ(Neo4jEntity):
+@dataclass
+class SEMMEDDB_OBJ(EpigraphdbRelEntity):
     class _Path:
-        source = "SemmedTriple"
-        target = "SemmedTerm"
+        source = "LiteratureTriple"
+        target = "LiteratureTerm"
 
 
-class SEM_PREDICATE(Neo4jEntity):
+@dataclass
+class SEMMEDDB_PREDICATE(EpigraphdbRelEntity):
+
     predicate: str
     count: int
 
     class _Path:
-        source = "SemmedTerm"
-        target = "SemmedTerm"
+        source = "LiteratureTerm"
+        target = "LiteratureTerm"
 
 
-class SEM_SUB(Neo4jEntity):
+@dataclass
+class SEMMEDDB_SUB(EpigraphdbRelEntity):
     class _Path:
-        source = "SemmedTriple"
-        target = "SemmedTerm"
+        source = "LiteratureTriple"
+        target = "LiteratureTerm"
 
 
-class SEM_TO_LIT(Neo4jEntity):
+@dataclass
+class SEMMEDDB_TO_LIT(EpigraphdbRelEntity):
     class _Path:
-        source = "SemmedTriple"
+        source = "LiteratureTriple"
         target = "Literature"
 
 
-class STRING_INTERACT_WITH(Neo4jEntity):
+@dataclass
+class STRING_INTERACT_WITH(EpigraphdbRelEntity):
+
     score: float
 
     class _Path:
@@ -353,7 +342,9 @@ class STRING_INTERACT_WITH(Neo4jEntity):
         target = "Protein"
 
 
-class TOPHITS(Neo4jEntity):
+@dataclass
+class OPENGWAS_TOPHITS(EpigraphdbRelEntity):
+
     beta: float
     pval: float
 
@@ -362,7 +353,9 @@ class TOPHITS(Neo4jEntity):
         target = "Variant"
 
 
-class VARIANT_TO_GENE(Neo4jEntity):
+@dataclass
+class VARIANT_TO_GENE(EpigraphdbRelEntity):
+
     location: str
     allele: str
     feature: str
@@ -381,9 +374,8 @@ class VARIANT_TO_GENE(Neo4jEntity):
         target = "Gene"
 
 
-class XQTL_MULTI_SNP_MR(Neo4jEntity):
-    """Association of exposure gene and outcome phenotype in the multi SNP MR results of xQTL.
-    """
+@dataclass
+class XQTL_MULTI_SNP_MR(EpigraphdbRelEntity):
 
     beta: float
     se: float
@@ -396,9 +388,8 @@ class XQTL_MULTI_SNP_MR(Neo4jEntity):
         target = "Gwas"
 
 
-class XQTL_SINGLE_SNP_MR_GENE_GWAS(Neo4jEntity):
-    """Association of exposure gene and outcome phenotype in the single SNP MR results of xQTL.
-    """
+@dataclass
+class XQTL_SINGLE_SNP_MR_GENE_GWAS(EpigraphdbRelEntity):
 
     beta: float
     se: float
@@ -411,62 +402,68 @@ class XQTL_SINGLE_SNP_MR_GENE_GWAS(Neo4jEntity):
         target = "Gwas"
 
 
-class XQTL_SINGLE_SNP_MR_SNP_GENE(Neo4jEntity):
-    """Association of SNP and exposure gene in the single SNP MR results of xQTL.
-    """
-
+@dataclass
+class XQTL_SINGLE_SNP_MR_SNP_GENE(EpigraphdbRelEntity):
     class _Path:
         source = "Variant"
         target = "Gene"
 
 
+@dataclass
+class GENE_TO_DISEASE(EpigraphdbRelEntity):
+
+    gene_relationship_type: str
+    last_updated: Optional[str] = None
+
+    class _Path:
+        source = "Gene"
+        target = "Disease"
+
+
 meta_rel_schema = {
-    "BN_GEN_COR": BN_GEN_COR,
+    "BIORXIV_OBJ": BIORXIV_OBJ,
+    "BIORXIV_PREDICATE": BIORXIV_PREDICATE,
+    "BIORXIV_SUB": BIORXIV_SUB,
+    "BIORXIV_TO_LIT": BIORXIV_TO_LIT,
     "CPIC": CPIC,
     "EFO_CHILD_OF": EFO_CHILD_OF,
-    "EVENT_IN_PATHWAY": EVENT_IN_PATHWAY,
     "EXPRESSED_IN": EXPRESSED_IN,
-    "GENE_TO_LITERATURE": GENE_TO_LITERATURE,
     "GENE_TO_PROTEIN": GENE_TO_PROTEIN,
+    "GEN_COR": GEN_COR,
+    "GWAS_EFO_EBI": GWAS_EFO_EBI,
     "GWAS_NLP": GWAS_NLP,
     "GWAS_NLP_EFO": GWAS_NLP_EFO,
-    "GWAS_SEM": GWAS_SEM,
-    "GWAS_TO_LIT": GWAS_TO_LIT,
+    "GWAS_TO_LITERATURE": GWAS_TO_LITERATURE,
+    "GWAS_TO_LITERATURE_TRIPLE": GWAS_TO_LITERATURE_TRIPLE,
     "GWAS_TO_VARIANT": GWAS_TO_VARIANT,
-    "INTACT_INTERACTS_WITH_GENE_GENE": INTACT_INTERACTS_WITH_GENE_GENE,
-    "INTACT_INTERACTS_WITH_GENE_PROTEIN": INTACT_INTERACTS_WITH_GENE_PROTEIN,
-    "INTACT_INTERACTS_WITH_PROTEIN_PROTEIN": INTACT_INTERACTS_WITH_PROTEIN_PROTEIN,
-    "INTACT_NOT_INTERACTS_WITH": INTACT_NOT_INTERACTS_WITH,
+    "MEDRXIV_OBJ": MEDRXIV_OBJ,
+    "MEDRXIV_PREDICATE": MEDRXIV_PREDICATE,
+    "MEDRXIV_SUB": MEDRXIV_SUB,
+    "MEDRXIV_TO_LIT": MEDRXIV_TO_LIT,
     "METAMAP_LITE": METAMAP_LITE,
     "MONDO_MAP_EFO": MONDO_MAP_EFO,
     "MONDO_MAP_UMLS": MONDO_MAP_UMLS,
-    "MR": MR,
+    "MR_EVE_MR": MR_EVE_MR,
     "OBS_COR": OBS_COR,
     "OPENTARGETS_DRUG_TO_DISEASE": OPENTARGETS_DRUG_TO_DISEASE,
     "OPENTARGETS_DRUG_TO_TARGET": OPENTARGETS_DRUG_TO_TARGET,
-    "PATHWAY_TO_DISEASE": PATHWAY_TO_DISEASE,
-    "PATHWAY_TO_LITERATURE": PATHWAY_TO_LITERATURE,
-    "PRECEDING_EVENT": PRECEDING_EVENT,
-    "PROTEIN_IN_EVENT": PROTEIN_IN_EVENT,
-    "PROTEIN_TO_DISEASE": PROTEIN_TO_DISEASE,
-    "PROTEIN_TO_LITERATURE": PROTEIN_TO_LITERATURE,
+    "PATHWAY_CHILD_OF": PATHWAY_CHILD_OF,
     "PROTEIN_IN_PATHWAY": PROTEIN_IN_PATHWAY,
     "PRS": PRS,
-    "SEM_GENE": SEM_GENE,
-    "SEM_OBJ": SEM_OBJ,
-    "SEM_PREDICATE": SEM_PREDICATE,
-    "SEM_SUB": SEM_SUB,
-    "SEM_TO_LIT": SEM_TO_LIT,
+    "TERM_TO_GENE": TERM_TO_GENE,
+    "SEMMEDDB_OBJ": SEMMEDDB_OBJ,
+    "SEMMEDDB_PREDICATE": SEMMEDDB_PREDICATE,
+    "SEMMEDDB_SUB": SEMMEDDB_SUB,
+    "SEMMEDDB_TO_LIT": SEMMEDDB_TO_LIT,
     "STRING_INTERACT_WITH": STRING_INTERACT_WITH,
-    "TOPHITS": TOPHITS,
+    "OPENGWAS_TOPHITS": OPENGWAS_TOPHITS,
     "VARIANT_TO_GENE": VARIANT_TO_GENE,
     "XQTL_MULTI_SNP_MR": XQTL_MULTI_SNP_MR,
     "XQTL_SINGLE_SNP_MR_GENE_GWAS": XQTL_SINGLE_SNP_MR_GENE_GWAS,
     "XQTL_SINGLE_SNP_MR_SNP_GENE": XQTL_SINGLE_SNP_MR_SNP_GENE,
+    "GENE_TO_DISEASE": GENE_TO_DISEASE,
 }
 
-# TODO: how to solve Type[BaseModel] has no attribute _Path?
-#       do we need a dedicated child class?
 meta_path_schema = {
     key: (value._Path.source, value._Path.target)  # type: ignore
     for key, value in meta_rel_schema.items()
