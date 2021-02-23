@@ -21,22 +21,18 @@ class EntityConfig:
 class EpigraphdbNodeEntity:
     "Pydantic basemodel for an epigraphdb node"
 
-    # NOTE: although specified here, they are ignored by pydantic
-    _id: str
-    _name: str
-    _source: List[str]
-
 
 @dataclass(config=EntityConfig)
 class EpigraphdbRelEntity:
     "Pydantic basemodel for an epigraphdb rel"
 
-    # NOTE: although specified here, they are ignored by pydantic
-    _source: List[str]
-
     class _Path:
         source: str
         target: str
+
+
+epigraphdb_node_meta_props = ["_id", "_name", "_source"]
+epigraphdb_rel_meta_props = ["_source"]
 
 
 def generate_schema(overwrite: bool = False):

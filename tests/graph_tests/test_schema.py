@@ -6,6 +6,10 @@ from loguru import logger
 from app.models.schema_meta_nodes import meta_node_schema
 from app.models.schema_meta_rels import meta_path_schema, meta_rel_schema
 from app.settings import epigraphdb
+from app.utils.schema import (
+    epigraphdb_node_meta_props,
+    epigraphdb_rel_meta_props,
+)
 
 
 def test_meta_node_name():
@@ -43,7 +47,18 @@ def test_meta_node_schema(meta_node_name):
     for item in res:
         # if None => black list
         if schema_model is not None:
-            node = schema_model(**item["n"])
+            node_item = item["n"]
+            # assert meta props exist and not None
+            for prop in epigraphdb_node_meta_props:
+                assert prop in node_item.keys()
+                assert node_item[prop] is not None
+            # assert schema conform
+            prop_items = {
+                key: value
+                for key, value in node_item.items()
+                if key not in epigraphdb_node_meta_props
+            }
+            node = schema_model(**prop_items)
             assert isinstance(node, schema_model)
 
 
@@ -62,7 +77,18 @@ def test_meta_rel_schema(meta_rel_name):
     res = epigraphdb.run_query(query)["results"]
     logger.info(pformat(res)[:1_000])
     for item in res:
-        rel = schema_model(**item["r"])
+        rel_item = item["r"]
+        # assert meta props exist and not None
+        for prop in epigraphdb_rel_meta_props:
+            assert prop in rel_item.keys()
+            assert rel_item[prop] is not None
+        # assert schema conform
+        prop_items = {
+            key: value
+            for key, value in rel_item.items()
+            if key not in epigraphdb_rel_meta_props
+        }
+        rel = schema_model(**prop_items)
         assert isinstance(rel, schema_model)
 
 
