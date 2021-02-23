@@ -12,6 +12,7 @@ class GeneticCorQueries:
           .Z, .p,
           .rg, .rg_SE,
           .rg_intercept, .rg_intercept_SE,
+          .h2, .h2_SE,
           .h2_intercept, .h2_intercept_SE
         }}
     ORDER BY

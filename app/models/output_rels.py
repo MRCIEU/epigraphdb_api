@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -18,11 +20,13 @@ class GeneticCorItem(BaseModel):
     Z: float
     p: float
     rg: float
-    rg_SE: float
-    rg_intercept: float
-    rg_intercept_SE: float
-    h2_intercept: float
-    h2_intercept_SE: float
+    rg_SE: Optional[float] = None
+    rg_intercept: Optional[float] = None
+    rg_intercept_SE: Optional[float] = None
+    h2: Optional[float] = None
+    h2_SE: Optional[float] = None
+    h2_intercept: Optional[float] = None
+    h2_intercept_SE: Optional[float] = None
 
 
 class GwasToVariantItem(BaseModel):
