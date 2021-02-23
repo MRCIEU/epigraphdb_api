@@ -22,7 +22,6 @@ def get_gene_druggability_ppi(gene_name: str):
     return res
 
 
-# TODO: check if model conformed
 @router.get("/gene/literature", response_model=models.GeneLiteratureResponse)
 def get_gene_literature(gene_name: str, object_name: str):
     """

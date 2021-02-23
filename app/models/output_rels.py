@@ -33,9 +33,8 @@ class GwasToVariantItem(BaseModel):
     beta: float
     se: float
     pval: float
-    # TODO: update these
-    # eaf: Optional[float]
     samplesize: float
+    eaf: Optional[float] = None
 
 
 class PrsItem(BaseModel):

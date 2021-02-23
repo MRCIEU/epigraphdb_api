@@ -12,8 +12,6 @@ class EpigraphdbMetaNodesFull(str, Enum):
     Literature = "Literature"
     LiteratureTerm = "LiteratureTerm"
     LiteratureTriple = "LiteratureTriple"
-    # FIXME: meta
-    # Meta = "Meta"
     Pathway = "Pathway"
     Protein = "Protein"
     Tissue = "Tissue"

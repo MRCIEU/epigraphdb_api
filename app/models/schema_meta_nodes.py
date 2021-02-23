@@ -176,13 +176,6 @@ class Tissue(EpigraphdbNodeEntity):
         _name = "name"
 
 
-# FIXME: meta
-# class Meta(EpigraphdbNodeEntity):
-
-#     build_date: Any
-#     graph_version: str
-
-
 @dataclass
 class Variant(EpigraphdbNodeEntity):
 
@@ -207,8 +200,6 @@ meta_node_schema = {
     "Literature": Literature,
     "LiteratureTerm": LiteratureTerm,
     "LiteratureTriple": LiteratureTriple,
-    # FIXME: meta
-    # "Meta": Meta,
     "Pathway": Pathway,
     "Protein": Protein,
     "Tissue": Tissue,

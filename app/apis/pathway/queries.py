@@ -11,7 +11,7 @@ class PathwayQueries:
     RETURN
         gwas {{.id, .trait}},
         gwas_to_variant
-            {{.beta, .se, .pval, .samplesize}},
+            {{.beta, .se, .pval, .eaf, .samplesize}},
         variant {{.name}},
         gene {{.name}},
         protein {{.uniprot_id}},
