@@ -1,3 +1,4 @@
+# TODO: ditch Rmarkdown and use jinja2
 from pprint import pformat
 
 from epigraphdb_common_utils.epigraphdb_data_dicts import (
@@ -16,10 +17,10 @@ def rmd_render_meta_nodes(api_url: str):
             print("> ", data["doc"], "\n")
 
         if data["id"] is not None:
-            print("**`id` property**: `{id}`\n".format(id=data["id"],))
+            print("**`_id` property**: `{id}`\n".format(id=data["id"],))
         if data["name"] is not None:
             print(
-                "**`label` property**: `{label}`\n".format(label=data["name"],)
+                "**`_name` property**: `{label}`\n".format(label=data["name"],)
             )
 
         if data["properties"] is not None:
@@ -54,10 +55,11 @@ def rmd_render_meta_rels(api_url: str):
 
 def render_properties(property):
     for key, value in property.items():
-        if value is None:
-            print("- `{prop}`\n".format(prop=key))
-        else:
-            print("- `{prop}`: {doc}\n".format(prop=key, doc=value))
+        print(
+            "- `{prop}`: `{type}`; {doc}\n".format(
+                prop=key, doc=value["doc"], type=value["type"]
+            )
+        )
 
 
 def render_entity_sneak_peek(meta_entity: str, entity_type: str, api_url: str):

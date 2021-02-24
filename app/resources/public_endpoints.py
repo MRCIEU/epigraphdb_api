@@ -587,7 +587,7 @@ util_params = {
                         """
                         MATCH (n:Gwas)-[r:MR_EVE_MR]-(m:Gwas)
                         WHERE r.pval < 1e-5
-                        RETURN n, r, m
+                        RETURN properties(n), properties(r), properties(m)
                         LIMIT 10
                     """.replace(
                             "\n", " "

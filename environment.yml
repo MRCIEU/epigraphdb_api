@@ -19,7 +19,7 @@ dependencies:
   - environs
   - jinja2
   - loguru
-  - neo4j-python-driver
+  - neo4j-python-driver=1.7
   - requests
   - uvicorn
   - pandas
