@@ -23,7 +23,7 @@ def rmd_render_meta_nodes(api_url: str):
                 "**`_name` property**: `{label}`\n".format(label=data["name"],)
             )
 
-        if data["properties"] is not None:
+        if len(data["properties"]) > 0:
             print("**Properties**:\n")
             render_properties(data["properties"])
             print("\n")
@@ -45,7 +45,7 @@ def rmd_render_meta_rels(api_url: str):
             )
         )
 
-        if data["properties"] is not None:
+        if len(data["properties"]) > 0:
             print("**Properties**:\n")
             render_properties(data["properties"])
             print("\n")
