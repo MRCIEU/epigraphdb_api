@@ -9,8 +9,8 @@ class GeneticCorQueries:
         trait {{.id, .trait}},
         assoc_trait {{.id, .trait}},
         gc {{
-          .Z, .p,
           .rg, .rg_SE,
+          .Z, .p,
           .rg_intercept, .rg_intercept_SE,
           .h2, .h2_SE,
           .h2_intercept, .h2_intercept_SE
