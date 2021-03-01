@@ -14,7 +14,6 @@ class GraphDbMetrics(str, Enum):
     count_nodes_by_label = "count_nodes_by_label"
     count_rels_by_type = "count_rels_by_type"
     schema = "schema"
-    graph_metadata = "graph_metadata"
 
 
 class PingResponse(BaseModel):

@@ -67,7 +67,3 @@ class DbStatusQueries:
         type(r) as relationshipType,
         count(type(r)) as count
     """
-
-    graph_metadata = """
-    MATCH (n:Meta) RETURN n as meta_data
-    """

@@ -11,7 +11,7 @@ from .models import GraphDbMetrics, PingResponse
 from .queries import DbStatusQueries
 
 router = APIRouter()
-pqtl_disabled_metrics = ["schema", "graph_metadata"]
+pqtl_disabled_metrics = ["schema"]
 
 
 @router.get("/status/ping", response_model=List[PingResponse])
