@@ -35,6 +35,14 @@ lint:
 test:
 	python -m pytest -vv
 
+## jupyter lab
+jupyterlab:
+	jupyter lab \
+		--allow-root \
+		--no-browser \
+		--ip 0.0.0.0 \
+		--port 80
+
 ## ==== documentation ====
 
 ## Generate documentation (requires dedicated conda env "epigraphdb_api")
