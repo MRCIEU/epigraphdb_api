@@ -30,5 +30,5 @@ class Pathway:
           RETURN
               protein.uniprot_id AS uniprot_id,
               count(p) AS pathway_count,
-              collect(pathway.reactome_id) AS pathway_reactome_id
+              collect(pathway.id) AS pathway_reactome_id
       """
