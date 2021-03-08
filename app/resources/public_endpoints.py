@@ -562,22 +562,6 @@ util_params = {
             },
         ],
     },
-    "POST /cypher/builder/plain": {
-        "func": cypher.post_cypher_builder_plain,
-        "tests": [
-            {
-                "desc": "Query for MR",
-                "params": {
-                    "source_meta_node": "Gwas",
-                    "target_meta_node": "Gwas",
-                    "meta_rel": "MR_EVE_MR",
-                    "where": ["rel.pval < 1e-12"],
-                    "order_by": ["rel.pval"],
-                    "limit": 20,
-                },
-            }
-        ],
-    },
     "POST /cypher": {
         "func": cypher.post_cypher,
         "tests": [
