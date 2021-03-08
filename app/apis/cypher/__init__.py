@@ -16,7 +16,6 @@ public_graph = Neo4jDB(
 
 @router.post("/cypher", response_model=ApiGenericResponse)
 def post_cypher(data: models.CypherRequest):
-    """Send a cypher query to EpiGraphDB Graph.
-    """
+    """Send a cypher query to EpiGraphDB Graph."""
     res = public_graph.run_query(data.query)
     return res

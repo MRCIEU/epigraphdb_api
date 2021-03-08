@@ -15,16 +15,14 @@ class PQTLPleioProteinsResultsItem(BaseModel):
 
 
 class PQTLPleioProteinsResponse(BaseModel):
-    """/pqtl/pleio/, when prflag == "proteins"
-    """
+    """/pqtl/pleio/, when prflag == "proteins" """
 
     metadata: ApiMetadata
     results: List[PQTLPleioProteinsResultsItem]
 
 
 class PQTLPleioCountResponse(BaseModel):
-    """/pqtl/pleio/, when prflag == "count"
-    """
+    """/pqtl/pleio/, when prflag == "count" """
 
     metadata: Optional[ApiMetadata]
     results: int

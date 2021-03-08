@@ -42,8 +42,7 @@ def get_ping():
 
 @router.get("/status/api")
 def get_api_metric():
-    """Return API metrics:
-    """
+    """Return API metrics:"""
     log_args(api="/status/api")
     data = get_service_builds()
     return data
@@ -53,8 +52,7 @@ def get_api_metric():
 def get_db_metric(
     metric: GraphDbMetrics, db: EpigraphdbGraphs = EpigraphdbGraphs.epigraphdb
 ):
-    """Return database metrics.
-    """
+    """Return database metrics."""
     log_args(api="/status/db", kwargs=locals())
     # NOTE: not every available metric is listed in the metrics model
     #       some needs special nodes, some needs APOC

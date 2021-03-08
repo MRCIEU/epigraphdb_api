@@ -19,8 +19,7 @@ def nodes_search_query_builder(
     limit: int = 10,
     full_data: bool = True,
 ) -> str:
-    """Returns the query for the search.
-    """
+    """Returns the query for the search."""
     name_field = meta_node_id_name_mappings[meta_node]["name"]
     id_field = meta_node_id_name_mappings[meta_node]["id"]
     if full_data:
@@ -54,8 +53,7 @@ def nodes_search_query_builder(
 def nodes_neighbour_query_builder(
     meta_node: str, id: Optional[str], limit: int = 50
 ) -> str:
-    """Query builder for searching neighbours of a node
-    """
+    """Query builder for searching neighbours of a node"""
     id_field = meta_node_id_name_mappings[meta_node]["id"]
     query = search_node_neighbour_by_id_template.format(
         meta_node=meta_node, id_field=id_field, id_query=id, limit=limit

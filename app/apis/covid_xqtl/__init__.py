@@ -16,8 +16,7 @@ router = APIRouter()
 
 @router.get("/covid-19/ctda/list/{entity}", response_model=ApiGenericResponse)
 def get_list_gwas(entity: models.CovidXqtlList):
-    """List entities
-    """
+    """List entities"""
     query = "SELECT * FROM {entity}".format(entity=entity.value)
     with sqlite3.connect(dependent_files["covid-xqtl"]) as conn:
         data = pd.read_sql(query, conn).to_dict(orient="records")
@@ -33,8 +32,7 @@ def get_single_snp_mr(
     q: Optional[str] = None,
     pval_threshold: float = 1e-3,
 ):
-    """Single SNP MR
-    """
+    """Single SNP MR"""
     _query_common = """
         SELECT *
         FROM single_snp_mr
@@ -65,8 +63,7 @@ def get_multi_snp_mr(
     q: Optional[str] = None,
     pval_threshold: float = 1e-3,
 ):
-    """Multi SNP MR
-    """
+    """Multi SNP MR"""
     _query_common = """
         SELECT *
         FROM multi_snp_mr

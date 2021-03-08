@@ -17,10 +17,16 @@ def rmd_render_meta_nodes(api_url: str):
             print("> ", data["doc"], "\n")
 
         if data["id"] is not None:
-            print("**`_id` property**: `{id}`\n".format(id=data["id"],))
+            print(
+                "**`_id` property**: `{id}`\n".format(
+                    id=data["id"],
+                )
+            )
         if data["name"] is not None:
             print(
-                "**`_name` property**: `{label}`\n".format(label=data["name"],)
+                "**`_name` property**: `{label}`\n".format(
+                    label=data["name"],
+                )
             )
 
         if len(data["properties"]) > 0:

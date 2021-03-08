@@ -40,8 +40,7 @@ router = APIRouter()
 def get_schema(
     graphviz: bool = False, plot: bool = False, overwrite: bool = False
 ):
-    """Schema of EpiGraphDB Graph.
-    """
+    """Schema of EpiGraphDB Graph."""
     log_args(api="/meta/schema")
     schema = generate_schema(overwrite=overwrite)
     if graphviz and not plot:
@@ -58,8 +57,7 @@ def get_schema(
 
 @router.get("/meta/nodes/list", response_model=List[str])
 def meta_nodes_list():
-    """List meta nodes
-    """
+    """List meta nodes"""
     log_args(api="/meta/nodes/list")
     res = [_.value for _ in EpigraphdbMetaNodes]
     return res
@@ -147,8 +145,7 @@ def nodes_search(
 def nodes_search_neighbour(
     meta_node: str, id: Optional[str], limit: int = Query(50, ge=1, le=200)
 ):
-    """Search the neighbour nodes adjacent to the query node.
-    """
+    """Search the neighbour nodes adjacent to the query node."""
     log_args(api="/meta/nodes/{meta_node}/search-neighbour", kwargs=locals())
     query = nodes_neighbour_query_builder(
         meta_node=meta_node, id=id, limit=limit
@@ -160,8 +157,7 @@ def nodes_search_neighbour(
 
 @router.get("/meta/rels/list", response_model=List[str])
 def meta_rels_list():
-    """List meta rels.
-    """
+    """List meta rels."""
     log_args(api="/meta/rels/list")
     res = [_.value for _ in EpigraphdbMetaRels]
     return res
@@ -173,8 +169,7 @@ def rels_list(
     limit: int = Query(10, ge=1, le=2000),
     offset: int = 0,
 ):
-    """List relationships under a meta relationship.
-    """
+    """List relationships under a meta relationship."""
     log_args(api="/meta/rels/{meta_rel}/list", kwargs=locals())
     query = MetaQueries.get_rels.format(
         meta_rel=meta_rel.value, skip=offset, limit=limit
@@ -211,8 +206,7 @@ if api_private_access:
 
     @router.get("/meta/api/schema")
     def get_meta_api_schema(yaml_format: bool = False):
-        """Returns current EpiGraphDB API schema, by default as json
-        """
+        """Returns current EpiGraphDB API schema, by default as json"""
         res = {
             "meta_nodes": {
                 meta_node: model_schema(model)  # type: ignore

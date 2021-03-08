@@ -182,8 +182,7 @@ def get_xqtl_list(
 
 @router.post("/xqtl/single-snp-mr/gene-by-variant")
 def post_xqtl_gene_by_variant(data: GeneByVariantRequest):
-    """Get the list of genes associated by an instrument SNP, nested per SNP
-    """
+    """Get the list of genes associated by an instrument SNP, nested per SNP"""
     log_args(api="/xqtl/single-snp-mr/gene-by-variant", kwargs=locals())
     query = xqtl_queries.GeneByVariant.query.format(
         variant_list=str(data.variant_list), qtl_type=data.qtl_type
