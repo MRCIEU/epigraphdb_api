@@ -84,7 +84,7 @@ class Gwas:
         RETURN
             gwas {{.id, .trait}},
             gs {{.pval, .localCount}},
-            triple {{.id, .predicate}},
+            triple {{.id, .name, .predicate}},
             lit {{.id}}
         SKIP {skip}
         LIMIT {limit}
