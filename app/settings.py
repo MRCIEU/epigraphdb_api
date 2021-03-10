@@ -30,6 +30,12 @@ epigraphdb = Neo4jDB(
     version=env_configs["epigraphdb_db_version"],
 )
 
+# EpiGraphDB database, publicly accessible, readonly
+public_graph = Neo4jDB(
+    hostname=env_configs["public_epigraphdb_server"],
+    bolt_port=env_configs["public_epigraphdb_port"],
+)
+
 # PQTL database
 pqtl = Neo4jDB(
     hostname=env_configs["pqtl_server"],

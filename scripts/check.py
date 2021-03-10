@@ -1,7 +1,7 @@
 from colorama import Fore, Style
 
 from app.resources.dependent_files import dependent_files
-from app.settings import epigraphdb, pqtl
+from app.settings import epigraphdb, pqtl, public_graph
 from epigraphdb_common_utils import (
     api_docs_env_configs,
     api_env_configs,
@@ -76,7 +76,11 @@ def check_db_connections() -> None:
         + "\n# Database connections"
         + Style.RESET_ALL
     )
-    for db_name, neo4j_db in [("epigraphdb", epigraphdb), ("pqtl", pqtl)]:
+    for db_name, neo4j_db in [
+        ("epigraphdb", epigraphdb),
+        ("pqtl", pqtl),
+        ("public_graph", public_graph),
+    ]:
         name = Style.BRIGHT + Fore.YELLOW + db_name + Style.RESET_ALL
         if neo4j_db.check_connection():
             status = Style.BRIGHT + Fore.GREEN + "Connected" + Style.RESET_ALL
