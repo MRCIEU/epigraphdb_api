@@ -299,10 +299,10 @@ topic_params = {
                 "params": {"gwas_id": "ieu-a-1088", "by_gwas_id": True},
             },
             {
-                "desc": "Search by id and semmed triple name",
+                "desc": "Search by id and semmed triple id",
                 "params": {
                     "gwas_id": "ieu-a-1088",
-                    "semmed_triple_name": "ghrelin INHIBITS Leptin",
+                    "semmed_triple_id": "C0060135:INTERACTS_WITH:C0001962",
                     "by_gwas_id": True,
                 },
             },

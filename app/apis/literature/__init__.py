@@ -21,7 +21,7 @@ router = APIRouter()
 def get_literature_gwas_semmed(
     trait: Optional[str] = None,
     gwas_id: Optional[str] = None,
-    semmed_triple_name: Optional[str] = None,
+    semmed_triple_id: Optional[str] = None,
     semmed_predicates: List[str] = Query([]),
     by_gwas_id: bool = False,
     pval_threshold: float = Query(1e-3, ge=0, le=1e-1),
@@ -32,8 +32,8 @@ def get_literature_gwas_semmed(
     """
     Search for literature evidence of a Gwas trait via semmed.
 
-    - `semmed_triple_id`: search for a specific semmed triple id,
-      e.g. "ghrelin:INHIBITS:Leptin"
+    - `semmed_triple_id`: search for a specific semmed triple id
+      (see EpiGraphDB documentation)
     - `semmed_predicates`: list of predicates for **whitelist**
     - `by_gwas_id`: False. If True search by Gwas.id
     - `fuzzy`: True. By default fuzzy match trait name.
@@ -49,10 +49,10 @@ def get_literature_gwas_semmed(
         )
     if by_gwas_id:
         validate_at_least_one_not_none(dict(gwas_id=gwas_id))
-        if semmed_triple_name is not None:
+        if semmed_triple_id is not None:
             query = queries.Gwas.id_triple.format(
                 gwas_id=gwas_id,
-                semmed_triple_name=semmed_triple_name,
+                semmed_triple_id=semmed_triple_id,
                 semmed_predicates_clause=semmed_predicates_clause,
                 pval_threshold=pval_threshold,
                 skip=skip,
@@ -73,10 +73,10 @@ def get_literature_gwas_semmed(
         if fuzzy:
             trait = str(cypher_fuzzify(trait))
             eq_symbol = "=~"
-        if semmed_triple_name is not None:
+        if semmed_triple_id is not None:
             query = queries.Gwas.trait_triple.format(
                 trait=trait,
-                semmed_triple_name=semmed_triple_name,
+                semmed_triple_id=semmed_triple_id,
                 semmed_predicates_clause=semmed_predicates_clause,
                 pval_threshold=pval_threshold,
                 eq_symbol=eq_symbol,

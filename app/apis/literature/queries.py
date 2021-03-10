@@ -13,12 +13,16 @@ class GwasPairwise:
         {semmantic_type_query}
     """
     _tail = """
+        MATCH (s1)-[:SEMMEDDB_SUB]-(st1:LiteratureTerm)
+        MATCH (s2)-[:SEMMEDDB_OBJ]-(st2:LiteratureTerm)
         RETURN
             gwas {{.id, .trait}},
             gs1 {{.pval, .localCount}},
+            st1 {{.name}},
             s1 {{.id, .subject_id, .object_id, .predicate}},
             st {{.name, .type}},
             s2 {{.id, .subject_id, .object_id, .predicate}},
+            st2 {{.name}},
             gs2 {{.pval, .localCount}},
             assoc_gwas {{.id, .trait}}
         SKIP {skip}
@@ -105,7 +109,7 @@ class Gwas:
         _head
         + """
         gwas.id = "{gwas_id}" AND
-        triple.name = "{semmed_triple_name}"
+        triple.id = "{semmed_triple_id}"
         """
         + _where
         + _tail
@@ -114,7 +118,7 @@ class Gwas:
         _head
         + """
         gwas.trait {eq_symbol} "{trait}" AND
-        triple.name = "{semmed_triple_name}"
+        triple.id = "{semmed_triple_id}"
         """
         + _where
         + _tail
