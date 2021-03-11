@@ -221,12 +221,11 @@ class MR_EVE_MR(EpigraphdbRelEntity):
 
     b: float
     method: str
-    moescore: str
+    moescore: float
     nsnp: float
     selection: str
     ci_low: Optional[float] = None
     ci_upp: Optional[float] = None
-    log10pval: Optional[float] = None
     pval: Optional[float] = None
     se: Optional[float] = None
 
