@@ -172,4 +172,4 @@ logger.add(
 )
 
 if settings.api_private_access:
-    logger.warning("You are running the API with PRIVATE access!")
+    logger.info("You are running the API with PRIVATE access!")
