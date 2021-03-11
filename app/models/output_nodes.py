@@ -19,7 +19,17 @@ class GeneItem(BaseModel):
 
 
 class LiteratureItem(BaseModel):
-    pubmed_id: str
+    id: str
+
+
+class LiteratureTripleItem(BaseModel):
+    id: str
+    name: str
+    predicate: str
+
+
+class LiteratureTermItem(BaseModel):
+    name: str
 
 
 class ProteinItem(BaseModel):

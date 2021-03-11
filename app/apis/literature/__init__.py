@@ -11,13 +11,12 @@ from app.utils.validators import (
     validate_char_length,
 )
 
-from . import queries
+from . import models, queries
 
 router = APIRouter()
 
 
-# TODO: add response model
-@router.get("/literature/gwas")
+@router.get("/literature/gwas", response_model=models.LiteratureGwasResponse)
 def get_literature_gwas_semmed(
     trait: Optional[str] = None,
     gwas_id: Optional[str] = None,
@@ -96,8 +95,10 @@ def get_literature_gwas_semmed(
     return res
 
 
-# TODO: add response model
-@router.get("/literature/gwas/pairwise")
+@router.get(
+    "/literature/gwas/pairwise",
+    response_model=models.LiteratureGwasPairwiseResponse,
+)
 def get_literature_gwas_graph(
     trait: Optional[str] = None,
     assoc_trait: Optional[str] = None,
