@@ -54,6 +54,10 @@ docs:
 
 ## ==== running the api ====
 
+## Overwrite cache:
+overwrite_cache:
+	python -m scripts.overwrite_cache
+
 ## Start API server, port: 80
 run:
 	python -m scripts.check
