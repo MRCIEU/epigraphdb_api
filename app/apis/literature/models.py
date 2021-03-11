@@ -42,6 +42,7 @@ class LiteratureGwasPairwiseItem(BaseModel):
     s1: SubjectTripleItem
     st: OverlappingTermItem
     s2: ObjectTripleItem
+    gs2: GwasLiteratureTripleItem
     st2: LiteratureTermItem
     assoc_gwas: TraitItem
 
