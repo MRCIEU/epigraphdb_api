@@ -170,6 +170,3 @@ logger.add(
     retention="7 days",
     compression="tar.gz",
 )
-
-if settings.api_private_access:
-    logger.info("You are running the API with PRIVATE access!")
