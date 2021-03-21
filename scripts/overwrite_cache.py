@@ -11,7 +11,7 @@ def main():
     logger.info("Overwrite schema cache.")
     client.get(
         "/meta/schema",
-        params={"graphviz": False, "plot": False, "overwrite": True},
+        params={"graphviz": True, "plot": True, "overwrite": True},
     )
 
     logger.info("Done.")
