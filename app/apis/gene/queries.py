@@ -28,9 +28,11 @@ class Literature:
         WITH
             gene, lt_gene, st, lt
         MATCH
-            (triple:LiteratureTriple)-[:SEMMEDDB_TO_LIT]-(l:Literature)
+            (triple:LiteratureTriple)-[triple_to_lit:SEMMEDDB_TO_LIT]-(l:Literature)
         WHERE
-            triple.subject_id = lt_gene.id AND triple.object_id = lt.id
+            triple.subject_id = lt_gene.id AND
+            triple.object_id = lt.id AND
+            triple.predicate = st.predicate
         RETURN
             gene {{.name}},
             st {{.predicate}},
