@@ -1,37 +1,37 @@
 # TODO: ditch Rmarkdown and use jinja2
 from pprint import pformat
 
-from epigraphdb_common_utils.epigraphdb_data_dicts import (
-    meta_nodes_dict_sanitised,
-    meta_rels_dict_sanitised,
+from epigraphdb_common_utils.epigraphdb_schema import (
+    meta_nodes_dict,
+    meta_rels_dict,
 )
 
 from .render_api import render_results_get
 
 
 def rmd_render_meta_nodes(api_url: str):
-    for name, data in meta_nodes_dict_sanitised.items():
+    for name, data in meta_nodes_dict.items():
         print(f"## `{name}`\n")
 
-        if data["doc"] is not None:
-            print("> ", data["doc"], "\n")
+        if data.doc is not None:
+            print("> ", data.doc, "\n")
 
-        if data["id"] is not None:
+        if data.id is not None:
             print(
                 "**`_id` property**: `{id}`\n".format(
-                    id=data["id"],
+                    id=data.id,
                 )
             )
-        if data["name"] is not None:
+        if data.name is not None:
             print(
                 "**`_name` property**: `{label}`\n".format(
-                    label=data["name"],
+                    label=data.name,
                 )
             )
 
-        if len(data["properties"]) > 0:
+        if len(data.properties) > 0:
             print("**Properties**:\n")
-            render_properties(data["properties"])
+            render_properties(data.properties)
             print("\n")
 
         # if name not in INVALID_NODES:
@@ -39,21 +39,21 @@ def rmd_render_meta_nodes(api_url: str):
 
 
 def rmd_render_meta_rels(api_url: str):
-    for name, data in meta_rels_dict_sanitised.items():
+    for name, data in meta_rels_dict.items():
         print(f"## `{name}`\n")
 
-        if data["doc"] is not None:
-            print("> ", data["doc"], "\n")
+        if data.doc is not None:
+            print("> ", data.doc, "\n")
 
         print(
             "**Path**: `({source})-[{name}]->({target})`\n".format(
-                source=data["source"], target=data["target"], name=name
+                source=data.source, target=data.target, name=name
             )
         )
 
-        if len(data["properties"]) > 0:
+        if len(data.properties) > 0:
             print("**Properties**:\n")
-            render_properties(data["properties"])
+            render_properties(data.properties)
             print("\n")
 
         render_entity_sneak_peek(name, "rel", api_url)
