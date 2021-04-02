@@ -19,11 +19,6 @@ from app.models.schema_meta_nodes import (
 from app.models.schema_meta_rels import meta_path_schema, meta_rel_schema
 from app.settings import api_private_access, epigraphdb
 from app.utils.logging import log_args, logger
-from app.utils.schema import (
-    generate_schema,
-    render_graphviz,
-    render_schema_graphviz,
-)
 from app.utils.validators import validate_at_least_one_not_none
 
 from .functions import (
@@ -32,6 +27,7 @@ from .functions import (
     paths_search_query_builder,
 )
 from .queries import MetaQueries
+from .schema import generate_schema, render_graphviz, render_schema_graphviz
 
 router = APIRouter()
 
