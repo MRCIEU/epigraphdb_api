@@ -2,6 +2,25 @@ from enum import Enum
 from typing import Any, List, Optional
 
 from pydantic import BaseModel
+from pydantic.dataclasses import dataclass
+
+
+class SchemaEntityConfig:
+    extra = "forbid"
+
+
+@dataclass(config=SchemaEntityConfig)
+class EpigraphdbNodeEntity:
+    "Pydantic basemodel for an epigraphdb node"
+
+
+@dataclass(config=SchemaEntityConfig)
+class EpigraphdbRelEntity:
+    "Pydantic basemodel for an epigraphdb rel"
+
+    class _Path:
+        source: str
+        target: str
 
 
 class EpigraphdbGraphs(str, Enum):

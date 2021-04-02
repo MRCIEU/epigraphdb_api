@@ -3,33 +3,11 @@ from typing import List
 import pandas as pd
 from graphviz import Digraph
 
-# from pydantic import BaseModel
-from pydantic.dataclasses import dataclass
-
 from app.apis.status import get_db_metric
 from app.apis.status.models import GraphDbMetrics
 from app.models import EpigraphdbGraphs
 from app.settings import cache_dir
 from app.utils.cache import cache_func_call_json
-
-
-class EntityConfig:
-    extra = "forbid"
-
-
-@dataclass(config=EntityConfig)
-class EpigraphdbNodeEntity:
-    "Pydantic basemodel for an epigraphdb node"
-
-
-@dataclass(config=EntityConfig)
-class EpigraphdbRelEntity:
-    "Pydantic basemodel for an epigraphdb rel"
-
-    class _Path:
-        source: str
-        target: str
-
 
 epigraphdb_node_meta_props = ["_id", "_name", "_source"]
 epigraphdb_rel_meta_props = ["_source"]
