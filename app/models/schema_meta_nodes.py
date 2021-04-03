@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic.dataclasses import dataclass
 
-from .schema import EpigraphdbNodeEntity
+from . import EpigraphdbNodeEntity
 
 
 @dataclass

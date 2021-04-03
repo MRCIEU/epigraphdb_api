@@ -1,7 +1,8 @@
-from typing import List
+from typing import Dict, List, Optional
 
 import pandas as pd
 from graphviz import Digraph
+from typing_extensions import TypedDict
 
 from app.apis.status import get_db_metric
 from app.apis.status.models import GraphDbMetrics
@@ -12,7 +13,41 @@ from app.utils.cache import cache_func_call_json
 schema_ignore_nodes = ["Meta"]
 
 
-def generate_schema(overwrite: bool = False):
+class MetaSchemaNodeProperty(TypedDict):
+    type: str
+    indexed: bool
+    unique: bool
+
+
+class MetaSchemaEdgeProperty(TypedDict):
+    array: bool
+    type: str
+
+
+class MetaSchemaNode(TypedDict):
+    count: int
+    properties: Dict[str, MetaSchemaNodeProperty]
+
+
+class MetaSchemaEdge(TypedDict):
+    count: int
+    properties: Optional[Dict[str, MetaSchemaEdgeProperty]]
+
+
+class MetaSchemaConnection(TypedDict):
+    rel: str
+    from_node: str
+    to_node: str
+    count: int
+
+
+class MetaSchemaData(TypedDict):
+    nodes: Dict[str, MetaSchemaNode]
+    edges: Dict[str, MetaSchemaEdge]
+    connections: List[MetaSchemaConnection]
+
+
+def generate_schema(overwrite: bool = False) -> MetaSchemaData:
     schema = cache_func_call_json(
         cache_name="schema",
         func=process_schema,
@@ -22,7 +57,7 @@ def generate_schema(overwrite: bool = False):
     return schema
 
 
-def process_schema(overwrite: bool = False):
+def process_schema(overwrite: bool = False) -> MetaSchemaData:
     db_schema_data = cache_func_call_json(
         cache_name="schema_raw",
         func=schema_request,
@@ -41,19 +76,19 @@ def process_schema(overwrite: bool = False):
         params=None,
         overwrite=overwrite,
     )
-    nodes_data = process_nodes(
+    nodes_data: Dict[str, MetaSchemaNode] = process_nodes(
         schema_data=db_schema_data,
         node_count=db_meta_node_count_data,
         ignore_nodes=schema_ignore_nodes,
     )
-    edges_data = process_edges(db_schema_data)
-    connections_data = process_connections(
+    edges_data: Dict[str, MetaSchemaEdge] = process_edges(db_schema_data)
+    connections_data: List[MetaSchemaConnection] = process_connections(
         db_schema_data,
         edges_data,
         edge_count=db_meta_rel_count_data,
         ignore_nodes=schema_ignore_nodes,
     )
-    res = {
+    res: MetaSchemaData = {
         "nodes": nodes_data,
         "edges": edges_data,
         "connections": connections_data,
@@ -86,9 +121,11 @@ def meta_rel_count_request():
     return data
 
 
-def process_nodes(schema_data, node_count, ignore_nodes: List[str]):
-    def pick_node_items(node_value, node_name):
-        items = {
+def process_nodes(
+    schema_data, node_count, ignore_nodes: List[str]
+) -> Dict[str, MetaSchemaNode]:
+    def pick_node_items(node_value, node_name) -> MetaSchemaNode:
+        items: MetaSchemaNode = {
             "count": node_count[node_name],
             "properties": {
                 prop_key: {
@@ -109,7 +146,7 @@ def process_nodes(schema_data, node_count, ignore_nodes: List[str]):
     return nodes_data
 
 
-def process_edges(schema_data):
+def process_edges(schema_data) -> Dict[str, MetaSchemaEdge]:
     def pick_edges_items(edge):
         if edge["properties"] != {}:
             props = pick_edges_props(edge["properties"])
@@ -135,7 +172,7 @@ def process_edges(schema_data):
 
 def process_connections(
     schema_data, edges_data, edge_count, ignore_nodes: List[str]
-):
+) -> List[MetaSchemaConnection]:
     connections_nodes = {
         key: value["relationships"]
         for key, value in schema_data.items()
