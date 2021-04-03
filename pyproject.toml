@@ -6,7 +6,7 @@ authors = ["Yi Liu <yi6240.liu@bristol.ac.uk>", "Tom Gaunt <Tom.Gaunt@bristol.ac
 
 [tool.poetry.dependencies]
 python = "^3.7"
-fastapi = "^0.54"
+fastapi = "^0.63"
 environs = "^6.1"
 numpy = "^1.17"
 requests = "^2.22"
@@ -20,11 +20,11 @@ graphviz = "^0.13.2"
 pytest-xdist = "^1.31.0"
 pandas = "^1.0.1"
 pyyaml = "^5.3.1"
-pydantic = "^1.5"
 colorama = "^0.4.3"
 loguru = ">=0.5.1"
 anonymizeip = "^1.0.0"
 neo4j = "^1.7"
+pydantic = "^1.8"
 
 [tool.poetry.dev-dependencies]
 mypy = {version = "^0.740.0", allow-prereleases = true}
