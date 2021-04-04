@@ -10,12 +10,14 @@ from app.utils.validators import (
     validate_char_length,
 )
 
-from . import queries
+from . import models, queries
 
 router = APIRouter()
 
 
-@router.get("/ontology/gwas-efo")
+@router.get(
+    "/ontology/gwas-efo", response_model=models.OntologyGwasEfoResponse
+)
 def get_ontology_gwas_efo(
     trait: Optional[str] = None,
     efo_term: Optional[str] = None,
@@ -54,7 +56,9 @@ def get_ontology_gwas_efo(
     return res
 
 
-@router.get("/ontology/disease-efo")
+@router.get(
+    "/ontology/disease-efo", response_model=models.OntologyDiseaseEfoResponse
+)
 def get_ontology_disease_efo(
     disease_label: Optional[str] = None,
     efo_term: Optional[str] = None,
@@ -89,7 +93,10 @@ def get_ontology_disease_efo(
     return res
 
 
-@router.get("/ontology/gwas-efo-disease")
+@router.get(
+    "/ontology/gwas-efo-disease",
+    response_model=models.OntologyGwasEfoDiseaseResponse,
+)
 def get_ontology_gwas_efo_disease(
     trait: Optional[str] = None,
     efo_term: Optional[str] = None,

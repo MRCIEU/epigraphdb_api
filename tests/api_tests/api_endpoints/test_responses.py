@@ -65,8 +65,9 @@ response_url_params_topics = [
         "/genetic-cor",
         {"trait": "Whole body fat mass", "cor_coef_threshold": 0.6},
     ),
-    # TODO # /ontology
-    # ("/ontology", {"efo_term": "systolic blood pressure"}),
+    # /ontology
+    ("/ontology/gwas-efo", {"efo_term": "systolic blood pressure"}),
+    ("/ontology/disease-efo", {"efo_term": "leukemia"}),
     # /drugs/risk-factors
     ("/drugs/risk-factors", {"trait": "Coronary heart disease"}),
     # /pathway

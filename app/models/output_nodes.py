@@ -39,3 +39,14 @@ class ProteinItem(BaseModel):
 class PathwayItem(BaseModel):
     id: str
     name: str
+
+
+class OntologyItem(BaseModel):
+    type: str
+    value: str
+    id: str
+
+
+class DiseaseItem(BaseModel):
+    id: str
+    label: str
