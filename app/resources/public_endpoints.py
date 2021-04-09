@@ -1,3 +1,7 @@
+from typing import Any, Callable, Dict, List, Optional
+
+from typing_extensions import TypedDict
+
 from app.apis import covid_xqtl, cypher, gene, literature, meta
 from app.apis.confounder import get_confounder
 from app.apis.drugs import get_drugs_risk_factors
@@ -25,7 +29,19 @@ from app.apis.xqtl import (
     post_xqtl_gene_by_variant,
 )
 
-topic_params = {
+
+class EndpointExample(TypedDict, total=False):
+    desc: str
+    endpoint: str
+    params: Optional[Dict[str, Any]]
+
+
+class EndpointData(TypedDict):
+    func: Callable
+    tests: List[EndpointExample]
+
+
+topic_params: Dict[str, EndpointData] = {
     "GET /mr": {
         "func": get_mr,
         "tests": [
@@ -453,7 +469,7 @@ topic_params = {
     },
 }
 
-util_params = {
+util_params: Dict[str, EndpointData] = {
     "GET /ping": {
         "func": get_top_ping,
         "tests": [{"desc": "Default", "params": None}],

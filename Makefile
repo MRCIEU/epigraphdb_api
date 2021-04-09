@@ -45,12 +45,11 @@ jupyterlab:
 
 ## ==== documentation ====
 
-## Generate documentation (requires dedicated conda env "epigraphdb_api")
+## Generate documentation (under development mode)
 docs:
-	scripts/rmd.sh scripts/doc-templates/meta-nodes.Rmd
-	scripts/rmd.sh scripts/doc-templates/meta-relationships.Rmd
-	scripts/rmd.sh scripts/doc-templates/metrics.Rmd
-	scripts/rmd.sh scripts/doc-templates/api-endpoints.Rmd
+	python -m scripts.render_metrics
+	python -m scripts.render_meta_entities
+	python -m scripts.render_api
 
 ## ==== running the api ====
 
