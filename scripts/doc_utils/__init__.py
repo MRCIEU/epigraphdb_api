@@ -14,6 +14,7 @@ class MetaEntityProp(TypedDict):
     name: str
     type: str
     desc: str
+    required: bool
 
 
 def entity_sneak_peek(

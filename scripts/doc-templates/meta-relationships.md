@@ -15,7 +15,7 @@ For each meta relationship, their available properties are shown, and an example
 **Properties**:
 
   {% for prop in meta_rel["props"] %}
-- `{{ prop["name"] }}`: `{{ prop["type"] }}`; {{ prop["desc"] }}
+- `{{ prop["name"] }}`: `{{ prop["type"] }}`{% if prop["required"] %}, **required**{% endif %}; {{ prop["desc"] }}
   {% endfor %}
 {% endif  %}
 

@@ -19,7 +19,7 @@ the collapsed text box.
 **Properties**:
 
   {% for prop in meta_node["props"] %}
-- `{{ prop["name"] }}`: `{{ prop["type"] }}`; {{ prop["desc"] }}
+- `{{ prop["name"] }}`: `{{ prop["type"] }}`{% if prop["required"] %}, **required**{% endif %}; {{ prop["desc"] }}
   {% endfor %}
 {% endif  %}
 

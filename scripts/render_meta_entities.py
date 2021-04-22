@@ -56,6 +56,7 @@ def prep_meta_node_data(
             {
                 "name": name,
                 "type": value.type,
+                "required": value.required,
                 "desc": "\n".join(
                     [f"  {_}" for _ in value.doc.split("\n")]
                 ).strip(),
@@ -94,6 +95,7 @@ def prep_meta_rel_data(
             {
                 "name": name,
                 "type": value.type,
+                "required": value.required,
                 "desc": "\n".join(
                     [f"  {_}" for _ in value.doc.split("\n")]
                 ).strip(),
