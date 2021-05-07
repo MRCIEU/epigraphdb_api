@@ -55,15 +55,15 @@ class DbStatusQueries:
     # Count nodes by label
     count_nodes_by_label = """
     MATCH (n)
-    RETURN DISTINCT
+    RETURN
         labels(n) as node_name,
-        count(labels(n)) as count
+        count(*) as count
     """
 
     # Count rels by type
     count_rels_by_type = """
     MATCH p=()-[r]->()
-    RETURN DISTINCT
+    RETURN
         type(r) as relationshipType,
-        count(type(r)) as count
+        count(*) as count
     """
