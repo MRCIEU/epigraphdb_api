@@ -14,6 +14,7 @@ from .apis import (
     literature,
     mappings,
     meta,
+    meta_api,
     mr,
     obs_cor,
     ontology,
@@ -54,6 +55,7 @@ app.include_router(prs.router, tags=["topics"])
 app.include_router(pqtl.router, tags=["topics", "pqtl"])
 app.include_router(literature.router, tags=["topics", "literature"])
 app.include_router(meta.router, tags=["metadata"])
+app.include_router(meta_api.router, tags=["metadata"])
 app.include_router(cypher.router, tags=["cypher"])
 app.include_router(ontology.router, tags=["topics", "ontology"])
 app.include_router(protein.router, tags=["topics", "protein"])
