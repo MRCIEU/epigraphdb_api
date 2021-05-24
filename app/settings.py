@@ -34,6 +34,8 @@ epigraphdb = Neo4jDB(
 public_graph = Neo4jDB(
     hostname=env_configs["public_epigraphdb_server"],
     bolt_port=env_configs["public_epigraphdb_port"],
+    user=env_configs["public_epigraphdb_user"],
+    password=env_configs["public_epigraphdb_passwd"],
 )
 
 # PQTL database
