@@ -39,7 +39,7 @@ def get_gene_literature(gene_name: str, object_name: str):
 @router.get("/gene/drugs", response_model=models.GeneDrugsResponse)
 def get_gene_drugs(gene_name: str):
     """
-    Get the aasociated drugs for a gene.
+    Get the associated drugs for a gene.
     """
     log_args(api="/gene/drugs", kwargs=locals())
     query = queries.Drugs.query.format(gene_name=gene_name)
