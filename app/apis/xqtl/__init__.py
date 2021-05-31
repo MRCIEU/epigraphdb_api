@@ -33,7 +33,8 @@ def get_xqtl_multi_snp_mr(
     qtl_type: QtlTypeInput = QtlTypeInput.eqtl,
     pval_threshold: float = Query(1e-5, ge=0.0, le=1.0),
 ):
-    """xQTL multi SNP MR results
+    """
+    xQTL multi SNP MR results
 
     Search by exposure_gene, outcome_trait, or both.
 
@@ -79,7 +80,8 @@ def get_xqtl_single_snp_mr(
     qtl_type: QtlTypeInput = QtlTypeInput.eqtl,
     pval_threshold: float = 1e-5,
 ):
-    """xQTL single SNP MR results
+    """
+    xQTL single SNP MR results
 
     Search by exposure_gene, outcome_trait, variant, or all of them.
 

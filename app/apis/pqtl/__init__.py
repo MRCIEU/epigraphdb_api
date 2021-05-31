@@ -59,7 +59,8 @@ def get_pqtl(
     pvalue: float = Query(0.5, ge=0.0, le=1.0),
 ):
 
-    """Returns the MR and other results related to pQTL
+    """
+    Returns the MR and other results related to pQTL
 
     - `query`: Protein or trait name e.g., ADAM19 or Inflammatory bowel disease
     - `rtype`: Results type
@@ -85,7 +86,8 @@ def get_pqtl(
 )
 def get_pqtl_pleio(rsid: str, prflag: PrflagInput):
 
-    """Returns the number or the list of associated proteins in the database
+    """
+    Returns the number or the list of associated proteins in the database
 
     - `rsid`: SNP rs_ID e.g., rs1260326
     - `prflag`:
@@ -99,9 +101,10 @@ def get_pqtl_pleio(rsid: str, prflag: PrflagInput):
 
 @router.get("/pqtl/list/", response_model=ListPQTLResponse)
 def get_pqtl_list(flag: ListFlagInput):
-    """Returns either the list of all proteins or traits in the database
+    """
+    Returns either the list of all proteins or traits in the database
 
-    "searchable_entities": {"flag": "Search for 'outcomes' or 'exposures'"}
+    - "searchable_entities": {"flag": "Search for 'outcomes' or 'exposures'"}
 
     """
     log_args(api="/pqtl/list/", kwargs=locals())
@@ -111,7 +114,8 @@ def get_pqtl_list(flag: ListFlagInput):
 
 
 def querypqtl(query: str, rtype: str, pvalue: float, searchflag: str):
-    """Returns the table of results as per
+    """
+    Returns the table of results as per
     the DB "query", data type "rtype",
     pvalue threshold "pvalue" and search type (either proteins or traits)
 
@@ -152,7 +156,8 @@ def querypqtl(query: str, rtype: str, pvalue: float, searchflag: str):
 
 
 def calc_flag_pleio(rsid: str, prflag: str):
-    """calc_flag_pleio : returns either
+    """
+    calc_flag_pleio : returns either
     the number of associated proteins with a SNP (rsid) and prflag = "count" or
     the list of associated proteins in all other cases.
 
@@ -185,7 +190,8 @@ def calc_flag_pleio(rsid: str, prflag: str):
 
 
 def pQTL_list(flag: str):
-    """pQTL_list : returns the list of proteins or outcomes
+    """
+    pQTL_list : returns the list of proteins or outcomes
 
     Args:
       flag: str:

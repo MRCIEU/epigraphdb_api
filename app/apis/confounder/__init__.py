@@ -32,10 +32,10 @@ def get_confounder(
 
     `type` accepts 1 of the 4 options:
 
-    - confounder: confounder->exposure->outcome<-confounder
-    - intermediate: intermediate<-exposure->outcome<-confounder
-    - reverse_intermediate: intermediate->exposure->outcome->confounder
-    - collider: collider<-exposure->outcome->collider
+    - confounder: `confounder -> exposure -> outcome <-confounder`
+    - intermediate: `intermediate <- exposure -> outcome <- confounder`
+    - reverse_intermediate: `intermediate -> exposure -> outcome -> confounder`
+    - collider: `collider <- exposure -> outcome -> collider`
     """
     log_args(api="/confounder", kwargs=locals())
     validate_at_least_one_not_none(

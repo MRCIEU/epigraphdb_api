@@ -76,7 +76,8 @@ def nodes_list(
     limit: int = Query(10, ge=1, le=10_000),
     offset: int = 0,
 ):
-    """List nodes under a meta node.
+    """
+    List nodes under a meta node.
 
     - `limit`: If you supply full_data to be True, the limit is 500,
       otherwise the limit is 10,000
@@ -120,7 +121,8 @@ def nodes_search(
     limit: int = Query(10, ge=1, le=200),
     full_data: bool = True,
 ):
-    """Use `id` for exact match, and use `name` for fuzzy match.
+    """
+    Use `id` for exact match, and use `name` for fuzzy match.
 
     - full_data: If False, only returns basic info (id, name).
     """

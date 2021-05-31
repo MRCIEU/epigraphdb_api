@@ -34,7 +34,7 @@ def get_literature_gwas_semmed(
     - `semmed_triple_id`: search for a specific semmed triple id
       (see EpiGraphDB documentation)
     - `semmed_predicates`: list of predicates for **whitelist**
-    - `by_gwas_id`: False. If True search by Gwas.id
+    - `by_gwas_id`: False. If True search by `Gwas.id`
     - `fuzzy`: True. By default fuzzy match trait name.
     - `skip`: pagination
     """
@@ -120,7 +120,7 @@ def get_literature_gwas_graph(
     - `blacklist` (True) and `semmantic_types`: The list of
     [semmantic types](https://mmtx.nlm.nih.gov/MMTx/semanticTypes.shtml) to exclude (`blacklist`=True) or include (`blacklist`=False).
     Leave `semmantic_types` blank to disable this.
-    - `by_gwas_id` (False): If True search by Gwas.id
+    - `by_gwas_id` (False): If True search by `Gwas.id`.
     - `fuzzy` (True): By default fuzzy match trait name.
     """
     log_args(api="/literature/gwas/pairwise", kwargs=locals())
