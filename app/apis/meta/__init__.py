@@ -79,7 +79,7 @@ def nodes_list(
     """
     List nodes under a meta node.
 
-    - `limit`: If you supply full_data to be True, the limit is 500,
+    - `limit`: If you supply full_data to be True, the limit is 2,000,
       otherwise the limit is 10,000
     - `full_data`: When False, only return the id and name fields for
       a node.
@@ -87,7 +87,7 @@ def nodes_list(
     """
     log_args(api="/meta/nodes/{meta_node}/list", kwargs=locals())
     if full_data:
-        full_data_limit = 500
+        full_data_limit = 2_000
         if limit > full_data_limit:
             raise HTTPException(
                 status_code=422,
