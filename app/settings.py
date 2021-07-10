@@ -46,3 +46,6 @@ pqtl = Neo4jDB(
     password=env_configs["pqtl_passwd"],
     version=env_configs["pqtl_db_version"],
 )
+
+# other paired components
+neural_url = env_configs["neural_url"]
