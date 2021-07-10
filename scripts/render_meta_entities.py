@@ -8,10 +8,12 @@ from typing_extensions import TypedDict
 
 from app.main import app
 from epigraphdb_common_utils.epigraphdb_schema import (
-    DataDictNode,
-    DataDictRel,
     meta_nodes_dict,
     meta_rels_dict,
+)
+from epigraphdb_common_utils.schema_utils.models import (
+    DataDictNode,
+    DataDictRel,
 )
 
 from .doc_utils import (
