@@ -8,6 +8,11 @@ from app.apis.drugs import get_drugs_risk_factors
 from app.apis.genetic_cor import get_genetic_cor
 from app.apis.mappings import post_gene_to_protein
 from app.apis.mr import get_mr
+from app.apis.nlp import (
+    get_nlp_query_ent,
+    get_nlp_query_ent_encode,
+    get_nlp_query_text,
+)
 from app.apis.obs_cor import get_obs_cor
 from app.apis.ontology import (
     get_ontology_disease_efo,
@@ -576,6 +581,43 @@ util_params: Dict[str, EndpointData] = {
                     "by_gene_id": True,
                 },
             },
+        ],
+    },
+    "GET /nlp/query/text": {
+        "func": get_nlp_query_text,
+        "tests": [
+            {
+                "params": {
+                    "text": "Coronary heart disease",
+                    "asis": True,
+                    "include_meta_nodes": ["Gwas", "Disease"],
+                    "limit": 10,
+                }
+            }
+        ],
+    },
+    "GET /nlp/query/entity": {
+        "func": get_nlp_query_ent,
+        "tests": [
+            {
+                "params": {
+                    "entity_id": "ieu-a-2",
+                    "meta_node": "Gwas",
+                    "include_meta_nodes": ["Efo"],
+                    "limit": 5,
+                }
+            }
+        ],
+    },
+    "GET /nlp/query/entity/encode": {
+        "func": get_nlp_query_ent_encode,
+        "tests": [
+            {
+                "params": {
+                    "entity_id": "ieu-a-2",
+                    "meta_node": "Gwas",
+                }
+            }
         ],
     },
     "POST /cypher": {

@@ -16,6 +16,7 @@ from .apis import (
     meta,
     meta_api,
     mr,
+    nlp,
     obs_cor,
     ontology,
     pathway,
@@ -60,6 +61,8 @@ app.include_router(cypher.router, tags=["cypher"])
 app.include_router(ontology.router, tags=["topics", "ontology"])
 app.include_router(protein.router, tags=["topics", "protein"])
 app.include_router(gene.router, tags=["topics", "gene"])
+# nlp
+app.include_router(nlp.router, tags=["NLP"])
 # utils
 app.include_router(mappings.router, tags=["mappings"])
 
