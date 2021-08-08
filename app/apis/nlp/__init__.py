@@ -72,7 +72,7 @@ def get_nlp_query_ent(
     r = requests.get(f"{neural_url}{route}", params=params)
     try:
         r.raise_for_status()
-        query_results = r.json()
+        query_results = r.json()["results"]
         empty_results = False
     except:
         query_results = []
