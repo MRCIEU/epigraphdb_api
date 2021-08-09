@@ -2,7 +2,7 @@ from typing import Any, Callable, Dict, List, Optional
 
 from typing_extensions import TypedDict
 
-from app.apis import covid_xqtl, cypher, gene, literature, meta
+from app.apis import covid_xqtl, cypher, gene, literature, meta, opengwas
 from app.apis.confounder import get_confounder
 from app.apis.drugs import get_drugs_risk_factors
 from app.apis.genetic_cor import get_genetic_cor
@@ -469,6 +469,21 @@ topic_params: Dict[str, EndpointData] = {
                 "desc": "By tissue",
                 "endpoint": "GET /covid-19/ctda/multi-snp-mr/tissue",
                 "params": {"q": "Lung"},
+            },
+        ],
+    },
+    "GET /opengwas/search/id": {
+        "func": opengwas.get_gwas_recommender,
+        "tests": [
+            {
+                "desc": "Recommend OpenGWAS datasets by id, ieu-a-2",
+                "endpoint": "GET /opengwas/search/id",
+                "params": {"gwas_id": "ieu-a-2"},
+            },
+            {
+                "desc": "Recommend OpenGWAS datasets by id, ieu-a-10",
+                "endpoint": "GET /opengwas/search/id",
+                "params": {"gwas_id": "ieu-a-10"},
             },
         ],
     },

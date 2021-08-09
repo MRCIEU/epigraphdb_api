@@ -19,6 +19,7 @@ from .apis import (
     nlp,
     obs_cor,
     ontology,
+    opengwas,
     pathway,
     pqtl,
     protein,
@@ -61,6 +62,8 @@ app.include_router(cypher.router, tags=["cypher"])
 app.include_router(ontology.router, tags=["topics", "ontology"])
 app.include_router(protein.router, tags=["topics", "protein"])
 app.include_router(gene.router, tags=["topics", "gene"])
+# opengwas
+app.include_router(opengwas.router, tags=["OpenGWAS"])
 # nlp
 app.include_router(nlp.router, tags=["NLP"])
 # utils
