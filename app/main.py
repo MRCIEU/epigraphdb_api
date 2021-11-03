@@ -28,6 +28,7 @@ from .apis import (
     status,
     top,
     xqtl,
+    xqtl_trans_ancestry_pwas,
 )
 
 app = FastAPI(
@@ -69,5 +70,8 @@ app.include_router(nlp.router, tags=["NLP"])
 # utils
 app.include_router(mappings.router, tags=["mappings"])
 
-# hype
+# others
 app.include_router(covid_xqtl.router, tags=["covid-19"])
+app.include_router(
+    xqtl_trans_ancestry_pwas.router, tags=["Trans ancestry PWAS study"]
+)
