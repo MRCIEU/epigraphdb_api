@@ -480,17 +480,17 @@ topic_params: Dict[str, EndpointData] = {
             },
         ],
     },
-    "GET /xqtl_trans_ancestry_pwas/{entity}": {
+    "GET /xqtl_trans_ancestry_pwas/list/{entity}": {
         "func": xqtl_trans_ancestry_pwas.list_ents,
         "tests": [
             {
                 "desc": "Get list of GWAS envolved in the study",
-                "endpoint": "GET /xqtl_trans_ancestry_pwas/gwas",
+                "endpoint": "GET /xqtl_trans_ancestry_pwas/list/gwas",
                 "params": None,
             },
             {
                 "desc": "Get list of genes envolved in the study",
-                "endpoint": "GET /xqtl_trans_ancestry_pwas/gene",
+                "endpoint": "GET /xqtl_trans_ancestry_pwas/list/gene",
                 "params": None,
             },
         ],
