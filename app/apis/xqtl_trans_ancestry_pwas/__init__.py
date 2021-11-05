@@ -21,7 +21,7 @@ def list_ents(entity: models.Entity):
     """List entities"""
     query = "SELECT * FROM {entity}".format(entity=entity.value)
     with sqlite3.connect(dependent_files["xqtl_pwas_mr"]) as conn:
-        data = pd.read_sql(query, conn).to_dict(orient="records")
+        data = pd.read_sql(query, conn).drop(columns=["idx"]).to_dict(orient="records")
     res = format_response(data=data)
     return res
 
@@ -48,7 +48,7 @@ def xqtl_pwas_mr(
         query = _query_common + "AND gene_id = '{q}';"
     query = query.format(q=q, pval_threshold=pval_threshold).replace("\n", " ")
     with sqlite3.connect(dependent_files["xqtl_pwas_mr"]) as conn:
-        res_df = pd.read_sql(query, conn).replace({np.nan: None})
+        res_df = pd.read_sql(query, conn).drop(columns=["idx"]).replace({np.nan: None})
     data = res_df.to_dict(orient="records")
     res = format_response(data=data)
     return res
