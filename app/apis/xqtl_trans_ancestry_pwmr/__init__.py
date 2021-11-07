@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 @router.get(
-    "/xqtl_trans_ancestry_pwas/list/{entity}", response_model=ApiGenericResponse
+    "/xqtl_trans_ancestry_pwmr/list/{entity}", response_model=ApiGenericResponse
 )
 def list_ents(entity: models.Entity):
     """List entities"""
@@ -27,7 +27,7 @@ def list_ents(entity: models.Entity):
 
 
 @router.get(
-    "/xqtl_trans_ancestry_pwas/xqtl_pwas_mr/{entity}",
+    "/xqtl_trans_ancestry_pwmr/xqtl_pwas_mr/{entity}",
     response_model=ApiGenericResponse,
 )
 def xqtl_pwas_mr(
