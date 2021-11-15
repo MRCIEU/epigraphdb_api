@@ -37,7 +37,11 @@ def xqtl_pwas_mr(
 ):
     """Main MR evidence"""
     _query_common = """
-        SELECT *
+        SELECT
+            gene_id, gene_name, chr, protein, description, seqid,
+            gwas_id, gwas_name, ancestry, nsnp,
+            b, se, pval, ci_low, ci_upp,
+            method, selection, moescore, ldcheck, pwcoco, pleiotropy
         FROM XQTL_PWAS_MR
         WHERE
           pval < {pval_threshold}
@@ -48,7 +52,7 @@ def xqtl_pwas_mr(
         query = _query_common + "AND gene_id = '{q}';"
     query = query.format(q=q, pval_threshold=pval_threshold).replace("\n", " ")
     with sqlite3.connect(dependent_files["xqtl_pwas_mr"]) as conn:
-        res_df = pd.read_sql(query, conn).drop(columns=["idx"]).replace({np.nan: None})
+        res_df = pd.read_sql(query, conn).replace({np.nan: None})
     data = res_df.to_dict(orient="records")
     res = format_response(data=data)
     return res
