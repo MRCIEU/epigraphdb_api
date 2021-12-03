@@ -15,19 +15,24 @@ router = APIRouter()
 
 
 @router.get(
-    "/xqtl_trans_ancestry_pwmr/list/{entity}", response_model=ApiGenericResponse
+    "/xqtl_multi_ancestry_pwmr/list/{entity}",
+    response_model=ApiGenericResponse,
 )
 def list_ents(entity: models.Entity):
     """List entities"""
     query = "SELECT * FROM {entity}".format(entity=entity.value)
     with sqlite3.connect(dependent_files["xqtl_pwas_mr"]) as conn:
-        data = pd.read_sql(query, conn).drop(columns=["idx"]).to_dict(orient="records")
+        data = (
+            pd.read_sql(query, conn)
+            .drop(columns=["idx"])
+            .to_dict(orient="records")
+        )
     res = format_response(data=data)
     return res
 
 
 @router.get(
-    "/xqtl_trans_ancestry_pwmr/xqtl_pwas_mr/{entity}",
+    "/xqtl_multi_ancestry_pwmr/xqtl_pwas_mr/{entity}",
     response_model=ApiGenericResponse,
 )
 def xqtl_pwas_mr(

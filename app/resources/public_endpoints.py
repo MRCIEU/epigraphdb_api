@@ -9,7 +9,7 @@ from app.apis import (
     literature,
     meta,
     opengwas,
-    xqtl_trans_ancestry_pwmr,
+    xqtl_multi_ancestry_pwmr,
 )
 from app.apis.confounder import get_confounder
 from app.apis.drugs import get_drugs_risk_factors
@@ -480,32 +480,32 @@ topic_params: Dict[str, EndpointData] = {
             },
         ],
     },
-    "GET /xqtl_trans_ancestry_pwmr/list/{entity}": {
-        "func": xqtl_trans_ancestry_pwmr.list_ents,
+    "GET /xqtl_multi_ancestry_pwmr/list/{entity}": {
+        "func": xqtl_multi_ancestry_pwmr.list_ents,
         "tests": [
             {
                 "desc": "Get list of GWAS envolved in the study",
-                "endpoint": "GET /xqtl_trans_ancestry_pwmr/list/gwas",
+                "endpoint": "GET /xqtl_multi_ancestry_pwmr/list/gwas",
                 "params": None,
             },
             {
                 "desc": "Get list of genes envolved in the study",
-                "endpoint": "GET /xqtl_trans_ancestry_pwmr/list/gene",
+                "endpoint": "GET /xqtl_multi_ancestry_pwmr/list/gene",
                 "params": None,
             },
         ],
     },
-    "GET /xqtl_trans_ancestry_pwmr/xqtl_pwas_mr/{entity}": {
-        "func": xqtl_trans_ancestry_pwmr.xqtl_pwas_mr,
+    "GET /xqtl_multi_ancestry_pwmr/xqtl_pwas_mr/{entity}": {
+        "func": xqtl_multi_ancestry_pwmr.xqtl_pwas_mr,
         "tests": [
             {
                 "desc": "Query study results by GWAS",
-                "endpoint": "GET /xqtl_trans_ancestry_pwmr/xqtl_pwas_mr/gwas",
+                "endpoint": "GET /xqtl_multi_ancestry_pwmr/xqtl_pwas_mr/gwas",
                 "params": {"q": "gbmi-a-00001-nfe-b", "pval_threshold": 1e-2},
             },
             {
                 "desc": "Query study results by gene",
-                "endpoint": "GET /xqtl_trans_ancestry_pwmr/xqtl_pwas_mr/gene",
+                "endpoint": "GET /xqtl_multi_ancestry_pwmr/xqtl_pwas_mr/gene",
                 "params": {"q": "ENSG00000168685", "pval_threshold": 1e-2},
             },
         ],
