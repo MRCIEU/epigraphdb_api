@@ -1,6 +1,10 @@
+from typing import Any, Dict
+
 import requests
 from fastapi import APIRouter
 
+from app.models import ApiInfoBuilds
+from app.resources.info import builds
 from app.settings import epigraphdb, neural_url, pqtl, public_graph
 
 router = APIRouter()
@@ -19,3 +23,8 @@ def get_top_ping(dependencies: bool = True) -> bool:
         all = [epigraphdb_ok, pqtl_ok, public_graph_ok, neural_ok]
         all_ok = sum(all) == len(all)
         return all_ok
+
+
+@router.get("/builds", response_model=ApiInfoBuilds)
+def get_top_builds() -> Dict[str, Any]:
+    return builds

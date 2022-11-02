@@ -44,3 +44,15 @@ class ApiGenericResponse(BaseModel):
 
     metadata: ApiMetadata
     results: List[Any]
+
+
+class EpigraphdbBuilds(BaseModel):
+    overall: str
+    database: str
+    api: str
+    web_app: Optional[str]
+
+
+class ApiInfoBuilds(BaseModel):
+    epigraphdb: EpigraphdbBuilds
+    pqtl: str

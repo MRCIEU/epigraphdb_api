@@ -35,7 +35,7 @@ from app.apis.protein import (
     post_protein_ppi_graph,
 )
 from app.apis.prs import get_prs
-from app.apis.top import get_top_ping
+from app.apis.top import get_top_builds, get_top_ping
 from app.apis.xqtl import (
     get_xqtl_multi_snp_mr,
     get_xqtl_single_snp_mr,
@@ -530,6 +530,10 @@ topic_params: Dict[str, EndpointData] = {
 util_params: Dict[str, EndpointData] = {
     "GET /ping": {
         "func": get_top_ping,
+        "tests": [{"desc": "Default", "params": None}],
+    },
+    "GET /builds": {
+        "func": get_top_builds,
         "tests": [{"desc": "Default", "params": None}],
     },
     "GET /meta/schema": {
