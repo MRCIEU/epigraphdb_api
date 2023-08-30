@@ -9,6 +9,7 @@ from app.apis import (
     literature,
     meta,
     opengwas,
+    sc_eqtl_mr,
     xqtl_multi_ancestry_pwmr,
 )
 from app.apis.confounder import get_confounder
@@ -507,6 +508,41 @@ topic_params: Dict[str, EndpointData] = {
                 "desc": "Query study results by gene",
                 "endpoint": "GET /xqtl_multi_ancestry_pwmr/xqtl_pwas_mr/gene",
                 "params": {"q": "ENSG00000168685", "pval_threshold": 1e-2},
+            },
+        ],
+    },
+    "GET /sc_eqtl_mr/list/{entity}": {
+        "func": sc_eqtl_mr.list_ents,
+        "tests": [
+            {
+                "desc": "Get list of outcome GWAS envolved in the study",
+                "endpoint": "GET /sc_eqtl_mr/list/outcome",
+                "params": None,
+            },
+            {
+                "desc": "Get list of genes envolved in the study",
+                "endpoint": "GET /sc_eqtl_mr/list/gene",
+                "params": None,
+            },
+        ],
+    },
+    "GET /sc_eqtl_mr/query/{entity}": {
+        "func": sc_eqtl_mr.main_query,
+        "tests": [
+            {
+                "desc": "Query study results by outcome",
+                "endpoint": "GET /sc_eqtl_mr/query/outcome",
+                "params": {"q": "ieu-a-1126", "pval_threshold": 1e-1},
+            },
+            {
+                "desc": "Query study results by gene",
+                "endpoint": "GET /sc_eqtl_mr/query/gene",
+                "params": {"q": "ENSG00000000971", "pval_threshold": 1e-1},
+            },
+            {
+                "desc": "Query study results by gene, check null",
+                "endpoint": "GET /sc_eqtl_mr/query/gene",
+                "params": {"q": "ENSG00000055950", "pval_threshold": 1},
             },
         ],
     },

@@ -25,6 +25,7 @@ from .apis import (
     protein,
     prs,
     raw_cypher,
+    sc_eqtl_mr,
     status,
     top,
     xqtl,
@@ -75,3 +76,4 @@ app.include_router(covid_xqtl.router, tags=["covid-19"])
 app.include_router(
     xqtl_multi_ancestry_pwmr.router, tags=["Multi-ancestry PWAS MR study"]
 )
+app.include_router(sc_eqtl_mr.router, tags=["single-cell eQTL MR study"])
